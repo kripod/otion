@@ -7,8 +7,7 @@ import { CSSOMInjector, DOMInjector } from './injectors';
 import { minifyCondition, minifyValue } from './minify';
 import { PROPERTY_ACCEPTS_UNITLESS_VALUES } from './propertyMatchers';
 
-// TODO: Use `PropertiesFallback` instead of just `Properties`
-export type CSSStyleRules = CSS.Properties<string | number> &
+export type CSSStyleRules = CSS.PropertiesFallback<string | number> &
   { [pseudo in CSS.Pseudos]?: CSSStyleRules };
 
 export type CSSConditionRules = {
@@ -62,7 +61,20 @@ export function createInstance({
       const value = rules[key as keyof typeof rules];
 
       if (value != null) {
-        if (typeof value !== 'object') {
+        if (typeof value === 'object' && !Array.isArray(value)) {
+          classNames += getClassNames(value, [
+            ...parentRules,
+            key[0] === ':' || key[0] === '@' ? key : minifyCondition(key),
+          ]);
+        } else {
+          const declarations =
+            typeof value === 'object'
+              ? (value as (string | number)[])
+                  // eslint-disable-next-line no-loop-func
+                  .map((fallbackValue) => styleDeclarations(key, fallbackValue))
+                  .join(';')
+              : styleDeclarations(key, value);
+
           let blockCount = 1;
           let blockStartCountdown = 0;
           let classSelectorPlaceholder = classNamePlaceholder;
@@ -90,7 +102,7 @@ export function createInstance({
 
               return cssText;
             }, '') + classSelectorPlaceholder
-          }{${styleDeclarations(key, value)}${'}'.repeat(blockCount)}`;
+          }{${declarations}${'}'.repeat(blockCount)}`;
 
           const className = `_${hash(rule)}`;
           classNames += ` ${className}`;
@@ -102,17 +114,6 @@ export function createInstance({
             );
             insertedClassNames.add(className);
           }
-        } /* else if (Array.isArray(value)) {
-          const specificityIncrementedParentRules = [];
-          // eslint-disable-next-line no-loop-func
-          value.forEach((fallbackValue) => {
-            classNames += getClassNames(key, fallbackValue);
-          });
-        } */ else {
-          classNames += getClassNames(value, [
-            ...parentRules,
-            key[0] === ':' || key[0] === '@' ? key : minifyCondition(key),
-          ]);
         }
       }
     }
