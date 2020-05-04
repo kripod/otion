@@ -49,7 +49,7 @@ export function createInstance({
     return prefix(kebabCasedProperty, formattedValue);
   }
 
-  const idPlaceholder = '\x1b';
+  const classNamePlaceholder = '\x1b';
   const insertedClassNames = new Set();
   let ruleCount = 0;
 
@@ -65,15 +65,15 @@ export function createInstance({
         if (typeof value !== 'object') {
           let blockCount = 1;
           let blockStartCountdown = 0;
-          let unappliedClassSelector = `.${idPlaceholder}`;
+          let classSelectorPlaceholder = classNamePlaceholder;
 
           const rule = `${
             parentRules.reduce((cssText, parentRule) => {
-              if (unappliedClassSelector) {
+              if (classSelectorPlaceholder) {
                 if (parentRule[0] === ':') {
                   // eslint-disable-next-line no-param-reassign
-                  cssText += unappliedClassSelector;
-                  unappliedClassSelector = '';
+                  cssText += classSelectorPlaceholder;
+                  classSelectorPlaceholder = '';
                 } else if (parentRule[0] === '@') {
                   blockStartCountdown = 2;
                 }
@@ -89,14 +89,15 @@ export function createInstance({
               }
 
               return cssText;
-            }, '') + unappliedClassSelector
+            }, '') + classSelectorPlaceholder
           }{${styleDeclarations(key, value)}${'}'.repeat(blockCount)}`;
 
           const className = `_${hash(rule)}`;
           classNames += ` ${className}`;
           if (!insertedClassNames.has(className)) {
             injector.insert(
-              rule.replace(idPlaceholder, className),
+              // TODO: Control specificity by repeating the `className`
+              rule.replace(classNamePlaceholder, `.${className}`),
               ruleCount++,
             );
             insertedClassNames.add(className);
