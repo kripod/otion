@@ -18,7 +18,8 @@
     "src/"
   ],
   "scripts": {
-    "build": "rollup --config --sourcemap"
+    "build": "rollup --config --sourcemap",
+    "develop": "yarn build --watch"
   },
   "dependencies": {
     "@emotion/hash": "^0.8.0",

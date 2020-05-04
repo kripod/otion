@@ -6,6 +6,7 @@
   "scripts": {
     "build": "lerna run build",
     "commit": "git-cz",
+    "develop": "lerna run --parallel --scope otion develop",
     "format": "prettier --ignore-path .gitignore --write .",
     "postinstall": "lerna bootstrap",
     "lint": "eslint --ignore-path .gitignore \"**/*.{ts,tsx,js,jsx}\"",
