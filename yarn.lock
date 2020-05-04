@@ -7795,11 +7795,6 @@ strong-log-transformer@^2.0.0:
     minimist "^1.2.0"
     through "^2.3.4"
 
-stylis@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/stylis/-/stylis-4.0.0.tgz#475f4e00e3b809ed2a0c2bb6cba83d526e824171"
-  integrity sha512-kdT29t1M7lMS1hKHvFD28QqT4oxTOIKF5KQD7Dz9UA2Gck9DjDc8IX1sdtHGI3QBRbLKOYhBjuBdcGpH5NibwA==
-
 supports-color@^4.0.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-4.5.0.tgz#be7a0de484dec5c5cddf8b3d59125044912f635b"
@@ -7941,6 +7936,11 @@ through@2, "through@>=2.2.7 <3", through@^2.3.4, through@^2.3.6, through@^2.3.8:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
+
+tiny-css-prefixer@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/tiny-css-prefixer/-/tiny-css-prefixer-1.1.4.tgz#b96a0aa6b312227d996e9c303645e3ae2f194086"
+  integrity sha512-QLnDGLUmMkNlSuWogBaSu92uQnvWhcQwUc+MG8L4YgBkjSmBkAz29pTq+8Rh3YWR1TwPrjuZDKWzO7v4PXkipQ==
 
 tmp@^0.0.33:
   version "0.0.33"

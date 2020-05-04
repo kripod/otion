@@ -24,6 +24,7 @@
 
     // Custom preferences
     "import/prefer-default-export": "off",
+    "no-bitwise": "off",
     "no-plusplus": "off"
   },
 

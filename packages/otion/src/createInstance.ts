@@ -1,90 +1,123 @@
 import hash from '@emotion/hash';
-import {
-  compile,
-  middleware,
-  prefixer,
-  RULESET,
-  rulesheet,
-  serialize,
-  stringify,
-} from 'stylis';
+import * as CSS from 'csstype';
+import { prefixProperty, prefixValue } from 'tiny-css-prefixer';
 
 import { isDev } from './env';
 import { CSSOMInjector, DOMInjector } from './injectors';
+import { minifyCondition, minifyValue } from './minify';
+import { PROPERTY_ACCEPTS_UNITLESS_VALUES } from './propertyMatchers';
 
-// TODO: Replace with types provided by Stylis
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type StylisElement = any;
+// TODO: Use `PropertiesFallback` instead of just `Properties`
+export type CSSStyleRules = CSS.Properties<string | number> &
+  { [pseudo in CSS.Pseudos]?: CSSStyleRules };
 
-function deepCopy(element: StylisElement): StylisElement {
-  const clonedElement = { ...element };
+export type CSSConditionRules = {
+  '@media'?: {
+    [conditionText: string]: CSSStyleRules & CSSConditionRules;
+  };
+  '@supports'?: {
+    [conditionText: string]: CSSStyleRules & CSSConditionRules;
+  };
+};
 
-  if (typeof element.props === 'object') {
-    clonedElement.props = [...element.props];
-  }
+export type ScopedCSSRules = CSSStyleRules & CSSConditionRules;
 
-  if (typeof element.children === 'object') {
-    clonedElement.children = element.children.map((child: StylisElement) => {
-      const clonedChild = deepCopy(child);
-      clonedChild.root = clonedElement;
-      return clonedChild;
-    });
-  }
-
-  return clonedElement;
+function upperToHyphenLower(match: string): string {
+  return `-${match.toLowerCase()}`;
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createInstance({
   injector = isDev ? DOMInjector() : CSSOMInjector(),
-  stylisMiddleware = [prefixer],
+  prefix = (property: string, value: string): string => {
+    const declaration = `${property}:${prefixValue(property, value)}`;
+    let css = declaration;
+    const flag = prefixProperty(property);
+    if (flag & 0b001) css += `;-ms-${declaration}`;
+    if (flag & 0b010) css += `;-moz-${declaration}`;
+    if (flag & 0b100) css += `;-webkit-${declaration}`;
+    return css;
+  },
 } = {}) {
-  let rootIndex: number;
-  let rootChildren: StylisElement[];
-
-  let traversalCallback: (element: StylisElement) => void;
-  function traverseSubtree(element: StylisElement): void {
-    traversalCallback(element);
-    if (typeof element.children === 'object') {
-      element.children.forEach(traverseSubtree);
-    }
-  }
-
-  function traverseFromRoot(callback: typeof traversalCallback): void {
-    traversalCallback = callback;
-    for (rootIndex = 0; rootIndex < rootChildren.length; ++rootIndex) {
-      traverseSubtree(rootChildren[rootIndex]);
-    }
-  }
-
-  function decompose(key: 'props' | 'children') {
-    return (element: StylisElement): void => {
-      const originalValues = element[key];
-
-      if (element.type === RULESET && originalValues.length > 1) {
-        const rootChild = rootChildren[rootIndex];
-        const restValues = originalValues.slice(1);
-
-        rootChildren.splice(
-          rootIndex + 1,
-          0,
-          ...restValues.map((prop: string) => {
-            // eslint-disable-next-line no-param-reassign
-            element[key] = [prop];
-            return deepCopy(rootChild);
-          }),
-        );
-
-        // eslint-disable-next-line no-param-reassign, prefer-destructuring
-        element[key][0] = originalValues[0];
-        rootIndex += restValues.length;
-      }
-    };
+  function styleDeclarations(property: string, value: string | number): string {
+    const kebabCasedProperty = property.replace(/[A-Z]/g, upperToHyphenLower);
+    const formattedValue =
+      typeof value === 'number' &&
+      !PROPERTY_ACCEPTS_UNITLESS_VALUES.test(property)
+        ? `${value}px` // Append missing unit
+        : minifyValue(`${value}`);
+    return prefix(kebabCasedProperty, formattedValue);
   }
 
   const idPlaceholder = '\x1b';
   const insertedClassNames = new Set();
   let ruleCount = 0;
+
+  function getClassNames(rules: ScopedCSSRules, parentRules: string[]): string {
+    let classNames = '';
+
+    // TODO: Replace `var` with `const` once it minifies equivalently
+    // eslint-disable-next-line guard-for-in, no-restricted-syntax, no-var, vars-on-top
+    for (var key in rules) {
+      const value = rules[key as keyof typeof rules];
+
+      if (value != null) {
+        if (typeof value !== 'object') {
+          let blockCount = 1;
+          let blockStartCountdown = 0;
+          let unappliedClassSelector = `.${idPlaceholder}`;
+
+          const rule = `${
+            parentRules.reduce((cssText, parentRule) => {
+              if (unappliedClassSelector) {
+                if (parentRule[0] === ':') {
+                  // eslint-disable-next-line no-param-reassign
+                  cssText += unappliedClassSelector;
+                  unappliedClassSelector = '';
+                } else if (parentRule[0] === '@') {
+                  blockStartCountdown = 2;
+                }
+              }
+
+              // eslint-disable-next-line no-param-reassign
+              cssText += parentRule;
+
+              if (!--blockStartCountdown) {
+                // eslint-disable-next-line no-param-reassign
+                cssText += '{';
+                ++blockCount;
+              }
+
+              return cssText;
+            }, '') + unappliedClassSelector
+          }{${styleDeclarations(key, value)}${'}'.repeat(blockCount)}`;
+
+          const className = `_${hash(rule)}`;
+          classNames += ` ${className}`;
+          if (!insertedClassNames.has(className)) {
+            injector.insert(
+              rule.replace(idPlaceholder, className),
+              ruleCount++,
+            );
+            insertedClassNames.add(className);
+          }
+        } /* else if (Array.isArray(value)) {
+          const specificityIncrementedParentRules = [];
+          // eslint-disable-next-line no-loop-func
+          value.forEach((fallbackValue) => {
+            classNames += getClassNames(key, fallbackValue);
+          });
+        } */ else {
+          classNames += getClassNames(value, [
+            ...parentRules,
+            key[0] === ':' || key[0] === '@' ? key : minifyCondition(key),
+          ]);
+        }
+      }
+    }
+
+    return classNames;
+  }
 
   return {
     setInjector(value: typeof injector): void {
@@ -92,34 +125,9 @@ export function createInstance({
       injector = value;
     },
 
-    css(scopedCSS: string): string {
-      rootChildren = compile(`.${idPlaceholder}{${scopedCSS}}`);
-      traverseFromRoot(decompose('props'));
-      traverseFromRoot(decompose('children'));
-
-      let classNames = '';
-
-      serialize(
-        rootChildren,
-        middleware([
-          ...stylisMiddleware,
-          stringify,
-          rulesheet((rule: string) => {
-            const className = `_${hash(rule)}`;
-            classNames += ` ${className}`;
-            if (!insertedClassNames.has(className)) {
-              injector.insert(
-                rule.replace(idPlaceholder, className),
-                ruleCount++,
-              );
-              insertedClassNames.add(className);
-            }
-          }),
-        ]),
-      );
-
-      // Remove prepended whitespace
-      return classNames.slice(1);
+    css(rules: ScopedCSSRules): string {
+      // Remove leading white space character
+      return getClassNames(rules, []).slice(1);
     },
   };
 }
