@@ -1,0 +1,28 @@
+{
+  "name": "otion",
+  "version": "0.0.0",
+  "license": "MIT",
+  "author": "Kristóf Poduszló <kripod@protonmail.com>",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    "import": "./dist-esm/bundle.min.js",
+    "require": "./dist-cjs/bundle.min.cjs"
+  },
+  "main": "./dist-cjs/bundle.min.cjs",
+  "module": "./dist-esm/bundle.min.js",
+  "source": "./src/index.ts",
+  "types": "./dist-types/bundle.d.ts",
+  "files": [
+    "dist-*/",
+    "src/"
+  ],
+  "scripts": {
+    "build": "rollup --config --sourcemap"
+  },
+  "dependencies": {
+    "@emotion/hash": "^0.8.0",
+    "csstype": "^2.6.10",
+    "stylis": "^4.0.0"
+  }
+}

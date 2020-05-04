@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig-base",
+  "include": ["./src/"],
+  "compilerOptions": {
+    "checkJs": false,
+    "declaration": true,
+    "declarationMap": true
+  }
+}

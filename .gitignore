@@ -1,0 +1,7 @@
+*.log*
+.DS_Store
+.env
+.env.*
+.eslintcache
+dist-*/
+node_modules/

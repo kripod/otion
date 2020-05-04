@@ -1,0 +1,38 @@
+{
+  "root": true,
+  "env": { "browser": true },
+  "parserOptions": { "project": "./tsconfig-base.json" },
+  "extends": [
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "prettier/@typescript-eslint",
+    "prettier/react"
+  ],
+  "plugins": ["simple-import-sort"],
+
+  "rules": {
+    // Auto-sort imports
+    "sort-imports": "off",
+    "import/order": "off",
+    "simple-import-sort/sort": "error",
+
+    // Using a type system makes it safe enough to disable the check below
+    "react/jsx-props-no-spreading": "off",
+
+    // Custom preferences
+    "import/prefer-default-export": "off",
+    "no-plusplus": "off"
+  },
+
+  "overrides": [
+    {
+      "files": ["rollup.config.js"],
+      "rules": {
+        "import/no-extraneous-dependencies": "off"
+      }
+    }
+  ]
+}
