@@ -48,7 +48,7 @@ export function createInstance({
     return prefix(kebabCasedProperty, formattedValue);
   }
 
-  const classNamePlaceholder = '\x1b';
+  const selectorPlaceholder = '\x1b';
   const insertedClassNames = new Set();
   let ruleCount = 0;
 
@@ -76,40 +76,35 @@ export function createInstance({
               : styleDeclarations(key, value);
 
           let blockCount = 1;
-          let blockStartCountdown = 0;
-          let classSelectorPlaceholder = classNamePlaceholder;
+          let isScopeSelectorMissing: 0 | 1 = 1;
 
           let rule = '';
 
           // eslint-disable-next-line no-loop-func
           parentRules.forEach((parentRule) => {
-            if (classSelectorPlaceholder) {
+            if (isScopeSelectorMissing) {
               if (parentRule[0] === ':') {
-                rule += classSelectorPlaceholder;
-                classSelectorPlaceholder = '';
-              } else if (parentRule[0] === '@') {
-                blockStartCountdown = 2;
+                isScopeSelectorMissing = 0;
+                rule += selectorPlaceholder;
+              } else if (parentRule[0] !== '@') {
+                ++blockCount;
+                // eslint-disable-next-line no-param-reassign
+                parentRule += '{';
               }
             }
-
             rule += parentRule;
-
-            if (!--blockStartCountdown) {
-              rule += '{';
-              ++blockCount;
-            }
           });
 
-          rule += `${classSelectorPlaceholder}{${declarations}${'}'.repeat(
-            blockCount,
-          )}`;
+          rule += `${
+            isScopeSelectorMissing ? `${selectorPlaceholder}{` : '{'
+          }${declarations}${'}'.repeat(blockCount)}`;
 
           const className = `_${hash(rule)}`;
           classNames += ` ${className}`;
           if (!insertedClassNames.has(className)) {
             injector.insert(
               // TODO: Control specificity by repeating the `className`
-              rule.replace(classNamePlaceholder, `.${className}`),
+              rule.replace(selectorPlaceholder, `.${className}`),
               ruleCount++,
             );
             insertedClassNames.add(className);
