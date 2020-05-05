@@ -51,25 +51,13 @@ export function createInstance({
   const insertedClassNames = new Set();
   let ruleCount = 0;
 
-  function getClassNames(rules: ScopedCSSRules, parentRules: string[]): string {
+  function getClassNames(
+    rules: ScopedCSSRules,
+    ruleTemplateHead: string,
+    ruleTemplateTail: string,
+    classSelectorStartIndex?: number,
+  ): string {
     let classNames = '';
-
-    let ruleTemplateHead = '';
-    let ruleTemplateTail = '';
-    let classSelectorStartIndex: number | undefined;
-
-    parentRules.forEach((parentRule) => {
-      if (!classSelectorStartIndex) {
-        if (parentRule[0] === ':') {
-          classSelectorStartIndex = ruleTemplateHead.length;
-        } else if (parentRule[0] !== '@') {
-          ruleTemplateTail += '}';
-          // eslint-disable-next-line no-param-reassign
-          parentRule += '{';
-        }
-      }
-      ruleTemplateHead += parentRule;
-    });
 
     // TODO: Replace `var` with `const` once it minifies equivalently
     // eslint-disable-next-line guard-for-in, no-restricted-syntax, no-var, vars-on-top
@@ -78,12 +66,26 @@ export function createInstance({
 
       if (value != null) {
         if (typeof value === 'object' && !Array.isArray(value)) {
-          // Avoid array mutation for better performance
-          parentRules.push(
-            key[0] === ':' || key[0] === '@' ? key : minifyCondition(key),
+          let parentRule =
+            key[0] === ':' || key[0] === '@' ? key : minifyCondition(key);
+
+          if (!classSelectorStartIndex) {
+            if (parentRule[0] === ':') {
+              // eslint-disable-next-line no-param-reassign
+              classSelectorStartIndex = ruleTemplateHead.length;
+            } else if (parentRule[0] !== '@') {
+              // eslint-disable-next-line no-param-reassign
+              ruleTemplateTail += '}';
+              parentRule += '{';
+            }
+          }
+
+          classNames += getClassNames(
+            value,
+            ruleTemplateHead + parentRule,
+            ruleTemplateTail,
+            classSelectorStartIndex,
           );
-          classNames += getClassNames(value, parentRules);
-          parentRules.pop();
         } else {
           const declarations =
             typeof value === 'object'
@@ -122,7 +124,7 @@ export function createInstance({
 
     css(rules: ScopedCSSRules): string {
       // Remove leading white space character
-      return getClassNames(rules, []).slice(1);
+      return getClassNames(rules, '', '').slice(1);
     },
   };
 }
