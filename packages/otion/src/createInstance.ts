@@ -2,8 +2,8 @@ import hash from '@emotion/hash';
 import * as CSS from 'csstype';
 import { prefixProperty, prefixValue } from 'tiny-css-prefixer';
 
-import { isDev } from './env';
-import { CSSOMInjector, DOMInjector } from './injectors';
+import { isBrowser, isDev } from './env';
+import { CSSOMInjector, DOMInjector, NoOpInjector } from './injectors';
 import { minifyCondition, minifyValue } from './minify';
 import { PROPERTY_ACCEPTS_UNITLESS_VALUES } from './propertyMatchers';
 
@@ -27,7 +27,12 @@ function upperToHyphenLower(match: string): string {
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createInstance({
-  injector = isDev ? DOMInjector() : CSSOMInjector(),
+  // eslint-disable-next-line no-nested-ternary
+  injector = isBrowser
+    ? isDev
+      ? DOMInjector()
+      : CSSOMInjector()
+    : NoOpInjector(),
   prefix = (property: string, value: string): string => {
     const declaration = `${property}:${prefixValue(property, value)}`;
     let css = declaration;

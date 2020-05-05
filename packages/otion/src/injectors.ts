@@ -1,6 +1,7 @@
 import { getStyleElement } from './getStyleElement';
 
 export interface Injector {
+  sheet?: CSSStyleSheet;
   insert(rule: string, index: number): number;
   nullify(index: number): void;
 }
@@ -34,6 +35,8 @@ export function CSSOMInjector({
   (target.ownerNode as HTMLStyleElement).nonce = nonce;
 
   return {
+    sheet: target,
+
     insert(rule, index): number {
       return target.insertRule(rule, index);
     },
@@ -54,6 +57,8 @@ export function DOMInjector({
   target.nonce = nonce;
 
   return {
+    sheet: target.sheet as CSSStyleSheet,
+
     insert(rule, index): number {
       target.insertBefore(
         document.createTextNode(rule),
@@ -67,5 +72,14 @@ export function DOMInjector({
       // eslint-disable-next-line no-param-reassign
       target.childNodes[index].textContent = dummyRule;
     },
+  };
+}
+
+export function NoOpInjector(): Injector {
+  return {
+    insert(): number {
+      return 0;
+    },
+    nullify(): void {},
   };
 }
