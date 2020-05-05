@@ -1,4 +1,3 @@
-import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import ts from '@wessberg/rollup-plugin-ts';
 import { terser } from 'rollup-plugin-terser';
@@ -35,7 +34,6 @@ export default [
     plugins: [
       ...commonPlugins,
       resolve(),
-      commonjs(),
       terser({ include: /\.min\.[^.]+$/ }),
     ],
     external: [/^@babel\/runtime\//],
