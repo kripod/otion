@@ -11,7 +11,8 @@
     "postinstall": "lerna bootstrap",
     "lint": "eslint --ignore-path .gitignore \"**/*.{ts,tsx,js,jsx}\"",
     "publish": "lerna publish from-git --yes",
-    "release": "dotenv -- lerna version --create-release github"
+    "release": "dotenv -- lerna version --create-release github",
+    "test": "bundlesize"
   },
   "husky": {
     "hooks": {
@@ -46,7 +47,7 @@
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
     "@wessberg/rollup-plugin-ts": "^1.2.24",
-    "bundlesize": "^0.18.0",
+    "bundlesize2": "^0.0.24",
     "commitizen": "^4.0.5",
     "cz-conventional-changelog": "^3.1.0",
     "eslint": "^6.8.0",
@@ -68,7 +69,8 @@
   },
   "bundlesize": [
     {
-      "path": "./packages/**/dist-esm/*.min.js"
+      "path": "./packages/**/dist-esm/*.min.js",
+      "maxSize": "3 kB"
     }
   ]
 }
