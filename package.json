@@ -5,14 +5,16 @@
   ],
   "scripts": {
     "build": "lerna run build",
+    "clean": "lerna run --parallel clean",
     "commit": "git-cz",
-    "develop": "lerna run --parallel --scope otion develop",
+    "develop": "lerna run --parallel --scope otion-example-gatsby --include-dependencies develop",
     "format": "prettier --ignore-path .gitignore --write .",
     "postinstall": "lerna bootstrap",
     "lint": "eslint --ignore-path .gitignore \"**/*.{ts,tsx,js,jsx}\"",
     "publish": "lerna publish from-git --yes",
     "release": "dotenv -- lerna version --create-release github",
-    "test": "bundlesize --enable-github-checks"
+    "test": "bundlesize --enable-github-checks",
+    "type-check": "lerna run type-check"
   },
   "husky": {
     "hooks": {

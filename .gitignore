@@ -1,8 +1,15 @@
+# General
 *.log*
 *.tsbuildinfo
 .DS_Store
-.env
-.env.*
+.env*
 .eslintcache
-dist-*/
 node_modules/
+
+# Package builds
+*.tgz
+dist-*/
+
+# Gatsby
+.cache/
+public/

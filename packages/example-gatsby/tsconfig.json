@@ -1,0 +1,7 @@
+{
+  "extends": "../../tsconfig-base",
+  "include": ["./src/", "./gatsby-*.js"],
+  "compilerOptions": {
+    "noEmit": true
+  }
+}

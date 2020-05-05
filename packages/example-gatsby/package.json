@@ -1,0 +1,19 @@
+{
+  "name": "otion-example-gatsby",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "gatsby build",
+    "clean": "gatsby clean",
+    "develop": "gatsby develop --open",
+    "serve": "gatsby serve",
+    "type-check": "tsc"
+  },
+  "dependencies": {
+    "gatsby": "^2.21.0",
+    "gatsby-plugin-react-helmet": "^3.3.0",
+    "otion": "^0.0.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  }
+}
