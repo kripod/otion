@@ -12,7 +12,7 @@
     "lint": "eslint --ignore-path .gitignore \"**/*.{ts,tsx,js,jsx}\"",
     "publish": "lerna publish from-git --yes",
     "release": "dotenv -- lerna version --create-release github",
-    "test": "bundlesize"
+    "test": "bundlesize --enable-github-checks"
   },
   "husky": {
     "hooks": {
