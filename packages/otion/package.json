@@ -12,7 +12,7 @@
   "main": "./dist-cjs/bundle.min.cjs",
   "module": "./dist-esm/bundle.min.js",
   "source": "./src/index.ts",
-  "types": "./dist-types/bundle.d.ts",
+  "types": "./dist-esm/bundle.d.ts",
   "files": [
     "dist-*/",
     "src/"
