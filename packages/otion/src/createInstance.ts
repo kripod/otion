@@ -70,14 +70,14 @@ export function createInstance({
             key[0] === ':' || key[0] === '@' ? key : minifyCondition(key);
 
           if (!classSelectorStartIndex) {
+            /* eslint-disable no-param-reassign */
             if (parentRule[0] === ':') {
-              // eslint-disable-next-line no-param-reassign
               classSelectorStartIndex = ruleTemplateHead.length;
             } else if (parentRule[0] !== '@') {
-              // eslint-disable-next-line no-param-reassign
-              ruleTemplateTail += '}';
               parentRule += '{';
+              ruleTemplateTail += '}';
             }
+            /* eslint-enable no-param-reassign */
           }
 
           classNames += getClassNames(
