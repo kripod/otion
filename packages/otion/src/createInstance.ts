@@ -62,10 +62,12 @@ export function createInstance({
 
       if (value != null) {
         if (typeof value === 'object' && !Array.isArray(value)) {
-          classNames += getClassNames(value, [
-            ...parentRules,
+          // Avoid array mutation for better performance
+          parentRules.push(
             key[0] === ':' || key[0] === '@' ? key : minifyCondition(key),
-          ]);
+          );
+          classNames += getClassNames(value, parentRules);
+          parentRules.pop();
         } else {
           const declarations =
             typeof value === 'object'
