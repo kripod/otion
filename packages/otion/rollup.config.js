@@ -7,11 +7,11 @@ import pkg from './package.json';
 
 const minifiedOutputs = [
   {
-    file: pkg.exports.import,
+    file: pkg.exports['.'].import,
     format: 'esm',
   },
   {
-    file: pkg.exports.require,
+    file: pkg.exports['.'].require,
     format: 'cjs',
   },
 ];
@@ -21,17 +21,31 @@ const unminifiedOutputs = minifiedOutputs.map(({ file, ...rest }) => ({
   file: file.replace('.min.', '.'),
 }));
 
-export default {
-  input: './src/index.ts',
-  output: [...unminifiedOutputs, ...minifiedOutputs],
-  plugins: [
-    resolve(),
-    commonjs(),
-    ts({
-      transpiler: 'babel',
-      babelConfig: '../..', // TODO: Use `{ rootMode: 'upward' }` instead
-    }),
-    terser({ include: /\.min\.[^.]+$/ }),
-  ],
-  external: [/^@babel\/runtime\//],
-};
+const commonPlugins = [
+  ts({
+    transpiler: 'babel',
+    babelConfig: '../..', // TODO: Use `{ rootMode: 'upward' }` instead
+  }),
+];
+
+export default [
+  {
+    input: './src/index.ts',
+    output: [...unminifiedOutputs, ...minifiedOutputs],
+    plugins: [
+      ...commonPlugins,
+      resolve(),
+      commonjs(),
+      terser({ include: /\.min\.[^.]+$/ }),
+    ],
+    external: [/^@babel\/runtime\//],
+  },
+  {
+    input: './src/server.ts',
+    output: {
+      file: pkg.exports['./server'].require,
+      format: 'cjs',
+    },
+    plugins: commonPlugins,
+  },
+];

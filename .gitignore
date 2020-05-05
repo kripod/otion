@@ -9,6 +9,7 @@ node_modules/
 # Package builds
 *.tgz
 dist-*/
+packages/*otion/server/
 
 # Gatsby
 .cache/

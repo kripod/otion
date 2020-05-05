@@ -6,8 +6,13 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
-    "import": "./dist-esm/bundle.min.js",
-    "require": "./dist-cjs/bundle.min.cjs"
+    ".": {
+      "import": "./dist-esm/bundle.min.js",
+      "require": "./dist-cjs/bundle.min.cjs"
+    },
+    "./server": {
+      "require": "./server/index.js"
+    }
   },
   "main": "./dist-cjs/bundle.min.cjs",
   "module": "./dist-esm/bundle.min.js",
@@ -15,6 +20,7 @@
   "types": "./dist-esm/bundle.d.ts",
   "files": [
     "dist-*/",
+    "server/",
     "src/"
   ],
   "scripts": {

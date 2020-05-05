@@ -30,6 +30,12 @@
 
   "overrides": [
     {
+      "files": ["*.js", "*.jsx"],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": "off"
+      }
+    },
+    {
       "files": ["rollup.config.js"],
       "rules": {
         "import/no-extraneous-dependencies": "off"

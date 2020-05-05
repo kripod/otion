@@ -1,7 +1,30 @@
-/**
- * Implement Gatsby's SSR (Server Side Rendering) APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/ssr-apis/
- */
+import { setInjector } from 'otion';
+import { getStyleTags, VirtualInjector } from 'otion/server';
 
-// You can delete this file if you're not using it
+/** @type {Map<string, string[]>} */
+const ruleListsByPathname = new Map();
+
+/** @type {import('gatsby').GatsbyBrowser["wrapRootElement"]} */
+export const wrapRootElement = ({ element, pathname }) => {
+  /** @type string[] */
+  const ruleList = [];
+  setInjector(VirtualInjector({ target: ruleList }));
+  ruleListsByPathname.set(pathname, ruleList);
+
+  // TODO: Improve integration with React
+  return element;
+};
+
+/**
+ * @param {{
+ *   setHeadComponents: (components: React.ReactNode) => void;
+ *   pathname: string;
+ * }} apiCallbackContext
+ */
+export const onRenderBody = ({ setHeadComponents, pathname }) => {
+  const ruleList = ruleListsByPathname.get(pathname);
+  if (ruleList) {
+    setHeadComponents(getStyleTags(ruleList));
+    ruleListsByPathname.delete(pathname);
+  }
+};
