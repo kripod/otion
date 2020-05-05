@@ -79,30 +79,30 @@ export function createInstance({
           let blockStartCountdown = 0;
           let classSelectorPlaceholder = classNamePlaceholder;
 
-          const rule = `${
-            parentRules.reduce((cssText, parentRule) => {
-              if (classSelectorPlaceholder) {
-                if (parentRule[0] === ':') {
-                  // eslint-disable-next-line no-param-reassign
-                  cssText += classSelectorPlaceholder;
-                  classSelectorPlaceholder = '';
-                } else if (parentRule[0] === '@') {
-                  blockStartCountdown = 2;
-                }
+          let rule = '';
+
+          // eslint-disable-next-line no-loop-func
+          parentRules.forEach((parentRule) => {
+            if (classSelectorPlaceholder) {
+              if (parentRule[0] === ':') {
+                rule += classSelectorPlaceholder;
+                classSelectorPlaceholder = '';
+              } else if (parentRule[0] === '@') {
+                blockStartCountdown = 2;
               }
+            }
 
-              // eslint-disable-next-line no-param-reassign
-              cssText += parentRule;
+            rule += parentRule;
 
-              if (!--blockStartCountdown) {
-                // eslint-disable-next-line no-param-reassign
-                cssText += '{';
-                ++blockCount;
-              }
+            if (!--blockStartCountdown) {
+              rule += '{';
+              ++blockCount;
+            }
+          });
 
-              return cssText;
-            }, '') + classSelectorPlaceholder
-          }{${declarations}${'}'.repeat(blockCount)}`;
+          rule += `${classSelectorPlaceholder}{${declarations}${'}'.repeat(
+            blockCount,
+          )}`;
 
           const className = `_${hash(rule)}`;
           classNames += ` ${className}`;
