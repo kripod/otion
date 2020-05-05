@@ -48,12 +48,28 @@ export function createInstance({
     return prefix(kebabCasedProperty, formattedValue);
   }
 
-  const selectorPlaceholder = '\x1b';
   const insertedClassNames = new Set();
   let ruleCount = 0;
 
   function getClassNames(rules: ScopedCSSRules, parentRules: string[]): string {
     let classNames = '';
+
+    let ruleTemplateHead = '';
+    let ruleTemplateTail = '';
+    let classSelectorStartIndex: number | undefined;
+
+    parentRules.forEach((parentRule) => {
+      if (!classSelectorStartIndex) {
+        if (parentRule[0] === ':') {
+          classSelectorStartIndex = ruleTemplateHead.length;
+        } else if (parentRule[0] !== '@') {
+          ruleTemplateTail += '}';
+          // eslint-disable-next-line no-param-reassign
+          parentRule += '{';
+        }
+      }
+      ruleTemplateHead += parentRule;
+    });
 
     // TODO: Replace `var` with `const` once it minifies equivalently
     // eslint-disable-next-line guard-for-in, no-restricted-syntax, no-var, vars-on-top
@@ -77,38 +93,18 @@ export function createInstance({
                   .join(';')
               : styleDeclarations(key, value);
 
-          let blockCount = 1;
-          let isScopeSelectorMissing: 0 | 1 = 1;
-
-          let rule = '';
-
-          // eslint-disable-next-line no-loop-func
-          parentRules.forEach((parentRule) => {
-            if (isScopeSelectorMissing) {
-              if (parentRule[0] === ':') {
-                isScopeSelectorMissing = 0;
-                rule += selectorPlaceholder;
-              } else if (parentRule[0] !== '@') {
-                ++blockCount;
-                // eslint-disable-next-line no-param-reassign
-                parentRule += '{';
-              }
-            }
-            rule += parentRule;
-          });
-
-          rule += `${
-            isScopeSelectorMissing ? `${selectorPlaceholder}{` : '{'
-          }${declarations}${'}'.repeat(blockCount)}`;
-
-          const className = `_${hash(rule)}`;
+          const className = `_${hash(`${ruleTemplateHead}${declarations}`)}`;
           classNames += ` ${className}`;
           if (!insertedClassNames.has(className)) {
-            injector.insert(
+            const rule = `${
+              ruleTemplateHead.slice(0, classSelectorStartIndex) +
               // TODO: Control specificity by repeating the `className`
-              rule.replace(selectorPlaceholder, `.${className}`),
-              ruleCount++,
-            );
+              `.${className}`.repeat(1) +
+              (classSelectorStartIndex
+                ? ruleTemplateHead.slice(classSelectorStartIndex)
+                : '')
+            }{${declarations}}${ruleTemplateTail}`;
+            injector.insert(rule, ruleCount++);
             insertedClassNames.add(className);
           }
         }
