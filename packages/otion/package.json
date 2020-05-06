@@ -12,8 +12,6 @@
     "./server": "./server/index.js"
   },
   "main": "./dist-cjs/bundle.min.cjs",
-  "module": "./dist-esm/bundle.min.mjs",
-  "source": "./src/index.ts",
   "types": "./dist-cjs/bundle.min.cjs.d.ts",
   "files": [
     "dist-*/",
