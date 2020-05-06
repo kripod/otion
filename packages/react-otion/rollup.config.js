@@ -38,10 +38,10 @@ export default [
       resolve(),
       terser({ include: /\.min\.[^.]+$/ }),
     ],
-    external: [/^@babel\/runtime\//],
+    external: ['otion', /^@babel\/runtime\//],
   },
   {
-    input: './src/server.ts',
+    input: './src/server.tsx',
     output: {
       file: pkg.exports['./server'],
       format: 'cjs',

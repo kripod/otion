@@ -1,0 +1,31 @@
+{
+  "name": "react-otion",
+  "version": "0.0.0",
+  "license": "MIT",
+  "author": "Kristóf Poduszló <kripod@protonmail.com>",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist-esm/bundle.min.mjs",
+      "require": "./dist-cjs/bundle.min.cjs"
+    },
+    "./server": "./server/index.js"
+  },
+  "main": "./dist-cjs/bundle.min.cjs",
+  "module": "./dist-esm/bundle.min.mjs",
+  "source": "./src/index.ts",
+  "types": "./dist-cjs/bundle.min.cjs.d.ts",
+  "files": [
+    "dist-*/",
+    "server/",
+    "src/"
+  ],
+  "scripts": {
+    "build": "rollup --config --sourcemap",
+    "develop": "yarn build --watch"
+  },
+  "peerDependencies": {
+    "otion": "^0.0.0",
+    "react": "^16.8.0"
+  }
+}
