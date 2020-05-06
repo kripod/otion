@@ -13,6 +13,7 @@ const minifiedOutputs = [
   {
     file: pkg.exports['.'].require,
     format: 'cjs',
+    externalLiveBindings: false,
   },
 ];
 
