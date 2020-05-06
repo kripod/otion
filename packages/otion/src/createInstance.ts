@@ -71,24 +71,24 @@ export function createInstance({
 
       if (value != null) {
         if (typeof value === 'object' && !Array.isArray(value)) {
-          let parentRule =
+          let parentRuleHead =
             key[0] === ':' || key[0] === '@' ? key : minifyCondition(key);
+          let parentRuleTail = '';
 
           if (!classSelectorStartIndex) {
-            /* eslint-disable no-param-reassign */
-            if (parentRule[0] === ':') {
+            if (parentRuleHead[0] === ':') {
+              // eslint-disable-next-line no-param-reassign
               classSelectorStartIndex = ruleTemplateHead.length;
-            } else if (parentRule[0] !== '@') {
-              parentRule += '{';
-              ruleTemplateTail += '}';
+            } else if (parentRuleHead[0] !== '@') {
+              parentRuleHead += '{';
+              parentRuleTail += '}';
             }
-            /* eslint-enable no-param-reassign */
           }
 
           classNames += getClassNames(
             value,
-            ruleTemplateHead + parentRule,
-            ruleTemplateTail,
+            ruleTemplateHead + parentRuleHead,
+            parentRuleTail + ruleTemplateTail,
             classSelectorStartIndex,
           );
         } else {
