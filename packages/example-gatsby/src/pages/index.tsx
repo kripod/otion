@@ -1,5 +1,5 @@
-import { css } from 'otion';
 import * as React from 'react';
+import { css } from 'react-otion';
 
 export default function IndexPage(): JSX.Element {
   return (

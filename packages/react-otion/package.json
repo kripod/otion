@@ -24,8 +24,10 @@
     "build": "rollup --config --sourcemap",
     "develop": "yarn build --watch"
   },
+  "dependencies": {
+    "otion": "^0.0.0"
+  },
   "peerDependencies": {
-    "otion": "^0.0.0",
     "react": "^16.8.0"
   }
 }
