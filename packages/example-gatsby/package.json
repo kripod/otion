@@ -10,6 +10,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "@types/react-dom": "^16.9.7",
     "gatsby": "^2.21.15",
     "otion": "^0.0.0",
     "react": "^16.12.0",
