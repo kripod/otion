@@ -1,10 +1,7 @@
 {
-  "extends": "../../tsconfig-base",
+  "extends": "../../tsconfig-lib",
   "include": ["./src/"],
   "compilerOptions": {
-    "incremental": true,
-    "tsBuildInfoFile": "./packages/otion/tsconfig.tsbuildinfo",
-    "declaration": true,
-    "declarationMap": true
+    "tsBuildInfoFile": "./packages/otion/tsconfig.tsbuildinfo"
   }
 }
