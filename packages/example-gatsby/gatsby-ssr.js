@@ -1,5 +1,5 @@
-import { setInjector } from 'otion';
-import { getStyleTags, VirtualInjector } from 'otion/server';
+import { setInjector } from 'react-otion';
+import { getStyleTags, VirtualInjector } from 'react-otion/server';
 
 /** @type {Map<string, string[]>} */
 const ruleListsByPathname = new Map();
