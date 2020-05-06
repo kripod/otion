@@ -35,7 +35,7 @@ export default [
     output: [...unminifiedOutputs, ...minifiedOutputs],
     plugins: [
       ...commonPlugins,
-      resolve(),
+      resolve({ browser: true }),
       terser({ include: /\.min\.[^.]+$/ }),
     ],
     external: ['otion', /^@babel\/runtime\//],
