@@ -41,7 +41,7 @@ export default [
   {
     input: './src/server.ts',
     output: {
-      file: pkg.exports['./server'].require,
+      file: pkg.exports['./server'],
       format: 'cjs',
     },
     plugins: commonPlugins,

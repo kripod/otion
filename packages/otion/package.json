@@ -4,20 +4,17 @@
   "license": "MIT",
   "author": "Kristóf Poduszló <kripod@protonmail.com>",
   "sideEffects": false,
-  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist-esm/bundle.min.js",
+      "import": "./dist-esm/bundle.min.mjs",
       "require": "./dist-cjs/bundle.min.cjs"
     },
-    "./server": {
-      "require": "./server/index.js"
-    }
+    "./server": "./server/index.js"
   },
   "main": "./dist-cjs/bundle.min.cjs",
-  "module": "./dist-esm/bundle.min.js",
+  "module": "./dist-esm/bundle.min.mjs",
   "source": "./src/index.ts",
-  "types": "./dist-esm/bundle.d.ts",
+  "types": "./dist-cjs/bundle.min.cjs.d.ts",
   "files": [
     "dist-*/",
     "server/",
