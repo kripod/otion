@@ -4,7 +4,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "lerna run build",
+    "build": "lerna run --stream build",
     "clean": "lerna run --parallel clean",
     "commit": "git-cz",
     "develop": "lerna run --parallel --scope otion-example-gatsby --include-dependencies develop",

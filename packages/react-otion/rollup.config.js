@@ -47,5 +47,6 @@ export default [
       format: 'cjs',
     },
     plugins: commonPlugins,
+    external: ['otion/server', 'react'],
   },
 ];

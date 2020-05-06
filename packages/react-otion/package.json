@@ -23,6 +23,7 @@
     "develop": "yarn build --watch"
   },
   "devDependencies": {
+    "otion": "^0.0.0",
     "react": "^16.13.1"
   },
   "peerDependencies": {
