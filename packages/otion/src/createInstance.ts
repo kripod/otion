@@ -7,6 +7,8 @@ import { CSSOMInjector, DOMInjector, NoOpInjector } from './injectors';
 import { minifyCondition, minifyValue } from './minify';
 import { PROPERTY_ACCEPTS_UNITLESS_VALUES } from './propertyMatchers';
 
+const MAX_CLASS_NAME_LENGTH = 9;
+
 export type CSSStyleRules = CSS.PropertiesFallback<string | number> &
   { [pseudo in CSS.Pseudos]?: CSSStyleRules };
 
@@ -43,6 +45,31 @@ export function createInstance({
     return css;
   },
 } = {}) {
+  const insertedClassNames = new Set();
+  let ruleCount = 0;
+
+  function hydrate(cssRule: CSSRule): void {
+    if (cssRule.type === 1 /* CSSRule.STYLE_RULE */) {
+      // Remove leading '.' from class selector
+      const { selectorText } = cssRule as CSSStyleRule;
+      const index = selectorText.indexOf('.', 2);
+      insertedClassNames.add(
+        selectorText.slice(1, index < 0 ? MAX_CLASS_NAME_LENGTH : index),
+      );
+      ++ruleCount;
+    } else {
+      hydrate((cssRule as CSSGroupingRule).cssRules[0]);
+    }
+  }
+
+  // Rehydrate sheet if available
+  if (injector.sheet) {
+    const { cssRules } = injector.sheet;
+    for (let i = 0, { length } = cssRules; i < length; ++i) {
+      hydrate(cssRules[i]);
+    }
+  }
+
   function styleDeclarations(property: string, value: string | number): string {
     const kebabCasedProperty = property.replace(/[A-Z]/g, upperToHyphenLower);
     const formattedValue =
@@ -52,9 +79,6 @@ export function createInstance({
         : minifyValue(`${value}`);
     return prefix(kebabCasedProperty, formattedValue);
   }
-
-  const insertedClassNames = new Set();
-  let ruleCount = 0;
 
   function getClassNames(
     rules: ScopedCSSRules,
@@ -106,7 +130,7 @@ export function createInstance({
             const rule = `${
               ruleTemplateHead.slice(0, classSelectorStartIndex) +
               // TODO: Control specificity by repeating the `className`
-              `.${className}`.repeat(1) +
+              `.${className}`.repeat(2) +
               (classSelectorStartIndex
                 ? ruleTemplateHead.slice(classSelectorStartIndex)
                 : '')
