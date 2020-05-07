@@ -1,7 +1,6 @@
 import hash from '@emotion/hash';
 import * as CSS from 'csstype';
 import { prefixProperty, prefixValue } from 'tiny-css-prefixer';
-import { LiteralUnion } from 'type-fest';
 
 import { isBrowser, isDev } from './env';
 import { CSSOMInjector, DOMInjector, NoOpInjector } from './injectors';
@@ -13,7 +12,10 @@ const MAX_CLASS_NAME_LENGTH = 9;
 export type CSSProperties = CSS.PropertiesFallback<string | number>;
 
 export type CSSStyleRules = CSSProperties &
-  { [pseudo in LiteralUnion<CSS.SimplePseudos, string>]?: CSSStyleRules };
+  (
+    | { [pseudo in CSS.SimplePseudos]?: CSSStyleRules }
+    | { [pseudo in string]?: CSSStyleRules }
+  );
 
 export interface CSSGroupingRules {
   '@media'?: {
@@ -26,9 +28,9 @@ export interface CSSGroupingRules {
 
 export type ScopedCSSRules = CSSStyleRules & CSSGroupingRules;
 
-export type CSSKeyframeRules = {
-  [time in LiteralUnion<'from' | 'to', string>]: CSSProperties;
-};
+export type CSSKeyframeRules =
+  | { [time in 'from' | 'to']?: CSSProperties }
+  | { [time in string]?: CSSProperties };
 
 function upperToHyphenLower(match: string): string {
   return `-${match.toLowerCase()}`;

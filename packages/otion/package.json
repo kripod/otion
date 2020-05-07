@@ -25,7 +25,6 @@
   "dependencies": {
     "@emotion/hash": "^0.8.0",
     "csstype": "^2.6.10",
-    "tiny-css-prefixer": "^1.1.4",
-    "type-fest": "^0.13.1"
+    "tiny-css-prefixer": "^1.1.4"
   }
 }
