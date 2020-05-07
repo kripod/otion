@@ -1,6 +1,7 @@
 import hash from '@emotion/hash';
 import * as CSS from 'csstype';
 import { prefixProperty, prefixValue } from 'tiny-css-prefixer';
+import { LiteralUnion } from 'type-fest';
 
 import { isBrowser, isDev } from './env';
 import { CSSOMInjector, DOMInjector, NoOpInjector } from './injectors';
@@ -9,19 +10,25 @@ import { PROPERTY_ACCEPTS_UNITLESS_VALUES } from './propertyMatchers';
 
 const MAX_CLASS_NAME_LENGTH = 9;
 
-export type CSSStyleRules = CSS.PropertiesFallback<string | number> &
+export type CSSProperties = CSS.PropertiesFallback<string | number>;
+
+export type CSSStyleRules = CSSProperties &
   { [pseudo in CSS.SimplePseudos]?: CSSStyleRules };
 
-export type CSSGroupingRules = {
+export interface CSSGroupingRules {
   '@media'?: {
     [conditionText: string]: CSSStyleRules & CSSGroupingRules;
   };
   '@supports'?: {
     [conditionText: string]: CSSStyleRules & CSSGroupingRules;
   };
-};
+}
 
 export type ScopedCSSRules = CSSStyleRules & CSSGroupingRules;
+
+export type CSSKeyframeRules = {
+  [time in LiteralUnion<'from' | 'to', string>]: CSSProperties;
+};
 
 function upperToHyphenLower(match: string): string {
   return `-${match.toLowerCase()}`;
@@ -158,6 +165,11 @@ export function createInstance({
     css(rules: ScopedCSSRules): string {
       // Remove leading white space character
       return getClassNames(rules, '', '').slice(1);
+    },
+
+    keyframes(rules: CSSKeyframeRules): string {
+      // TODO
+      return '';
     },
   };
 }
