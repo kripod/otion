@@ -10,7 +10,7 @@ import { PROPERTY_ACCEPTS_UNITLESS_VALUES } from './propertyMatchers';
 const MAX_CLASS_NAME_LENGTH = 9;
 
 export type CSSStyleRules = CSS.PropertiesFallback<string | number> &
-  { [pseudo in CSS.Pseudos]?: CSSStyleRules };
+  { [pseudo in CSS.SimplePseudos]?: CSSStyleRules };
 
 export type CSSGroupingRules = {
   '@media'?: {
