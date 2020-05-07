@@ -12,16 +12,16 @@ const MAX_CLASS_NAME_LENGTH = 9;
 export type CSSStyleRules = CSS.PropertiesFallback<string | number> &
   { [pseudo in CSS.Pseudos]?: CSSStyleRules };
 
-export type CSSConditionRules = {
+export type CSSGroupingRules = {
   '@media'?: {
-    [conditionText: string]: CSSStyleRules & CSSConditionRules;
+    [conditionText: string]: CSSStyleRules & CSSGroupingRules;
   };
   '@supports'?: {
-    [conditionText: string]: CSSStyleRules & CSSConditionRules;
+    [conditionText: string]: CSSStyleRules & CSSGroupingRules;
   };
 };
 
-export type ScopedCSSRules = CSSStyleRules & CSSConditionRules;
+export type ScopedCSSRules = CSSStyleRules & CSSGroupingRules;
 
 function upperToHyphenLower(match: string): string {
   return `-${match.toLowerCase()}`;
@@ -64,10 +64,13 @@ export function createInstance({
 
   // Rehydrate sheet if available
   if (injector.sheet) {
-    // TODO: Support @keyframes and global styles by skipping the first N rules
+    // TODO: Support global styles by skipping the first N rules
     const { cssRules } = injector.sheet;
     for (let i = 0, { length } = cssRules; i < length; ++i) {
-      hydrate(cssRules[i]);
+      const cssRule = cssRules[i];
+      if (cssRule.type !== 7 /* CSSRule.KEYFRAMES_RULE */) {
+        hydrate(cssRule);
+      }
     }
   }
 
