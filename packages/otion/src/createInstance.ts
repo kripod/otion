@@ -64,6 +64,7 @@ export function createInstance({
 
   // Rehydrate sheet if available
   if (injector.sheet) {
+    // TODO: Support @keyframes and global styles by skipping the first N rules
     const { cssRules } = injector.sheet;
     for (let i = 0, { length } = cssRules; i < length; ++i) {
       hydrate(cssRules[i]);
