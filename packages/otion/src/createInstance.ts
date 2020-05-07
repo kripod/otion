@@ -13,7 +13,7 @@ const MAX_CLASS_NAME_LENGTH = 9;
 export type CSSProperties = CSS.PropertiesFallback<string | number>;
 
 export type CSSStyleRules = CSSProperties &
-  { [pseudo in CSS.SimplePseudos]?: CSSStyleRules };
+  { [pseudo in LiteralUnion<CSS.SimplePseudos, string>]?: CSSStyleRules };
 
 export interface CSSGroupingRules {
   '@media'?: {
