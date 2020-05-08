@@ -1,69 +1,13 @@
 import hash from '@emotion/hash';
-import * as CSS from 'csstype';
 import { prefixProperty, prefixValue } from 'tiny-css-prefixer';
 
+import { CSSKeyframeRules, ScopedCSSRules } from './cssTypes';
 import { isBrowser, isDev } from './env';
 import { CSSOMInjector, DOMInjector, NoOpInjector } from './injectors';
 import { minifyCondition, minifyValue } from './minify';
 import { PROPERTY_ACCEPTS_UNITLESS_VALUES } from './propertyMatchers';
 
 const MAX_CLASS_NAME_LENGTH = 9;
-
-export type MarginAtRules = {
-  [pageMargin in
-    | '@top-left-corner'
-    | '@top-left'
-    | '@top-center'
-    | '@top-right'
-    | '@top-right-corner'
-    | '@right-top'
-    | '@right-middle'
-    | '@right-bottom'
-    | '@bottom-right-corner'
-    | '@bottom-right'
-    | '@bottom-center'
-    | '@bottom-left'
-    | '@bottom-left-corner'
-    | '@left-bottom'
-    | '@left-middle'
-    | '@left-top']?: CSSProperties; // TODO: PageMarginCSSProperties
-};
-
-export type PageFallback =
-  | CSSProperties // TODO: PageCSSProperties
-  | MarginAtRules
-  | {
-      [pseudo in ' :left' | ' :right' | ' :first' | ' :blank']?: MarginAtRules;
-    };
-
-export type CSSProperties = CSS.PropertiesFallback<string | number>;
-
-export type CSSRules = CSSProperties | { [key: string]: CSSRules };
-
-export type CSSStyleRules = CSSRules &
-  { [pseudo in CSS.SimplePseudos]?: CSSStyleRules };
-
-export interface CSSGroupingRules {
-  '@media'?: {
-    [conditionText: string]: CSSStyleRules & CSSGroupingRules;
-  };
-  '@supports'?: {
-    [conditionText: string]: CSSStyleRules & CSSGroupingRules;
-  };
-}
-
-export type CSSKeyframeRules =
-  | { [time in 'from' | 'to']?: CSSProperties }
-  | { [time: string]: CSSProperties };
-
-export type ScopedCSSRules = CSSStyleRules & CSSGroupingRules;
-
-export type GlobalCSSRules = ScopedCSSRules & {
-  '@font-face'?: CSS.FontFaceFallback | CSS.FontFaceFallback[];
-  '@import'?: string | string[];
-  '@namespace'?: string | string[];
-  '@page'?: PageFallback;
-};
 
 function upperToHyphenLower(match: string): string {
   return `-${match.toLowerCase()}`;
@@ -88,6 +32,7 @@ export function createInstance({
   },
 } = {}) {
   const insertedClassNames = new Set();
+  const insertedKeyframeNames = new Set();
   let ruleCount = 0;
 
   function hydrate(cssRule: CSSRule): void {
@@ -111,6 +56,9 @@ export function createInstance({
     for (let i = 0, { length } = cssRules; i < length; ++i) {
       const cssRule = cssRules[i];
       if (cssRule.type !== 7 /* CSSRule.KEYFRAMES_RULE */) {
+        insertedKeyframeNames.add((cssRule as CSSKeyframesRule).name);
+        ++ruleCount;
+      } else {
         hydrate(cssRule);
       }
     }
@@ -203,8 +151,42 @@ export function createInstance({
     },
 
     keyframes(rules: CSSKeyframeRules): string {
-      // TODO
-      return '';
+      let cssText = '';
+
+      // TODO: Replace var with const once it minifies equivalently
+      // eslint-disable-next-line guard-for-in, no-restricted-syntax, no-var, vars-on-top
+      for (var time in rules) {
+        cssText += `${time}{`;
+
+        const declarations = rules[time as keyof typeof rules];
+
+        // TODO: Replace var with const once it minifies equivalently
+        // eslint-disable-next-line guard-for-in, no-restricted-syntax, no-var, vars-on-top
+        for (var property in declarations) {
+          const value = declarations[property as keyof typeof declarations];
+
+          if (value != null) {
+            if (typeof value !== 'object') {
+              cssText += styleDeclarations(property, value);
+            } else {
+              // eslint-disable-next-line no-loop-func
+              value.forEach((fallbackValue) => {
+                cssText += styleDeclarations(property, fallbackValue);
+              });
+            }
+          }
+        }
+
+        cssText += '}';
+      }
+
+      const identName = `_${hash(cssText)}`;
+      if (!insertedKeyframeNames.has(identName)) {
+        injector.insert(`@keyframes ${identName}{${cssText}}`, ruleCount++);
+        insertedClassNames.add(identName);
+      }
+
+      return identName;
     },
   };
 }

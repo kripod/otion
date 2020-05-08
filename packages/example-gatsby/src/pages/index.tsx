@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { css } from 'react-otion';
+import { css, keyframes } from 'react-otion';
+
+const pulse = keyframes({
+  from: { opacity: 0 },
+  to: { opacity: 1 },
+});
 
 export default function IndexPage(): JSX.Element {
   return (
@@ -11,6 +16,7 @@ export default function IndexPage(): JSX.Element {
           fontWeight: 'bold',
           fontSize: 30,
           textEmphasis: 'filled   red',
+          animation: `${pulse} 3s infinite alternate`,
 
           '@media': {
             ' (min-width:  \n600px)   ': {

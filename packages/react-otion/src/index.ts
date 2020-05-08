@@ -5,6 +5,7 @@ export {
   css,
   CSSOMInjector,
   DOMInjector,
+  keyframes,
   NoOpInjector,
   setInjector,
 } from 'otion';
