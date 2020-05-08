@@ -6,7 +6,7 @@
     "build": "gatsby build",
     "clean": "gatsby clean",
     "develop": "gatsby develop --open",
-    "serve": "gatsby serve",
+    "serve": "gatsby serve --open",
     "type-check": "tsc"
   },
   "dependencies": {
