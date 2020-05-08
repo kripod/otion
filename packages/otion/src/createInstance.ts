@@ -23,12 +23,12 @@ export function createInstance({
     : NoOpInjector(),
   prefix = (property: string, value: string): string => {
     const declaration = `${property}:${prefixValue(property, value)}`;
-    let css = declaration;
+    let cssText = declaration;
     const flag = prefixProperty(property);
-    if (flag & 0b001) css += `;-ms-${declaration}`;
-    if (flag & 0b010) css += `;-moz-${declaration}`;
-    if (flag & 0b100) css += `;-webkit-${declaration}`;
-    return css;
+    if (flag & 0b001) cssText += `;-ms-${declaration}`;
+    if (flag & 0b010) cssText += `;-moz-${declaration}`;
+    if (flag & 0b100) cssText += `;-webkit-${declaration}`;
+    return cssText;
   },
 } = {}) {
   const insertedClassNames = new Set();
@@ -74,10 +74,10 @@ export function createInstance({
     return prefix(kebabCasedProperty, formattedValue);
   }
 
-  function getClassNames(
+  function decompose(
     rules: ScopedCSSRules,
-    ruleTemplateHead: string,
-    ruleTemplateTail: string,
+    cssTextHead: string,
+    cssTextTail: string,
     classSelectorStartIndex?: number,
   ): string {
     let classNames = '';
@@ -88,7 +88,35 @@ export function createInstance({
       const value = rules[key as keyof typeof rules];
 
       if (value != null) {
-        if (typeof value === 'object' && !Array.isArray(value)) {
+        let declarations: string | undefined;
+        if (typeof value !== 'object') {
+          declarations = styleDeclarations(key, value);
+        } else if (Array.isArray(value)) {
+          // eslint-disable-next-line no-loop-func
+          value.forEach((fallbackValue) => {
+            declarations += `${styleDeclarations(key, fallbackValue)};`;
+          });
+        }
+
+        if (declarations) {
+          const className = `_${hash(`${cssTextHead}${declarations}`)}`;
+
+          if (!insertedClassNames.has(className)) {
+            let cssText =
+              cssTextHead.slice(0, classSelectorStartIndex) +
+              // TODO: Control specificity by repeating the `className`
+              `.${className}`.repeat(2);
+            if (classSelectorStartIndex) {
+              cssText += cssTextHead.slice(classSelectorStartIndex);
+            }
+            cssText += `{${declarations}}${cssTextTail}`;
+
+            injector.insert(cssText, ruleCount++);
+            insertedClassNames.add(className);
+          }
+
+          classNames += ` ${className}`;
+        } else {
           let parentRuleHead =
             key[0] === ':' || key[0] === '@' ? key : minifyCondition(key);
           let parentRuleTail = '';
@@ -96,42 +124,19 @@ export function createInstance({
           if (!classSelectorStartIndex) {
             if (parentRuleHead[0] === ':') {
               // eslint-disable-next-line no-param-reassign
-              classSelectorStartIndex = ruleTemplateHead.length;
+              classSelectorStartIndex = cssTextHead.length;
             } else if (parentRuleHead[0] !== '@') {
               parentRuleHead += '{';
               parentRuleTail += '}';
             }
           }
 
-          classNames += getClassNames(
-            value,
-            ruleTemplateHead + parentRuleHead,
-            parentRuleTail + ruleTemplateTail,
+          classNames += decompose(
+            value as ScopedCSSRules,
+            cssTextHead + parentRuleHead,
+            parentRuleTail + cssTextTail,
             classSelectorStartIndex,
           );
-        } else {
-          const declarations =
-            typeof value === 'object'
-              ? (value as (string | number)[])
-                  // eslint-disable-next-line no-loop-func
-                  .map((fallbackValue) => styleDeclarations(key, fallbackValue))
-                  .join(';')
-              : styleDeclarations(key, value);
-
-          const className = `_${hash(`${ruleTemplateHead}${declarations}`)}`;
-          classNames += ` ${className}`;
-          if (!insertedClassNames.has(className)) {
-            const rule = `${
-              ruleTemplateHead.slice(0, classSelectorStartIndex) +
-              // TODO: Control specificity by repeating the `className`
-              `.${className}`.repeat(2) +
-              (classSelectorStartIndex
-                ? ruleTemplateHead.slice(classSelectorStartIndex)
-                : '')
-            }{${declarations}}${ruleTemplateTail}`;
-            injector.insert(rule, ruleCount++);
-            insertedClassNames.add(className);
-          }
         }
       }
     }
@@ -147,7 +152,7 @@ export function createInstance({
 
     css(rules: ScopedCSSRules): string {
       // Remove leading white space character
-      return getClassNames(rules, '', '').slice(1);
+      return decompose(rules, '', '').slice(1);
     },
 
     keyframes(rules: CSSKeyframeRules): { toString(): string } {
@@ -177,7 +182,10 @@ export function createInstance({
                   } else {
                     // eslint-disable-next-line no-loop-func
                     value.forEach((fallbackValue) => {
-                      cssText += styleDeclarations(property, fallbackValue);
+                      cssText += `${styleDeclarations(
+                        property,
+                        fallbackValue,
+                      )};`;
                     });
                   }
                 }
