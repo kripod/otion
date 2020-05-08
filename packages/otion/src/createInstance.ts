@@ -89,7 +89,7 @@ export function createInstance({
     return cssText;
   }
 
-  function decompose(
+  function decomposeToClassNames(
     rules: ScopedCSSRules,
     cssTextHead: string,
     cssTextTail: string,
@@ -137,7 +137,7 @@ export function createInstance({
             }
           }
 
-          classNames += decompose(
+          classNames += decomposeToClassNames(
             value as ScopedCSSRules,
             cssTextHead + parentRuleHead,
             parentRuleTail + cssTextTail,
@@ -158,7 +158,7 @@ export function createInstance({
 
     css(rules: ScopedCSSRules): string {
       // The leading white space character gets removed
-      return decompose(rules, '', '').slice(1);
+      return decomposeToClassNames(rules, '', '').slice(1);
     },
 
     keyframes(rules: CSSKeyframeRules): { toString(): string } {
