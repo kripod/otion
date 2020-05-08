@@ -31,21 +31,18 @@ export function createInstance({
     return cssText;
   },
 } = {}) {
-  const insertedClassNames = new Set();
-  const insertedKeyframeNames = new Set();
-  let ruleCount = 0;
+  const insertedIdentNames = new Set();
 
-  function hydrate(cssRule: CSSRule): void {
+  function hydrateTree(cssRule: CSSRule): void {
     if (cssRule.type === 1 /* CSSRule.STYLE_RULE */) {
-      // Remove leading '.' from class selector
       const { selectorText } = cssRule as CSSStyleRule;
       const index = selectorText.indexOf('.', 2);
-      insertedClassNames.add(
+      insertedIdentNames.add(
+        // Remove leading '.' from class selector
         selectorText.slice(1, index < 0 ? MAX_CLASS_NAME_LENGTH : index),
       );
-      ++ruleCount;
     } else {
-      hydrate((cssRule as CSSGroupingRule).cssRules[0]);
+      hydrateTree((cssRule as CSSGroupingRule).cssRules[0]);
     }
   }
 
@@ -56,10 +53,10 @@ export function createInstance({
     for (let i = 0, { length } = cssRules; i < length; ++i) {
       const cssRule = cssRules[i];
       if (cssRule.type !== 7 /* CSSRule.KEYFRAMES_RULE */) {
-        insertedKeyframeNames.add((cssRule as CSSKeyframesRule).name);
-        ++ruleCount;
+        // Keyframes needn't be checked recursively, as they are never nested
+        insertedIdentNames.add((cssRule as CSSKeyframesRule).name);
       } else {
-        hydrate(cssRule);
+        hydrateTree(cssRule);
       }
     }
   }
@@ -110,7 +107,7 @@ export function createInstance({
           const declarations = serializeDeclarationList(key, value);
           const className = `_${hash(cssTextHead + declarations)}`;
 
-          if (!insertedClassNames.has(className)) {
+          if (!insertedIdentNames.has(className)) {
             let cssText =
               cssTextHead.slice(0, classSelectorStartIndex) +
               // TODO: Control specificity by repeating the `className`
@@ -120,8 +117,8 @@ export function createInstance({
             }
             cssText += `{${declarations}}${cssTextTail}`;
 
-            injector.insert(cssText, ruleCount++);
-            insertedClassNames.add(className);
+            injector.insert(cssText, insertedIdentNames.size);
+            insertedIdentNames.add(className);
           }
 
           classNames += ` ${className}`;
@@ -160,7 +157,7 @@ export function createInstance({
     },
 
     css(rules: ScopedCSSRules): string {
-      // Remove leading white space character
+      // The leading white space character gets removed
       return decompose(rules, '', '').slice(1);
     },
 
@@ -194,12 +191,12 @@ export function createInstance({
             }
 
             identName = `_${hash(cssText)}`;
-            if (!insertedKeyframeNames.has(identName)) {
+            if (!insertedIdentNames.has(identName)) {
               injector.insert(
                 `@keyframes ${identName}{${cssText}}`,
-                ruleCount++,
+                insertedIdentNames.size,
               );
-              insertedClassNames.add(identName);
+              insertedIdentNames.add(identName);
             }
           }
 
