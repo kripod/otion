@@ -30,7 +30,7 @@ export function VirtualInjector({ target }: VirtualInjectorConfig): Injector {
 export function CSSOMInjector({
   nonce,
   target = getStyleElement().sheet as CSSStyleSheet,
-}: BrowserInjectorConfig<CSSStyleSheet> = {}): Injector {
+}: BrowserInjectorConfig<CSSStyleSheet>): Injector {
   // eslint-disable-next-line no-param-reassign
   (target.ownerNode as HTMLStyleElement).nonce = nonce;
 
@@ -52,7 +52,7 @@ export function CSSOMInjector({
 export function DOMInjector({
   nonce,
   target = getStyleElement(),
-}: BrowserInjectorConfig<HTMLStyleElement> = {}): Injector {
+}: BrowserInjectorConfig<HTMLStyleElement>): Injector {
   // eslint-disable-next-line no-param-reassign
   target.nonce = nonce;
 

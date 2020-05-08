@@ -18,19 +18,19 @@ export function createInstance({
   // eslint-disable-next-line no-nested-ternary
   injector = isBrowser
     ? isDev
-      ? DOMInjector()
-      : CSSOMInjector()
+      ? DOMInjector({})
+      : CSSOMInjector({})
     : NoOpInjector(),
   prefix = (property: string, value: string): string => {
-    const declaration = `${property}:${prefixValue(property, value)};`;
+    const declaration = `${property}:${prefixValue(property, value)}`;
     let cssText = declaration;
     const flag = prefixProperty(property);
-    if (flag & 0b001) cssText += `-ms-${declaration}`;
-    if (flag & 0b010) cssText += `-moz-${declaration}`;
-    if (flag & 0b100) cssText += `-webkit-${declaration}`;
+    if (flag & 0b001) cssText += `;-ms-${declaration}`;
+    if (flag & 0b010) cssText += `;-moz-${declaration}`;
+    if (flag & 0b100) cssText += `;-webkit-${declaration}`;
     return cssText;
   },
-} = {}) {
+}) {
   const insertedIdentNames = new Set();
 
   function hydrateTree(cssRule: CSSRule): void {
@@ -84,9 +84,11 @@ export function createInstance({
 
     let cssText = '';
     value.forEach((fallbackValue) => {
-      cssText += normalizeDeclaration(property, fallbackValue);
+      cssText += `;${normalizeDeclaration(property, fallbackValue)}`;
     });
-    return cssText;
+
+    // The leading declaration separator character gets removed
+    return cssText.slice(1);
   }
 
   function decomposeToClassNames(
@@ -108,16 +110,17 @@ export function createInstance({
           const className = `_${hash(cssTextHead + declarations)}`;
 
           if (!insertedIdentNames.has(className)) {
-            let cssText =
-              cssTextHead.slice(0, classSelectorStartIndex) +
-              // TODO: Control specificity by repeating the `className`
-              `.${className}`.repeat(2);
-            if (classSelectorStartIndex) {
-              cssText += cssTextHead.slice(classSelectorStartIndex);
-            }
-            cssText += `{${declarations}}${cssTextTail}`;
-
-            injector.insert(cssText, insertedIdentNames.size);
+            injector.insert(
+              `${
+                cssTextHead.slice(0, classSelectorStartIndex) +
+                // TODO: Control specificity by repeating the `className`
+                `.${className}`.repeat(2) +
+                (classSelectorStartIndex
+                  ? `${cssTextHead.slice(classSelectorStartIndex)}{`
+                  : '{')
+              }${declarations}}${cssTextTail}`,
+              insertedIdentNames.size,
+            );
             insertedIdentNames.add(className);
           }
 
