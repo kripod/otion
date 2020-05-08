@@ -150,43 +150,56 @@ export function createInstance({
       return getClassNames(rules, '', '').slice(1);
     },
 
-    keyframes(rules: CSSKeyframeRules): string {
-      let cssText = '';
+    keyframes(rules: CSSKeyframeRules): { toString(): string } {
+      let identName: string | undefined;
 
-      // TODO: Replace var with const once it minifies equivalently
-      // eslint-disable-next-line guard-for-in, no-restricted-syntax, no-var, vars-on-top
-      for (var time in rules) {
-        cssText += `${time}{`;
+      return {
+        toString(): string {
+          if (!identName) {
+            let cssText = '';
 
-        const declarations = rules[time as keyof typeof rules];
+            // TODO: Replace var with const once it minifies equivalently
+            // eslint-disable-next-line guard-for-in, no-restricted-syntax, no-var, vars-on-top
+            for (var time in rules) {
+              cssText += `${time}{`;
 
-        // TODO: Replace var with const once it minifies equivalently
-        // eslint-disable-next-line guard-for-in, no-restricted-syntax, no-var, vars-on-top
-        for (var property in declarations) {
-          const value = declarations[property as keyof typeof declarations];
+              const declarations = rules[time as keyof typeof rules];
 
-          if (value != null) {
-            if (typeof value !== 'object') {
-              cssText += styleDeclarations(property, value);
-            } else {
-              // eslint-disable-next-line no-loop-func
-              value.forEach((fallbackValue) => {
-                cssText += styleDeclarations(property, fallbackValue);
-              });
+              // TODO: Replace var with const once it minifies equivalently
+              // eslint-disable-next-line guard-for-in, no-restricted-syntax, no-var, vars-on-top
+              for (var property in declarations) {
+                const value =
+                  declarations[property as keyof typeof declarations];
+
+                if (value != null) {
+                  if (typeof value !== 'object') {
+                    cssText += styleDeclarations(property, value);
+                  } else {
+                    // eslint-disable-next-line no-loop-func
+                    value.forEach((fallbackValue) => {
+                      cssText += styleDeclarations(property, fallbackValue);
+                    });
+                  }
+                }
+              }
+
+              cssText += '}';
+            }
+
+            identName = `_${hash(cssText)}`;
+            if (!insertedKeyframeNames.has(identName)) {
+              injector.insert(
+                `@keyframes ${identName}{${cssText}}`,
+                ruleCount++,
+              );
+              insertedClassNames.add(identName);
             }
           }
-        }
 
-        cssText += '}';
-      }
-
-      const identName = `_${hash(cssText)}`;
-      if (!insertedKeyframeNames.has(identName)) {
-        injector.insert(`@keyframes ${identName}{${cssText}}`, ruleCount++);
-        insertedClassNames.add(identName);
-      }
-
-      return identName;
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          return identName!;
+        },
+      };
     },
   };
 }
