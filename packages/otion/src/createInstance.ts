@@ -22,12 +22,12 @@ export function createInstance({
       : CSSOMInjector()
     : NoOpInjector(),
   prefix = (property: string, value: string): string => {
-    const declaration = `${property}:${prefixValue(property, value)}`;
+    const declaration = `${property}:${prefixValue(property, value)};`;
     let cssText = declaration;
     const flag = prefixProperty(property);
-    if (flag & 0b001) cssText += `;-ms-${declaration}`;
-    if (flag & 0b010) cssText += `;-moz-${declaration}`;
-    if (flag & 0b100) cssText += `;-webkit-${declaration}`;
+    if (flag & 0b001) cssText += `-ms-${declaration}`;
+    if (flag & 0b010) cssText += `-moz-${declaration}`;
+    if (flag & 0b100) cssText += `-webkit-${declaration}`;
     return cssText;
   },
 } = {}) {
@@ -64,7 +64,10 @@ export function createInstance({
     }
   }
 
-  function styleDeclarations(property: string, value: string | number): string {
+  function normalizeDeclaration(
+    property: string,
+    value: string | number,
+  ): string {
     const kebabCasedProperty = property.replace(/[A-Z]/g, upperToHyphenLower);
     const formattedValue =
       typeof value === 'number' &&
@@ -72,6 +75,21 @@ export function createInstance({
         ? `${value}px` // Append missing unit
         : minifyValue(`${value}`);
     return prefix(kebabCasedProperty, formattedValue);
+  }
+
+  function serializeDeclarationList(
+    property: string,
+    value: string | number | Array<string | number>,
+  ): string {
+    if (typeof value !== 'object') {
+      return normalizeDeclaration(property, value);
+    }
+
+    let cssText = '';
+    value.forEach((fallbackValue) => {
+      cssText += normalizeDeclaration(property, fallbackValue);
+    });
+    return cssText;
   }
 
   function decompose(
@@ -88,18 +106,9 @@ export function createInstance({
       const value = rules[key as keyof typeof rules];
 
       if (value != null) {
-        let declarations: string | undefined;
-        if (typeof value !== 'object') {
-          declarations = styleDeclarations(key, value);
-        } else if (Array.isArray(value)) {
-          // eslint-disable-next-line no-loop-func
-          value.forEach((fallbackValue) => {
-            declarations += `${styleDeclarations(key, fallbackValue)};`;
-          });
-        }
-
-        if (declarations) {
-          const className = `_${hash(`${cssTextHead}${declarations}`)}`;
+        if (typeof value !== 'object' || Array.isArray(value)) {
+          const declarations = serializeDeclarationList(key, value);
+          const className = `_${hash(cssTextHead + declarations)}`;
 
           if (!insertedClassNames.has(className)) {
             let cssText =
@@ -177,17 +186,7 @@ export function createInstance({
                   declarations[property as keyof typeof declarations];
 
                 if (value != null) {
-                  if (typeof value !== 'object') {
-                    cssText += styleDeclarations(property, value);
-                  } else {
-                    // eslint-disable-next-line no-loop-func
-                    value.forEach((fallbackValue) => {
-                      cssText += `${styleDeclarations(
-                        property,
-                        fallbackValue,
-                      )};`;
-                    });
-                  }
+                  cssText += serializeDeclarationList(property, value);
                 }
               }
 
