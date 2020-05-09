@@ -6,6 +6,7 @@ import { isBrowser, isDev } from './env';
 import { CSSOMInjector, DOMInjector, NoOpInjector } from './injectors';
 import { minifyCondition, minifyValue } from './minify';
 import { PROPERTY_ACCEPTS_UNITLESS_VALUES } from './propertyMatchers';
+import { PRECEDENCES_BY_PSEUDO } from './pseudos';
 
 const MAX_CLASS_NAME_LENGTH = 9;
 
@@ -111,13 +112,18 @@ export function createInstance({
 
           if (!insertedIdentNames.has(className)) {
             injector.insert(
-              `${
-                cssTextHead.slice(0, classSelectorStartIndex) +
+              `${cssTextHead.slice(0, classSelectorStartIndex)}.${
                 // TODO: Control specificity by repeating the `className`
-                `.${className}`.repeat(2) +
-                (classSelectorStartIndex
-                  ? `${cssTextHead.slice(classSelectorStartIndex)}{`
-                  : '{')
+                className
+              }${
+                classSelectorStartIndex
+                  ? `${`.${className}`.repeat(
+                      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                      PRECEDENCES_BY_PSEUDO.get(
+                        cssTextHead.slice(cssTextHead.lastIndexOf(':') + 1),
+                      )!,
+                    )}${cssTextHead.slice(classSelectorStartIndex)}{`
+                  : '{'
               }${declarations}}${cssTextTail}`,
               insertedIdentNames.size,
             );
