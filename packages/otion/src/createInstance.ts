@@ -6,7 +6,7 @@ import { isBrowser, isDev } from './env';
 import { CSSOMInjector, DOMInjector, NoOpInjector } from './injectors';
 import { minifyCondition, minifyValue } from './minify';
 import { PROPERTY_ACCEPTS_UNITLESS_VALUES } from './propertyMatchers';
-import { PRECEDENCES_BY_PSEUDO_CLASS } from './pseudos';
+import { PRECEDENCES_BY_PSEUDO } from './pseudos';
 
 const MAX_CLASS_NAME_LENGTH = 9;
 
@@ -118,17 +118,10 @@ export function createInstance({
               }${
                 classSelectorStartIndex
                   ? `${`.${className}`.repeat(
-                      PRECEDENCES_BY_PSEUDO_CLASS.get(
+                      PRECEDENCES_BY_PSEUDO.get(
                         cssTextHead
-                          .slice(
-                            // Target only the first pseudo selector
-                            cssTextHead.indexOf(':', classSelectorStartIndex),
-                            `${cssTextHead}:`.indexOf(
-                              ':',
-                              classSelectorStartIndex + 1,
-                            ),
-                          )
-                          .slice(3, 8), // Uniquely identifies pseudo-class
+                          .slice(cssTextHead.lastIndexOf(':'))
+                          .slice(3, 8), // Uniquely identifies pseudoselector
                       ) || 1,
                     )}${cssTextHead.slice(classSelectorStartIndex)}{`
                   : '{'

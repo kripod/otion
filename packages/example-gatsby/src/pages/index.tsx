@@ -23,9 +23,6 @@ export default function IndexPage(): JSX.Element {
               ':hover': {
                 color: 'palevioletred  ',
                 background: 'papayawhip',
-                ':enabled': {
-                  color: 'blue',
-                },
               },
             },
 
