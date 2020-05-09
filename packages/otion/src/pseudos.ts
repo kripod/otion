@@ -5,7 +5,7 @@
  * - https://developer.mozilla.org/docs/Web/CSS/:active#Active_links
  */
 
-export const PRECEDENCES_BY_PSEUDO = new Map([
+export const PRECEDENCES_BY_PSEUDO_CLASS = new Map([
   [/* li */ 'nk', 2],
   [/* vi */ 'sited', 3],
   [/* em */ 'pty', 4],
