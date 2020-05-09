@@ -32,7 +32,7 @@ export type CSSProperties = CSS.PropertiesFallback<string | number>;
 export type CSSRules = CSSProperties;
 
 export type CSSStyleRules = CSSRules &
-  { [pseudo in CSS.SimplePseudos]?: CSSRules };
+  { [pseudo in CSS.SimplePseudos]?: CSSStyleRules };
 
 export interface CSSGroupingRules {
   '@media'?: {
