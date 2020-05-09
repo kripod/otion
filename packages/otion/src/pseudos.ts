@@ -1,15 +1,18 @@
-// Source: https://tailwindcss.com/docs/configuring-variants/#ordering-variants
+/**
+ * Sources:
+ *
+ * - https://developer.mozilla.org/docs/Web/CSS/:active#Active_links
+ * - https://bitsofco.de/when-do-the-hover-focus-and-active-pseudo-classes-apply/#orderofstyleshoverthenfocusthenactive
+ */
+
 export const PRECEDENCES_BY_PSEUDO = new Map([
-  ['group-hover', 1],
-  ['group-focus', 2],
-  ['focus-within', 3],
-  ['first', 4],
-  ['last', 5],
-  ['odd', 6],
-  ['even', 7],
-  ['hover', 8],
-  ['focus', 9],
-  ['active', 10],
-  ['visited', 11],
-  ['disabled', 12],
+  ['link', 2],
+  ['visited', 3],
+  ['empty', 4],
+  ['focus-within', 5],
+  ['hover', 6],
+  ['focus', 7],
+  ['focus-visible', 8],
+  ['active', 9],
+  ['disabled', 10],
 ]);

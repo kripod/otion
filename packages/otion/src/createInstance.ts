@@ -118,10 +118,9 @@ export function createInstance({
               }${
                 classSelectorStartIndex
                   ? `${`.${className}`.repeat(
-                      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                       PRECEDENCES_BY_PSEUDO.get(
                         cssTextHead.slice(cssTextHead.lastIndexOf(':') + 1),
-                      )!,
+                      ) || 1,
                     )}${cssTextHead.slice(classSelectorStartIndex)}{`
                   : '{'
               }${declarations}}${cssTextTail}`,
