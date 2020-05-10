@@ -1,4 +1,4 @@
-const STYLE_ELEMENT_ID = '__otion';
+export const STYLE_ELEMENT_ID = '__otion';
 
 export function getStyleElement(): HTMLStyleElement {
   // Hydrate existing style element if available

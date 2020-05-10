@@ -1,10 +1,19 @@
+import { getStyleProps, VirtualInjector } from 'otion/server';
 import * as React from 'react';
 
 export * from 'otion/server';
 
-export function getStyleElement(rules: string[]): JSX.Element {
+export function getStyleElement(
+  injector: ReturnType<typeof VirtualInjector>,
+): JSX.Element {
+  const { id, nonce, textContent } = getStyleProps(injector);
+
   return (
-    // eslint-disable-next-line react/no-danger
-    <style id="__otion" dangerouslySetInnerHTML={{ __html: rules.join('') }} />
+    <style
+      id={id}
+      nonce={nonce}
+      // eslint-disable-next-line react/no-danger
+      dangerouslySetInnerHTML={{ __html: textContent }}
+    />
   );
 }

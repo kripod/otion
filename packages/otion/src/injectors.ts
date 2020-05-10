@@ -1,24 +1,31 @@
 import { getStyleElement } from './getStyleElement';
 
-export interface Injector {
-  sheet?: CSSStyleSheet;
-  insert(rule: string, index: number): number;
-  nullify(index: number): void;
-}
-
-export interface VirtualInjectorConfig {
-  target: string[];
-}
-
-export interface BrowserInjectorConfig<T> {
+export interface InjectorConfig<T> {
   nonce?: string;
   target?: T;
 }
 
-export function VirtualInjector({ target }: VirtualInjectorConfig): Injector {
+type InjectorInstance = {
+  sheet?: CSSStyleSheet;
+  insert(rule: string, index: number): number;
+  nullify(index: number): void;
+};
+
+type VirtualInjectorInstance = InjectorInstance & {
+  nonce: string | undefined;
+  ruleTexts: string[];
+};
+
+export function VirtualInjector({
+  nonce,
+  target: ruleTexts = [],
+}: InjectorConfig<string[]> = {}): VirtualInjectorInstance {
   return {
+    nonce,
+    ruleTexts,
+
     insert(rule, index): number {
-      target.splice(index, 0, rule);
+      ruleTexts.splice(index, 0, rule);
       return index;
     },
 
@@ -30,7 +37,7 @@ export function VirtualInjector({ target }: VirtualInjectorConfig): Injector {
 export function CSSOMInjector({
   nonce,
   target = getStyleElement().sheet as CSSStyleSheet,
-}: BrowserInjectorConfig<CSSStyleSheet>): Injector {
+}: InjectorConfig<CSSStyleSheet>): InjectorInstance {
   // eslint-disable-next-line no-param-reassign
   (target.ownerNode as HTMLStyleElement).nonce = nonce;
 
@@ -52,7 +59,7 @@ export function CSSOMInjector({
 export function DOMInjector({
   nonce,
   target = getStyleElement(),
-}: BrowserInjectorConfig<HTMLStyleElement>): Injector {
+}: InjectorConfig<HTMLStyleElement>): InjectorInstance {
   // eslint-disable-next-line no-param-reassign
   target.nonce = nonce;
 
@@ -75,7 +82,7 @@ export function DOMInjector({
   };
 }
 
-export function NoOpInjector(): Injector {
+export function NoOpInjector(): InjectorInstance {
   return {
     insert(): number {
       return 0;
