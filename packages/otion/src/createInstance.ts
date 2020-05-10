@@ -119,9 +119,11 @@ export function createInstance({
                 classSelectorStartIndex
                   ? `${`.${className}`.repeat(
                       PRECEDENCES_BY_PSEUDO_CLASS.get(
-                        cssTextHead
-                          .slice(cssTextHead.lastIndexOf(':'))
-                          .slice(3, 8), // Uniquely identifies pseudoselector
+                        cssTextHead.slice(
+                          // This part uniquely identifies a pseudoselector
+                          classSelectorStartIndex + 3,
+                          classSelectorStartIndex + 8,
+                        ),
                       ) || 1,
                     )}${cssTextHead.slice(classSelectorStartIndex)}{`
                   : '{'
