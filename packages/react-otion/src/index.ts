@@ -7,5 +7,5 @@ export {
   DOMInjector,
   keyframes,
   NoOpInjector,
-  setInjector,
+  setUp,
 } from 'otion';

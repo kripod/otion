@@ -1,4 +1,4 @@
-import { setInjector } from 'react-otion';
+import { setUp } from 'react-otion';
 import { getStyleElements, VirtualInjector } from 'react-otion/server';
 
 /** @type {Map<string, string[]>} */
@@ -8,7 +8,7 @@ const ruleListsByPathname = new Map();
 export const wrapRootElement = ({ element, pathname }) => {
   /** @type string[] */
   const ruleList = [];
-  setInjector(VirtualInjector({ target: ruleList }));
+  setUp({ injector: VirtualInjector({ target: ruleList }) });
   ruleListsByPathname.set(pathname, ruleList);
 
   // TODO: Improve integration with React

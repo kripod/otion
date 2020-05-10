@@ -161,9 +161,14 @@ export function createInstance({
   }
 
   return {
-    setInjector(value: typeof injector): void {
-      // eslint-disable-next-line no-param-reassign
-      injector = value;
+    setUp(options: {
+      injector?: typeof injector;
+      prefix?: typeof prefix;
+    }): void {
+      /* eslint-disable no-param-reassign */
+      injector = options.injector || injector;
+      prefix = options.prefix || prefix;
+      /* eslint-enable no-param-reassign */
     },
 
     css(rules: ScopedCSSRules): string {
