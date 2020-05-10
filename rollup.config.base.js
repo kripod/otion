@@ -40,3 +40,21 @@ export function getMainEntry(pkg) {
     external: [/^@babel\/runtime\//],
   };
 }
+
+export function getServerEntry(pkg, options) {
+  return {
+    ...options,
+    output: [
+      {
+        file: pkg.exports['./server'].import,
+        format: 'esm',
+      },
+      {
+        file: pkg.exports['./server'].require,
+        format: 'cjs',
+        externalLiveBindings: false,
+      },
+    ],
+    plugins: commonPlugins,
+  };
+}

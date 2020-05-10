@@ -5,7 +5,10 @@
   "author": "Kristóf Poduszló <kripod@protonmail.com>",
   "sideEffects": false,
   "exports": {
-    "./server": "./server/index.js"
+    "./server": {
+      "import": "./server/index.mjs",
+      "require": "./server/index.js"
+    }
   },
   "files": [
     "dist-*/",

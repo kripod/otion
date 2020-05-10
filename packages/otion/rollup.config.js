@@ -1,16 +1,7 @@
-import { commonPlugins, getMainEntry } from '../../rollup.config.base';
+import { getMainEntry, getServerEntry } from '../../rollup.config.base';
 import pkg from './package.json';
 
-const mainEntry = getMainEntry(pkg);
-
 export default [
-  mainEntry,
-  {
-    input: './src/server.ts',
-    output: {
-      file: pkg.exports['./server'],
-      format: 'cjs',
-    },
-    plugins: commonPlugins,
-  },
+  getMainEntry(pkg),
+  getServerEntry(pkg, { input: './src/server.ts' }),
 ];

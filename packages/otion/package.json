@@ -9,9 +9,13 @@
       "import": "./dist-esm/bundle.min.mjs",
       "require": "./dist-cjs/bundle.min.cjs"
     },
-    "./server": "./server/index.js"
+    "./server": {
+      "import": "./server/index.mjs",
+      "require": "./server/index.js"
+    }
   },
   "main": "./dist-cjs/bundle.min.cjs",
+  "module": "./dist-esm/bundle.min.mjs",
   "types": "./dist-cjs/bundle.min.cjs.d.ts",
   "files": [
     "dist-*/",
