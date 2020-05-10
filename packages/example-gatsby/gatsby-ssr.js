@@ -1,5 +1,5 @@
 import { setUp } from 'otion';
-import { getStyleElements, VirtualInjector } from 'react-otion/server';
+import { getStyleElement, VirtualInjector } from 'react-otion/server';
 
 /** @type {Map<string, string[]>} */
 const ruleListsByPathname = new Map();
@@ -24,7 +24,7 @@ export const wrapRootElement = ({ element, pathname }) => {
 export const onRenderBody = ({ setHeadComponents, pathname }) => {
   const ruleList = ruleListsByPathname.get(pathname);
   if (ruleList) {
-    setHeadComponents(getStyleElements(ruleList));
+    setHeadComponents(getStyleElement(ruleList));
     ruleListsByPathname.delete(pathname);
   }
 };
