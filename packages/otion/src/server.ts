@@ -22,3 +22,54 @@ export function getStyleTag(
   if (nonce) props += ` nonce="${nonce}"`;
   return `<style ${props}>${textContent}</style>`;
 }
+
+export function filterOutUnusedRules(
+  injector: ReturnType<typeof VirtualInjector>,
+  html: string,
+): ReturnType<typeof VirtualInjector> {
+  const usedIdentNames = new Set<string>();
+
+  const re = /<[^>]+\s+class\s*=\s*("[^"]+"|'[^']+'|[^>\s]+)/gi;
+  let matches: string[] | null;
+
+  // eslint-disable-next-line no-cond-assign
+  while ((matches = re.exec(html)) != null) {
+    let classAttributeValue = matches[1];
+    if (classAttributeValue[0] === '"' || classAttributeValue[0] === "'") {
+      classAttributeValue = classAttributeValue.slice(1, -1);
+    }
+    classAttributeValue
+      .trim()
+      .split(/\s+/)
+      .forEach((className) => usedIdentNames.add(className));
+  }
+
+  const ruleTextsByIdentName = injector.ruleTexts.map((ruleText) => [
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    /_[0-9a-z]+/.exec(ruleText)![0],
+    ruleText,
+  ]);
+
+  return {
+    ...injector,
+
+    ruleTexts: ruleTextsByIdentName
+      .filter(([identName, ruleText]) => {
+        if (usedIdentNames.has(identName)) return true;
+
+        // Only a `@keyframes` name can be referenced by other scoped rules
+        const isReferencedByAnOtherUsedRule =
+          ruleText[0] === '@' &&
+          ruleText[1] === 'k' &&
+          ruleTextsByIdentName.some(
+            ([otherIdentName, otherRuleText]) =>
+              usedIdentNames.has(otherIdentName) &&
+              otherRuleText.includes(identName),
+          );
+        if (isReferencedByAnOtherUsedRule) return true;
+
+        return false;
+      })
+      .map(([, ruleText]) => ruleText),
+  };
+}

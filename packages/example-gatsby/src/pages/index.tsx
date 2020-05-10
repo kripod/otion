@@ -7,6 +7,15 @@ const pulse = keyframes({
 });
 
 export default function IndexPage(): JSX.Element {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const unusedElement = (
+    <div
+      className={css({
+        content: "This text shouldn't appear in the SSR-collected style sheet.",
+      })}
+    />
+  );
+
   return (
     <React.StrictMode>
       <h1>Hello, world!</h1>
