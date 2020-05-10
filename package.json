@@ -72,10 +72,6 @@
     {
       "path": "./packages/otion/dist-*/*.min.*js",
       "maxSize": "3 kB"
-    },
-    {
-      "path": "./packages/react-otion/dist-*/*.min.*js",
-      "maxSize": "1 kB"
     }
   ]
 }

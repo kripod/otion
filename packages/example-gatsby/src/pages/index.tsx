@@ -1,5 +1,5 @@
+import { css, keyframes } from 'otion';
 import * as React from 'react';
-import { css, keyframes } from 'react-otion';
 
 const pulse = keyframes({
   from: { opacity: 0 },

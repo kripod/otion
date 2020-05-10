@@ -5,14 +5,8 @@
   "author": "Kristóf Poduszló <kripod@protonmail.com>",
   "sideEffects": false,
   "exports": {
-    ".": {
-      "import": "./dist-esm/bundle.min.mjs",
-      "require": "./dist-cjs/bundle.min.cjs"
-    },
     "./server": "./server/index.js"
   },
-  "main": "./dist-cjs/bundle.min.cjs",
-  "types": "./dist-cjs/bundle.min.cjs.d.ts",
   "files": [
     "dist-*/",
     "server/",

@@ -1,4 +1,4 @@
-import { setUp } from 'react-otion';
+import { setUp } from 'otion';
 import { getStyleElements, VirtualInjector } from 'react-otion/server';
 
 /** @type {Map<string, string[]>} */
