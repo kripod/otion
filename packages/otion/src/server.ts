@@ -36,11 +36,12 @@ export function filterOutUnusedRules(
   while ((matches = re.exec(html)) != null) {
     let classAttributeValue = matches[1];
     if (classAttributeValue[0] === '"' || classAttributeValue[0] === "'") {
+      // Remove enclosing quotes
       classAttributeValue = classAttributeValue.slice(1, -1);
     }
     classAttributeValue
       .trim()
-      .split(/\s+/)
+      .split(/\s+/) // Ignore excess white space between class names
       .forEach((className) => usedIdentNames.add(className));
   }
 
