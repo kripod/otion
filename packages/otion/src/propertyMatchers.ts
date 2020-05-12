@@ -108,14 +108,14 @@ export const shorthandPropertiesByReversePrecedence = [
   ],
 
   [
-    /* ^[mpb].*(k|ne)$ */
-    'mask',
+    /* ^[mpb].{8,}(k|ne|er)$ */
     'margin-block',
     'margin-inline',
     'padding-block',
     'padding-inline',
     'border-block',
     'border-inline',
+    'mask-border',
   ],
 
   [
@@ -154,10 +154,10 @@ export const shorthandPropertiesByReversePrecedence = [
     'flex',
     'font',
 
-    /* ^m(.{5}|.*r)$ */
+    /* ^m.{3,5}$ */
+    'mask',
     'margin',
     'motion', // Obsolete
-    'mask-border',
 
     /* ^b.*(er|d)$ */
     'border',
