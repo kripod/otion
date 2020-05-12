@@ -1,11 +1,11 @@
-/**
- * The order of rules is influenced by CSS usage metrics:
- *
- * - https://www.cssstats.com/stats/?url=css-tricks.com
- * - https://www.cssstats.com/stats/?url=joshwcomeau.com
- * - https://www.cssstats.com/stats/?url=mastery.games
- * - https://www.chromestatus.com/metrics/css/popularity
- */
+/*
+  The order of rules is influenced by CSS usage metrics:
+
+  - https://www.cssstats.com/stats/?url=css-tricks.com
+  - https://www.cssstats.com/stats/?url=joshwcomeau.com
+  - https://www.cssstats.com/stats/?url=mastery.games
+  - https://www.chromestatus.com/metrics/css/popularity
+*/
 
 // Includes support for CSS custom properties
 export const PROPERTY_ACCEPTS_UNITLESS_VALUES = /^(-|f[lo].*[^se]$|g.{6,}[^ps]$|z|o[pr]|li.*(t|mp)$|an|(bo|s).{5}im|sca|m.{4}[bi]|ta|c.*[st]$|wido|ini)/;
