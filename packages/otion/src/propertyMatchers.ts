@@ -1,9 +1,13 @@
 /**
- * The order of rules is heavily influenced by CSS usage metrics:
- * https://www.chromestatus.com/metrics/css/popularity
+ * The order of rules is influenced by CSS usage metrics:
+ *
+ * - https://www.cssstats.com/stats/?url=css-tricks.com
+ * - https://www.cssstats.com/stats/?url=joshwcomeau.com
+ * - https://www.chromestatus.com/metrics/css/popularity
  */
 
-export const PROPERTY_ACCEPTS_UNITLESS_VALUES = /^(-|f(ont.*[^e]|l.*[^s])$|li.*(t|mp)$|o[pr]|z|grid.*[^ps]$|an|bo.+im|ta|s(h.*d$|ca)|co.+[sc]|wido|ma(sk-b|x-l)|ini)/;
+// Includes support for CSS custom properties
+export const PROPERTY_ACCEPTS_UNITLESS_VALUES = /^(-|f[lo].*[^se]$|g.{6,}[^ps]$|z|o[pr]|li.*(t|mp)$|an|(bo|s).{5}im|sca|m.{4}[bi]|ta|c.*[st]$|wido|ini)/;
 
 // TODO: Add tests to match everything below, without false positives
 export const propertiesAcceptingUnitlessValues = [
@@ -14,19 +18,6 @@ export const propertiesAcceptingUnitlessValues = [
   'font-size-adjust',
   'font-weight',
 
-  /* ^li.*(t|mp)$ */
-  'line-height',
-  'line-clamp',
-
-  /* ^o[pr] */
-  'opacity',
-  'order',
-  'orphans',
-
-  /* ^z */
-  'z-index',
-  'zoom',
-
   /* ^g.{6,}[^ps]$ */
   'grid-area',
   'grid-column',
@@ -35,6 +26,19 @@ export const propertiesAcceptingUnitlessValues = [
   'grid-row',
   'grid-row-end',
   'grid-row-start',
+
+  /* ^z */
+  'z-index',
+  'zoom',
+
+  /* ^o[pr] */
+  'opacity',
+  'order',
+  'orphans',
+
+  /* ^li.*(t|mp)$ */
+  'line-height',
+  'line-clamp',
 
   /* ^an */
   'animation',
@@ -47,18 +51,8 @@ export const propertiesAcceptingUnitlessValues = [
   'border-image-width',
   'shape-image-threshold',
 
-  /* ^ta */
-  'tab-size',
-
   /* ^sca */
   'scale',
-
-  /* ^c.*[st]$ */
-  'columns',
-  'column-count',
-
-  /* ^wido */
-  'widows',
 
   /* ^m.{4}[bi] */
   'mask-border',
@@ -66,6 +60,16 @@ export const propertiesAcceptingUnitlessValues = [
   'mask-border-slice',
   'mask-border-width',
   'max-lines',
+
+  /* ^ta */
+  'tab-size',
+
+  /* ^c.*[st]$ */
+  'columns',
+  'column-count',
+
+  /* ^wido */
+  'widows',
 
   /* ^ini */
   'initial-letter',
