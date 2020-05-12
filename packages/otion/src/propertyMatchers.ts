@@ -7,7 +7,7 @@ export const PROPERTY_ACCEPTS_UNITLESS_VALUES = /^(-|f(ont.*[^e]|l.*[^s])$|li.*(
 
 // TODO: Add tests to match everything below, without false positives
 export const propertiesAcceptingUnitlessValues = [
-  /* ^f(ont.*[^e]|l.*[^s])$ */
+  /* ^f[lo].*[^se]$ */
   'flex',
   'flex-grow',
   'flex-shrink',
@@ -15,8 +15,8 @@ export const propertiesAcceptingUnitlessValues = [
   'font-weight',
 
   /* ^li.*(t|mp)$ */
-  'line-clamp',
   'line-height',
+  'line-clamp',
 
   /* ^o[pr] */
   'opacity',
@@ -27,7 +27,7 @@ export const propertiesAcceptingUnitlessValues = [
   'z-index',
   'zoom',
 
-  /* ^grid.*[^ps]$ */
+  /* ^g.{6,}[^ps]$ */
   'grid-area',
   'grid-column',
   'grid-column-end',
@@ -40,27 +40,27 @@ export const propertiesAcceptingUnitlessValues = [
   'animation',
   'animation-iteration-count',
 
-  /* ^bo.+im */
+  /* ^(bo|s).{5}im */
   'border-image',
   'border-image-outset',
   'border-image-slice',
   'border-image-width',
+  'shape-image-threshold',
 
   /* ^ta */
   'tab-size',
 
-  /* ^s(h.*d$|ca) */
+  /* ^sca */
   'scale',
-  'shape-image-threshold',
 
-  /* ^co.+[sc] */
-  'column-count',
+  /* ^c.*[st]$ */
   'columns',
+  'column-count',
 
   /* ^wido */
   'widows',
 
-  /* ^ma(sk-b|x-l) */
+  /* ^m.{4}[bi] */
   'mask-border',
   'mask-border-outset',
   'mask-border-slice',
