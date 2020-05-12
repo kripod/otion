@@ -74,3 +74,116 @@ export const propertiesAcceptingUnitlessValues = [
   'z-index',
   'zoom',
 ];
+
+// TODO: precedences.length - precedences.indexOf(...) == 4 - [-1..3]
+// TODO: Add tests to match everything below, with no conflicting longhands
+export const shorthandPropertiesByReversePrecedence = [
+  [
+    /* ^(mar|pa|bo).*[ptmd]$ */
+    'margin-top',
+    'margin-left',
+    'margin-bottom',
+    'margin-right',
+    'margin-block-end',
+    'margin-block-start',
+    'margin-inline-end',
+    'margin-inline-start',
+    'padding-top',
+    'padding-left',
+    'padding-bottom',
+    'padding-right',
+    'padding-block-end',
+    'padding-block-start',
+    'padding-inline-end',
+    'padding-inline-start',
+    'border-top',
+    'border-left',
+    'border-bottom',
+    'border-right',
+    'border-block-end',
+    'border-block-start',
+    'border-inline-end',
+    'border-inline-start',
+  ],
+
+  [
+    /* ^[mpb].*(k|ne)$ */
+    'mask',
+    'margin-block',
+    'margin-inline',
+    'padding-block',
+    'padding-inline',
+    'border-block',
+    'border-inline',
+  ],
+
+  [
+    /* ^bo.{10}.?$ */
+    'border-width',
+    'border-color',
+    'border-style',
+    'border-image',
+    'border-radius',
+
+    /* ^gr.*[ae]$ */
+    'grid-area',
+    'grid-template',
+
+    /* ^i.{10}.?$ */
+    'inset-block',
+    'inset-inline',
+  ],
+
+  [
+    /* ^a.{8}$ */
+    'animation',
+
+    /* ^b.*(er|d)$ */
+    'border',
+    'background',
+
+    /* ^c.{6}(.{4})?$ */
+    'column-rule',
+    'columns',
+
+    /* ^f.{3}(-fl..)?$ */
+    'flex-flow',
+    'flex',
+    'font',
+
+    /* ^g..(d(.{4}(umn)?)?)?$ */
+    'grid-column',
+    'grid-gap', // Obsolete
+    'grid-row',
+    'grid',
+    'gap',
+
+    /* ^i.{4}$ */
+    'inset',
+
+    /* ^l.{9}$ */
+    'line-clamp',
+    'list-style',
+
+    /* ^m(.{5}|.*r)$ */
+    'margin',
+    'motion', // Obsolete
+    'mask-border',
+
+    /* ^o.{5,7}$ */
+    'offset',
+    'outline',
+    'overflow',
+
+    /* ^p(l.{2,5})?.{6}$ */
+    'place-self',
+    'place-items',
+    'place-content',
+    'padding',
+
+    /* ^t.{9,14}$ */
+    'transition',
+    'text-emphasis',
+    'text-decoration',
+  ],
+];
