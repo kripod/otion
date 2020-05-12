@@ -3,6 +3,7 @@
  *
  * - https://www.cssstats.com/stats/?url=css-tricks.com
  * - https://www.cssstats.com/stats/?url=joshwcomeau.com
+ * - https://www.cssstats.com/stats/?url=mastery.games
  * - https://www.chromestatus.com/metrics/css/popularity
  */
 
@@ -142,16 +143,16 @@ export const shorthandPropertiesByReversePrecedence = [
     'grid',
     'gap',
 
-    /* ^f.{3}(-fl..)?$ */
-    'flex-flow',
-    'flex',
-    'font',
-
     /* ^p(l.{2,5})?.{6}$ */
     'place-self',
     'place-items',
     'place-content',
     'padding',
+
+    /* ^f.{3}(-fl..)?$ */
+    'flex-flow',
+    'flex',
+    'font',
 
     /* ^m(.{5}|.*r)$ */
     'margin',
@@ -162,22 +163,20 @@ export const shorthandPropertiesByReversePrecedence = [
     'border',
     'background',
 
+    /* ^o.{5,7}$ */
+    'offset',
+    'outline',
+    'overflow',
+
     /* ^t.{9,14}$ */
     'transition',
     'text-emphasis',
     'text-decoration',
 
-    /* ^a.{8}$ */
+    /* ^(a|li).{8}$ */
     'animation',
-
-    /* ^l.{9}$ */
     'line-clamp',
     'list-style',
-
-    /* ^o.{5,7}$ */
-    'offset',
-    'outline',
-    'overflow',
 
     /* ^i.{4}$ */
     'inset',
