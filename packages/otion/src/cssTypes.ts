@@ -1,20 +1,28 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import * as CSS from 'csstype';
 
 export type CSSProperties = CSS.PropertiesFallback<string | number>;
+export type ScopedCSSProperties = Omit<CSSProperties, 'all'>;
 
-export type CSSStyleRules = CSSProperties &
-  { [pseudo in CSS.SimplePseudos]?: CSSProperties };
+export type CSSRules<
+  P extends Record<string, any> = CSSProperties
+> = CSSStyleRules<P> & CSSGroupingRules<P>;
+export type ScopedCSSRules = CSSRules<ScopedCSSProperties>;
 
-export interface CSSGroupingRules {
+export type CSSStyleRules<P extends Record<string, any> = CSSProperties> = P &
+  { [pseudo in CSS.SimplePseudos]?: P };
+
+export interface CSSGroupingRules<
+  P extends Record<string, any> = CSSProperties
+> {
   '@media'?: {
-    [conditionText: string]: CSSStyleRules & CSSGroupingRules;
+    [conditionText: string]: CSSRules<P>;
   };
   '@supports'?: {
-    [conditionText: string]: CSSStyleRules & CSSGroupingRules;
+    [conditionText: string]: CSSRules<P>;
   };
 }
-
-export type ScopedCSSRules = CSSStyleRules & CSSGroupingRules;
 
 export type CSSKeyframeRules =
   | { [time in 'from' | 'to']?: CSSProperties }
