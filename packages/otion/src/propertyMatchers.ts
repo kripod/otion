@@ -3,16 +3,14 @@
  * https://www.chromestatus.com/metrics/css/popularity
  */
 
-export const PROPERTY_ACCEPTS_UNITLESS_VALUES = /^(-|f(ont.*[^e]|[li].*[^s])$|li.*(t|mp)$|o[pr]|z|g(rid.*[^ps]$|l)|an|bo.+im|ta|s((h.*d$|ca)|t(o|.*(y|it)$))|co.+[sc]|wido|ma(sk-b|x-l)|ini)/;
+export const PROPERTY_ACCEPTS_UNITLESS_VALUES = /^(-|f(ont.*[^e]|l.*[^s])$|li.*(t|mp)$|o[pr]|z|grid.*[^ps]$|an|bo.+im|ta|s(h.*d$|ca)|co.+[sc]|wido|ma(sk-b|x-l)|ini)/;
 
 // TODO: Add tests to match everything below, without false positives
 export const propertiesAcceptingUnitlessValues = [
-  /* ^f(ont.*[^e]|[li].*[^s])$ */
-  'fill-opacity', // SVG
+  /* ^f(ont.*[^e]|l.*[^s])$ */
   'flex',
   'flex-grow',
   'flex-shrink',
-  'flood-opacity', // SVG
   'font-size-adjust',
   'font-weight',
 
@@ -29,8 +27,7 @@ export const propertiesAcceptingUnitlessValues = [
   'z-index',
   'zoom',
 
-  /* ^g(rid.*[^ps]$|l) */
-  'glyph-orientation-vertical', // SVG
+  /* ^grid.*[^ps]$ */
   'grid-area',
   'grid-column',
   'grid-column-end',
@@ -52,13 +49,9 @@ export const propertiesAcceptingUnitlessValues = [
   /* ^ta */
   'tab-size',
 
-  /* ^s((h.*d$|ca)|t(o|.*(y|it)$)) */
+  /* ^s(h.*d$|ca) */
   'scale',
   'shape-image-threshold',
-  'stop-opacity', // SVG
-  'stroke-dasharray', // SVG
-  'stroke-miterlimit', // SVG
-  'stroke-opacity', // SVG
 
   /* ^co.+[sc] */
   'column-count',
