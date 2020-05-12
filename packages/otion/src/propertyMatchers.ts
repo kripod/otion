@@ -1,23 +1,12 @@
-// The order of rules is heavily influenced by CSS usage metrics:
-// https://www.chromestatus.com/metrics/css/popularity
+/**
+ * The order of rules is heavily influenced by CSS usage metrics:
+ * https://www.chromestatus.com/metrics/css/popularity
+ */
+
 export const PROPERTY_ACCEPTS_UNITLESS_VALUES = /^(-|f(ont.*[^e]|[li].*[^s])$|li.*(t|mp)$|o[pr]|z|g(rid.*[^ps]$|l)|an|bo.+im|ta|s((h.*d$|ca)|t(o|.*(y|it)$))|co.+[sc]|wido|ma(sk-b|x-l)|ini)/;
 
 // TODO: Add tests to match everything below, without false positives
 export const propertiesAcceptingUnitlessValues = [
-  /* ^an */
-  'animation',
-  'animation-iteration-count',
-
-  /* ^bo.+im */
-  'border-image',
-  'border-image-outset',
-  'border-image-slice',
-  'border-image-width',
-
-  /* ^co.+[sc] */
-  'column-count',
-  'columns',
-
   /* ^f(ont.*[^e]|[li].*[^s])$ */
   'fill-opacity', // SVG
   'flex',
@@ -26,6 +15,19 @@ export const propertiesAcceptingUnitlessValues = [
   'flood-opacity', // SVG
   'font-size-adjust',
   'font-weight',
+
+  /* ^li.*(t|mp)$ */
+  'line-clamp',
+  'line-height',
+
+  /* ^o[pr] */
+  'opacity',
+  'order',
+  'orphans',
+
+  /* ^z */
+  'z-index',
+  'zoom',
 
   /* ^g(rid.*[^ps]$|l) */
   'glyph-orientation-vertical', // SVG
@@ -37,24 +39,18 @@ export const propertiesAcceptingUnitlessValues = [
   'grid-row-end',
   'grid-row-start',
 
-  /* ^ini */
-  'initial-letter',
+  /* ^an */
+  'animation',
+  'animation-iteration-count',
 
-  /* ^li.*(t|mp)$ */
-  'line-clamp',
-  'line-height',
+  /* ^bo.+im */
+  'border-image',
+  'border-image-outset',
+  'border-image-slice',
+  'border-image-width',
 
-  /* ^ma(sk-b|x-l) */
-  'mask-border',
-  'mask-border-outset',
-  'mask-border-slice',
-  'mask-border-width',
-  'max-lines',
-
-  /* ^o[pr] */
-  'opacity',
-  'order',
-  'orphans',
+  /* ^ta */
+  'tab-size',
 
   /* ^s((h.*d$|ca)|t(o|.*(y|it)$)) */
   'scale',
@@ -64,15 +60,22 @@ export const propertiesAcceptingUnitlessValues = [
   'stroke-miterlimit', // SVG
   'stroke-opacity', // SVG
 
-  /* ^ta */
-  'tab-size',
+  /* ^co.+[sc] */
+  'column-count',
+  'columns',
 
   /* ^wido */
   'widows',
 
-  /* ^z */
-  'z-index',
-  'zoom',
+  /* ^ma(sk-b|x-l) */
+  'mask-border',
+  'mask-border-outset',
+  'mask-border-slice',
+  'mask-border-width',
+  'max-lines',
+
+  /* ^ini */
+  'initial-letter',
 ];
 
 // TODO: precedences.length - precedences.indexOf(...) == 4 - [-1..3]
@@ -135,22 +138,6 @@ export const shorthandPropertiesByReversePrecedence = [
   ],
 
   [
-    /* ^a.{8}$ */
-    'animation',
-
-    /* ^b.*(er|d)$ */
-    'border',
-    'background',
-
-    /* ^c.{6}(.{4})?$ */
-    'column-rule',
-    'columns',
-
-    /* ^f.{3}(-fl..)?$ */
-    'flex-flow',
-    'flex',
-    'font',
-
     /* ^g..(d(.{4}(umn)?)?)?$ */
     'grid-column',
     'grid-gap', // Obsolete
@@ -158,22 +145,10 @@ export const shorthandPropertiesByReversePrecedence = [
     'grid',
     'gap',
 
-    /* ^i.{4}$ */
-    'inset',
-
-    /* ^l.{9}$ */
-    'line-clamp',
-    'list-style',
-
-    /* ^m(.{5}|.*r)$ */
-    'margin',
-    'motion', // Obsolete
-    'mask-border',
-
-    /* ^o.{5,7}$ */
-    'offset',
-    'outline',
-    'overflow',
+    /* ^f.{3}(-fl..)?$ */
+    'flex-flow',
+    'flex',
+    'font',
 
     /* ^p(l.{2,5})?.{6}$ */
     'place-self',
@@ -181,9 +156,37 @@ export const shorthandPropertiesByReversePrecedence = [
     'place-content',
     'padding',
 
+    /* ^m(.{5}|.*r)$ */
+    'margin',
+    'motion', // Obsolete
+    'mask-border',
+
+    /* ^b.*(er|d)$ */
+    'border',
+    'background',
+
     /* ^t.{9,14}$ */
     'transition',
     'text-emphasis',
     'text-decoration',
+
+    /* ^a.{8}$ */
+    'animation',
+
+    /* ^l.{9}$ */
+    'line-clamp',
+    'list-style',
+
+    /* ^o.{5,7}$ */
+    'offset',
+    'outline',
+    'overflow',
+
+    /* ^i.{4}$ */
+    'inset',
+
+    /* ^c.{6}(.{4})?$ */
+    'column-rule',
+    'columns',
   ],
 ];
