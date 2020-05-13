@@ -5,7 +5,10 @@ import { CSSKeyframeRules, ScopedCSSRules } from './cssTypes';
 import { isBrowser, isDev } from './env';
 import { CSSOMInjector, DOMInjector, NoOpInjector } from './injectors';
 import { minifyCondition, minifyValue } from './minify';
-import { PROPERTY_ACCEPTS_UNITLESS_VALUES } from './propertyMatchers';
+import {
+  PROPERTY_ACCEPTS_UNITLESS_VALUES,
+  PROPERTY_PRECEDENCE_GROUPS,
+} from './propertyMatchers';
 import { PRECEDENCES_BY_PSEUDO_CLASS } from './pseudos';
 
 const MAX_CLASS_NAME_LENGTH = 9;
@@ -109,14 +112,26 @@ export function createInstance({
           const declarations = serializeDeclarationList(key, value);
           const className = `_${hash(cssTextHead + declarations)}`;
 
+          const precedenceMatches = PROPERTY_PRECEDENCE_GROUPS.exec(key);
+          const scopeSelector = `.${className}`.repeat(
+            precedenceMatches
+              ? 1 * ((!!precedenceMatches[4] as unknown) as number) ||
+                  2 * ((!!precedenceMatches[3] as unknown) as number) ||
+                  3 * ((!!precedenceMatches[2] as unknown) as number) ||
+                  4 * ((!!precedenceMatches[1] as unknown) as number)
+              : 5,
+          );
+
+          // Class specificities are controlled with repetition, see:
+          // https://csswizardry.com/2014/07/hacks-for-dealing-with-specificity/
+
           if (!insertedIdentNames.has(className)) {
             injector.insert(
-              `${cssTextHead.slice(0, classSelectorStartIndex)}.${
-                // TODO: Control specificity by repeating the `className`
-                className
-              }${
-                classSelectorStartIndex
-                  ? `${`.${className}`.repeat(
+              `${
+                cssTextHead.slice(0, classSelectorStartIndex) +
+                scopeSelector +
+                (classSelectorStartIndex
+                  ? `${scopeSelector.repeat(
                       PRECEDENCES_BY_PSEUDO_CLASS.get(
                         cssTextHead.slice(
                           // This part uniquely identifies a pseudoselector
@@ -125,7 +140,7 @@ export function createInstance({
                         ),
                       ) || 1,
                     )}${cssTextHead.slice(classSelectorStartIndex)}{`
-                  : '{'
+                  : '{')
               }${declarations}}${cssTextTail}`,
               insertedIdentNames.size,
             );

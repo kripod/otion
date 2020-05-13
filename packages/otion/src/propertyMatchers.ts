@@ -76,6 +76,8 @@ export const propertiesAcceptingUnitlessValues = [
   'initial-letter',
 ];
 
+export const PROPERTY_PRECEDENCE_GROUPS = /^(?:(?:[mp]a|bo).{7,}([ptmd]|(k|ne|er))|(bo.{10}.?|gr.*[ae]|i.{10}.?)|(g..(d(.{4}(umn)?)?)?|p(l.{2,5})?.{6}|f.{3}(-fl..)?|m.{3,5}|b.*(er|d)|o.{5,7}|t.{9,14}|(a|li).{8}|i.{4}|c.{6}(.{4})?))$/;
+
 // TODO: precedences.length - precedences.indexOf(...) == 4 - [-1..3]
 // TODO: Add tests to match everything below, with no conflicting longhands
 export const shorthandPropertiesByReversePrecedence = [

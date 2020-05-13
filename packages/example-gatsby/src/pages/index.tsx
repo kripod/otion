@@ -11,7 +11,7 @@ export default function IndexPage(): JSX.Element {
   const unusedElement = (
     <div
       className={css({
-        content: "This text shouldn't appear in the SSR-collected style sheet.",
+        content: `"This text shouldn't appear in the SSR-collected style sheet."`,
       })}
     />
   );
@@ -26,6 +26,9 @@ export default function IndexPage(): JSX.Element {
           fontSize: 30,
           textEmphasis: 'filled   red',
           animation: `${pulse} 3s infinite alternate`,
+          paddingLeft: 16,
+          paddingRight: 24,
+          padding: 8,
 
           '@media': {
             ' (min-width:  \n600px)   ': {
