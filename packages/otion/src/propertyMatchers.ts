@@ -4,6 +4,7 @@
   - https://www.cssstats.com/stats/?url=css-tricks.com
   - https://www.cssstats.com/stats/?url=joshwcomeau.com
   - https://www.cssstats.com/stats/?url=mastery.games
+  - https://www.cssstats.com/stats/?url=nytimes.com
   - https://www.chromestatus.com/metrics/css/popularity
 */
 
@@ -76,115 +77,35 @@ export const propertiesAcceptingUnitlessValues = [
   'initial-letter',
 ];
 
-export const PROPERTY_PRECEDENCE_GROUPS = /^(?:(?:[mp]a|bo).{7,}([ptmd]|(k|ne|er))|(bo.{10}.?|gr.*[ae]|i.{10}.?)|(g..(d(.{4}(umn)?)?)?|p(l.{2,5})?.{6}|f.{3}(-fl..)?|m.{3,5}|b.*(er|d)|o.{5,7}|t.{9,14}|(a|li).{8}|i.{4}|c.{6}(.{4})?))$/;
+export const PROPERTY_PRECEDENCE_FIX_GROUPS = /^(?:(border-(?!w|c|sty)|[tlbr].{2,4}m?$|c.{7}$)|([fl].{5}l|g.{8}$|pl))/;
 
-// TODO: precedences.length - precedences.indexOf(...) == 4 - [-1..3]
 // TODO: Add tests to match everything below, with no conflicting longhands
-export const shorthandPropertiesByReversePrecedence = [
-  [
-    /* ^(mar|pa|bo).*[ptmd]$ */
-    'margin-top',
-    'margin-left',
-    'margin-bottom',
-    'margin-right',
-    'margin-block-end',
-    'margin-block-start',
-    'margin-inline-end',
-    'margin-inline-start',
-    'padding-top',
-    'padding-left',
-    'padding-bottom',
-    'padding-right',
-    'padding-block-end',
-    'padding-block-start',
-    'padding-inline-end',
-    'padding-inline-start',
-    'border-top',
-    'border-left',
-    'border-bottom',
-    'border-right',
-    'border-block-end',
-    'border-block-start',
-    'border-inline-end',
-    'border-inline-start',
+export const propertiesByPrecedenceFixGroup = {
+  [+1]: [
+    /* ^border-(?!w|c|sty) */
+    'border-!(width,color,style)',
+
+    /* ^[tlbr].{2,4}m?$ */
+    'top',
+    'left',
+    'bottom',
+    'right',
+
+    /* ^c.{7}$ */
+    'continue',
   ],
 
-  [
-    /* ^[mpb].{8,}(k|ne|er)$ */
-    'margin-block',
-    'margin-inline',
-    'padding-block',
-    'padding-inline',
-    'border-block',
-    'border-inline',
-    'mask-border',
-  ],
-
-  [
-    /* ^bo.{10}.?$ */
-    'border-width',
-    'border-color',
-    'border-style',
-    'border-image',
-    'border-radius',
-
-    /* ^gr.*[ae]$ */
-    'grid-area',
-    'grid-template',
-
-    /* ^i.{10}.?$ */
-    'inset-block',
-    'inset-inline',
-  ],
-
-  [
-    /* ^g..(d(.{4}(umn)?)?)?$ */
-    'grid-column',
-    'grid-gap', // Obsolete
-    'grid-row',
-    'grid',
-    'gap',
-
-    /* ^p(l.{2,5})?.{6}$ */
-    'place-self',
-    'place-items',
-    'place-content',
-    'padding',
-
-    /* ^f.{3}(-fl..)?$ */
+  [-1]: [
+    /* ^[fl].{5}l */
     'flex-flow',
-    'flex',
-    'font',
-
-    /* ^m.{3,5}$ */
-    'mask',
-    'margin',
-    'motion', // Obsolete
-
-    /* ^b.*(er|d)$ */
-    'border',
-    'background',
-
-    /* ^o.{5,7}$ */
-    'offset',
-    'outline',
-    'overflow',
-
-    /* ^t.{9,14}$ */
-    'transition',
-    'text-emphasis',
-    'text-decoration',
-
-    /* ^(a|li).{8}$ */
-    'animation',
     'line-clamp',
-    'list-style',
 
-    /* ^i.{4}$ */
-    'inset',
+    /* ^g.{8}$ */
+    'grid-area',
 
-    /* ^c.{6}(.{4})?$ */
-    'column-rule',
-    'columns',
+    /* ^pl */
+    'place-content',
+    'place-items',
+    'place-self',
   ],
-];
+};

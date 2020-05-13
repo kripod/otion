@@ -7,7 +7,7 @@ import { CSSOMInjector, DOMInjector, NoOpInjector } from './injectors';
 import { minifyCondition, minifyValue } from './minify';
 import {
   PROPERTY_ACCEPTS_UNITLESS_VALUES,
-  PROPERTY_PRECEDENCE_GROUPS,
+  PROPERTY_PRECEDENCE_FIX_GROUPS,
 } from './propertyMatchers';
 import { PRECEDENCES_BY_PSEUDO_CLASS } from './pseudos';
 
@@ -68,13 +68,12 @@ export function createInstance({
     property: string,
     value: string | number,
   ): string {
-    const kebabCasedProperty = property.replace(/[A-Z]/g, upperToHyphenLower);
     const formattedValue =
       typeof value === 'number' &&
       !PROPERTY_ACCEPTS_UNITLESS_VALUES.test(property)
         ? `${value}px` // Append missing unit
         : minifyValue(`${value}`);
-    return prefix(kebabCasedProperty, formattedValue);
+    return prefix(property, formattedValue);
   }
 
   function serializeDeclarationList(
@@ -109,17 +108,22 @@ export function createInstance({
 
       if (value != null) {
         if (typeof value !== 'object' || Array.isArray(value)) {
-          const declarations = serializeDeclarationList(key, value);
+          const property = key.replace(/[A-Z]/g, upperToHyphenLower);
+          const declarations = serializeDeclarationList(property, value);
           const className = `_${hash(cssTextHead + declarations)}`;
 
-          const precedenceMatches = PROPERTY_PRECEDENCE_GROUPS.exec(key);
+          // The property's baseline precedence is based on dash (`-`) counting
+          let precedence = 1;
+          let position = 3;
+          // eslint-disable-next-line no-cond-assign
+          while ((position = property.indexOf('-', position) + 1) > 0) {
+            ++precedence;
+          }
+
+          // Handle properties which don't conform to the rule above
+          const matches = PROPERTY_PRECEDENCE_FIX_GROUPS.exec(property);
           const scopeSelector = `.${className}`.repeat(
-            precedenceMatches
-              ? 1 * ((!!precedenceMatches[4] as unknown) as number) ||
-                  2 * ((!!precedenceMatches[3] as unknown) as number) ||
-                  3 * ((!!precedenceMatches[2] as unknown) as number) ||
-                  4 * ((!!precedenceMatches[1] as unknown) as number)
-              : 5,
+            precedence + (matches ? +!!matches[1] || -!!matches[2] : 0),
           );
 
           // Class specificities are controlled with repetition, see:
