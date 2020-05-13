@@ -81,7 +81,7 @@ export const PROPERTY_PRECEDENCE_FIX_GROUPS = /^(?:(border-(?!w|c|sty)|[tlbr].{2
 
 // TODO: Add tests to match everything below, with no conflicting longhands
 export const propertiesByPrecedenceFixGroup = {
-  [+1]: [
+  '+1': [
     /* ^border-(?!w|c|sty) */
     'border-!(width,color,style)',
 
@@ -95,7 +95,7 @@ export const propertiesByPrecedenceFixGroup = {
     'continue',
   ],
 
-  [-1]: [
+  '-1': [
     /* ^[fl].{5}l */
     'flex-flow',
     'line-clamp',
