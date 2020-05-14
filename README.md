@@ -20,6 +20,44 @@ Atomicity generalizes the former concept by instantiating styling rules on deman
 - 🐾 Negligible runtime footprint
 - 💫 Works without a framework
 
+## Example
+
+The following demo covers a wide range of use-cases. The `css` function returns a space-separated list of stably auto-generated class names. Each property–value pair is only injected once to the library-managed style sheet.
+
+```jsx
+import { css, keyframes } from 'otion';
+
+// Animation keyframes are lazily initialized
+const pulse = keyframes({
+  from: { opacity: 0.2 },
+  to: { opacity: 0.8 },
+});
+
+// Use of JSX is optional, as the solution is framework-agnostic
+function Component() {
+  return (
+    <>
+      <p className={css({ color: 'blue' })}>I'm blue</p>
+      <p
+        className={css({
+          color: 'blue',
+          ':hover': {
+            // Style attachment happens upon usage
+            animation: `${pulse} 1s infinite`,
+          },
+        })}
+      >
+        I'm also blue, reusing the CSS class injected by my sibling
+      </p>
+    </>
+  );
+}
+```
+
+## Integrations
+
+TODO
+
 ## Acknowledgements
 
 The project's name is an ode to [Emotion](https://emotion.sh/), an extensive CSS-in-JS runtime. Similar libraries had great impact on the initial development process, including but not limited to:
