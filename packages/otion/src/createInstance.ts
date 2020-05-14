@@ -138,7 +138,7 @@ export function createInstance({
                   ? `${scopeSelector.repeat(
                       PRECEDENCES_BY_PSEUDO_CLASS.get(
                         cssTextHead.slice(
-                          // This part uniquely identifies a pseudoselector
+                          // This part uniquely identifies a pseudo selector
                           classSelectorStartIndex + 3,
                           classSelectorStartIndex + 8,
                         ),

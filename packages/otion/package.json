@@ -1,6 +1,7 @@
 {
   "name": "otion",
   "version": "0.0.0",
+  "description": "Atomic CSS-in-JS with a featherweight runtime",
   "license": "MIT",
   "author": "Kristóf Poduszló <kripod@protonmail.com>",
   "sideEffects": false,
