@@ -22,7 +22,9 @@ Atomicity generalizes the former concept by instantiating styling rules on deman
 
 ## Example
 
-The following demo covers a wide range of use-cases. The `css` function returns a space-separated list of stably auto-generated class names. Each property–value pair is only injected once to the library-managed style sheet.
+The following demo covers a wide range of use-cases.
+
+As a core function, `css(rules)` returns a space-separated list of stably generated class names. Each property–value pair is only injected once to the library-managed style sheet.
 
 ```jsx
 import { css, keyframes } from 'otion';
