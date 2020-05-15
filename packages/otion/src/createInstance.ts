@@ -46,6 +46,12 @@ export function createInstance() {
     property: string,
     value: string | number,
   ): string {
+    if (isDev && !prefix) {
+      throw new Error(
+        'On a custom otion instance, `setUp()` must be called before usage.',
+      );
+    }
+
     const formattedValue =
       typeof value === 'number' &&
       !PROPERTY_ACCEPTS_UNITLESS_VALUES.test(property)
