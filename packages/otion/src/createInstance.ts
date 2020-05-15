@@ -29,7 +29,7 @@ export function createInstance() {
 
   const insertedIdentNames = new Set<string>();
 
-  function hydrateTree(cssRule: CSSRule): void {
+  function hydrateScopedSubtree(cssRule: CSSRule): void {
     if (cssRule.type === 1 /* CSSRule.STYLE_RULE */) {
       const { selectorText } = cssRule as CSSStyleRule;
       const index = selectorText.indexOf('.', 2);
@@ -38,7 +38,7 @@ export function createInstance() {
         selectorText.slice(1, index < 0 ? MAX_CLASS_NAME_LENGTH : index),
       );
     } else {
-      hydrateTree((cssRule as CSSGroupingRule).cssRules[0]);
+      hydrateScopedSubtree((cssRule as CSSGroupingRule).cssRules[0]);
     }
   }
 
@@ -191,18 +191,18 @@ export function createInstance() {
           if (flag & 0b100) cssText += `;-webkit-${declaration}`;
           return cssText;
         });
+    },
 
-      // Rehydrate sheet if available
-      if (injector.sheet) {
-        const { cssRules } = injector.sheet;
-        for (let i = 0, { length } = cssRules; i < length; ++i) {
-          const cssRule = cssRules[i];
-          if (cssRule.type === 7 /* CSSRule.KEYFRAMES_RULE */) {
-            // Keyframes needn't be checked recursively, as they are never nested
-            insertedIdentNames.add((cssRule as CSSKeyframesRule).name);
-          } else {
-            hydrateTree(cssRule);
-          }
+    hydrate(): void {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const { cssRules } = injector.sheet!;
+      for (let i = 0, { length } = cssRules; i < length; ++i) {
+        const cssRule = cssRules[i];
+        if (cssRule.type === 7 /* CSSRule.KEYFRAMES_RULE */) {
+          // Keyframes needn't be checked recursively, as they are never nested
+          insertedIdentNames.add((cssRule as CSSKeyframesRule).name);
+        } else {
+          hydrateScopedSubtree(cssRule);
         }
       }
     },
