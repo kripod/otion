@@ -20,23 +20,23 @@ Integrates otion, the atomic CSS-in-JS library, with Gatsby sites.
 
 ## Options
 
-Additional configuration can be specified using [Gatsby plugin options](https://www.gatsbyjs.org/docs/configuring-usage-with-plugin-options/):
+Additional configuration can be specified through [shadowing](https://www.gatsbyjs.org/blog/2019-04-29-component-shadowing/):
 
 ```js
-const { prefix: stylisPrefix } = require('stylis' /* v4 */);
+/* src/gatsby-plugin-otion/options.js */
 
-module.exports = {
-  plugins: [
-    {
-      resolve: 'gatsby-plugin-otion',
-      options: {
-        // Use a custom auto-prefixer, growing bundle sizes as a side-effect
-        prefix: (property, value) => {
-          const declaration = `${property}:${value};`;
-          return stylisPrefix(declaration, property.length);
-        },
-      },
-    },
-  ],
+import { prefix as stylisPrefix } from 'stylis'; // v4
+
+export default {
+  // Use a custom auto-prefixer, despite being larger than the default
+  prefix: (property, value) => {
+    const declaration = `${property}:${value};`;
+    return (
+      // The trailing `;` is removed for cleaner results
+      stylisPrefix(declaration, property.length).slice(0, -1)
+    );
+  },
 };
 ```
+
+_Unfortunately, [Gatsby plugin options](https://www.gatsbyjs.org/docs/configuring-usage-with-plugin-options/) cannot be used at this time, as function parameters are [not supported](https://github.com/gatsbyjs/gatsby/issues/14199)._

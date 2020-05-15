@@ -1,6 +1,9 @@
-import { setUp } from 'otion';
+import { hydrate, setUp } from 'otion';
+
+import options from './src/options';
 
 /** @type {import('gatsby').GatsbyBrowser["onClientEntry"]} */
-export const onClientEntry = (_, { plugins, ...pluginOptions }) => {
-  setUp(pluginOptions);
+export const onClientEntry = () => {
+  setUp(options);
+  hydrate();
 };

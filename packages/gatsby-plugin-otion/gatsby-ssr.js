@@ -5,16 +5,15 @@ import {
   VirtualInjector,
 } from 'react-otion/server';
 
+import options from './src/options';
+
 /** @type {Map<string, ReturnType<typeof VirtualInjector>>} */
 const injectorsByPathname = new Map();
 
 /** @type {import('gatsby').GatsbyBrowser["wrapRootElement"]} */
-export const wrapRootElement = (
-  { pathname, element },
-  { plugins, ...pluginOptions },
-) => {
+export const wrapRootElement = ({ pathname, element }) => {
   const injector = VirtualInjector();
-  setUp({ ...pluginOptions, injector });
+  setUp({ ...options, injector });
   injectorsByPathname.set(pathname, injector);
 
   return element;
