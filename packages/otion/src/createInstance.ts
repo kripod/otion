@@ -197,7 +197,7 @@ export function createInstance() {
         const { cssRules } = injector.sheet;
         for (let i = 0, { length } = cssRules; i < length; ++i) {
           const cssRule = cssRules[i];
-          if (cssRule.type !== 7 /* CSSRule.KEYFRAMES_RULE */) {
+          if (cssRule.type === 7 /* CSSRule.KEYFRAMES_RULE */) {
             // Keyframes needn't be checked recursively, as they are never nested
             insertedIdentNames.add((cssRule as CSSKeyframesRule).name);
           } else {
