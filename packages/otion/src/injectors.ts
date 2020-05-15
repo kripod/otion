@@ -5,7 +5,7 @@ export interface InjectorConfig<T> {
   target?: T;
 }
 
-type InjectorInstance = {
+export type InjectorInstance = {
   sheet?: CSSStyleSheet;
   insert(rule: string, index: number): number;
 };

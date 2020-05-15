@@ -3,7 +3,12 @@ import { prefixProperty, prefixValue } from 'tiny-css-prefixer';
 
 import { CSSKeyframeRules, ScopedCSSRules } from './cssTypes';
 import { isBrowser, isDev } from './env';
-import { CSSOMInjector, DOMInjector, NoOpInjector } from './injectors';
+import {
+  CSSOMInjector,
+  DOMInjector,
+  InjectorInstance,
+  NoOpInjector,
+} from './injectors';
 import { minifyCondition, minifyValue } from './minify';
 import {
   PROPERTY_ACCEPTS_UNITLESS_VALUES,
@@ -18,24 +23,11 @@ function upperToHyphenLower(match: string): string {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function createInstance({
-  // eslint-disable-next-line no-nested-ternary
-  injector = isBrowser
-    ? isDev
-      ? DOMInjector({})
-      : CSSOMInjector({})
-    : NoOpInjector(),
-  prefix = (property: string, value: string): string => {
-    const declaration = `${property}:${prefixValue(property, value)}`;
-    let cssText = declaration;
-    const flag = prefixProperty(property);
-    if (flag & 0b001) cssText += `;-ms-${declaration}`;
-    if (flag & 0b010) cssText += `;-moz-${declaration}`;
-    if (flag & 0b100) cssText += `;-webkit-${declaration}`;
-    return cssText;
-  },
-}) {
-  const insertedIdentNames = new Set();
+export function createInstance() {
+  let injector: InjectorInstance;
+  let prefix: (property: string, value: string) => string;
+
+  const insertedIdentNames = new Set<string>();
 
   function hydrateTree(cssRule: CSSRule): void {
     if (cssRule.type === 1 /* CSSRule.STYLE_RULE */) {
@@ -47,20 +39,6 @@ export function createInstance({
       );
     } else {
       hydrateTree((cssRule as CSSGroupingRule).cssRules[0]);
-    }
-  }
-
-  // Rehydrate sheet if available
-  if (injector.sheet) {
-    const { cssRules } = injector.sheet;
-    for (let i = 0, { length } = cssRules; i < length; ++i) {
-      const cssRule = cssRules[i];
-      if (cssRule.type !== 7 /* CSSRule.KEYFRAMES_RULE */) {
-        // Keyframes needn't be checked recursively, as they are never nested
-        insertedIdentNames.add((cssRule as CSSKeyframesRule).name);
-      } else {
-        hydrateTree(cssRule);
-      }
     }
   }
 
@@ -187,10 +165,40 @@ export function createInstance({
       injector?: typeof injector;
       prefix?: typeof prefix;
     }): void {
-      /* eslint-disable no-param-reassign */
-      injector = options.injector || injector;
-      prefix = options.prefix || prefix;
-      /* eslint-enable no-param-reassign */
+      injector =
+        options.injector ||
+        // eslint-disable-next-line no-nested-ternary
+        (isBrowser
+          ? isDev
+            ? DOMInjector({})
+            : CSSOMInjector({})
+          : NoOpInjector());
+
+      prefix =
+        options.prefix ||
+        ((property: string, value: string): string => {
+          const declaration = `${property}:${prefixValue(property, value)}`;
+          let cssText = declaration;
+          const flag = prefixProperty(property);
+          if (flag & 0b001) cssText += `;-ms-${declaration}`;
+          if (flag & 0b010) cssText += `;-moz-${declaration}`;
+          if (flag & 0b100) cssText += `;-webkit-${declaration}`;
+          return cssText;
+        });
+
+      // Rehydrate sheet if available
+      if (injector.sheet) {
+        const { cssRules } = injector.sheet;
+        for (let i = 0, { length } = cssRules; i < length; ++i) {
+          const cssRule = cssRules[i];
+          if (cssRule.type !== 7 /* CSSRule.KEYFRAMES_RULE */) {
+            // Keyframes needn't be checked recursively, as they are never nested
+            insertedIdentNames.add((cssRule as CSSKeyframesRule).name);
+          } else {
+            hydrateTree(cssRule);
+          }
+        }
+      }
     },
 
     css(rules: ScopedCSSRules): string {
