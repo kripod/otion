@@ -135,15 +135,17 @@ export function createInstance({
                 cssTextHead.slice(0, classSelectorStartIndex) +
                 scopeSelector +
                 (classSelectorStartIndex
-                  ? `${scopeSelector.repeat(
-                      PRECEDENCES_BY_PSEUDO_CLASS.get(
-                        cssTextHead.slice(
-                          // This part uniquely identifies a pseudo selector
-                          classSelectorStartIndex + 3,
-                          classSelectorStartIndex + 8,
-                        ),
-                      ) || 1,
-                    )}${cssTextHead.slice(classSelectorStartIndex)}{`
+                  ? `${
+                      scopeSelector.repeat(
+                        PRECEDENCES_BY_PSEUDO_CLASS.get(
+                          cssTextHead.slice(
+                            // This part uniquely identifies a pseudo selector
+                            classSelectorStartIndex + 3,
+                            classSelectorStartIndex + 8,
+                          ),
+                        ) || 1,
+                      ) + cssTextHead.slice(classSelectorStartIndex)
+                    }{`
                   : '{')
               }${declarations}}${cssTextTail}`,
               insertedIdentNames.size,
@@ -163,7 +165,7 @@ export function createInstance({
               classSelectorStartIndex = cssTextHead.length;
             } else if (parentRuleHead[0] !== '@') {
               parentRuleHead += '{';
-              parentRuleTail += '}';
+              parentRuleTail = '}';
             }
           }
 
