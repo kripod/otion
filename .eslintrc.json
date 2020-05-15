@@ -11,7 +11,7 @@
     "prettier/@typescript-eslint",
     "prettier/react"
   ],
-  "plugins": ["simple-import-sort"],
+  "plugins": ["simple-import-sort", "tsdoc"],
 
   "rules": {
     // Auto-sort imports
@@ -25,7 +25,8 @@
     // Custom preferences
     "import/prefer-default-export": "off",
     "no-bitwise": "off",
-    "no-plusplus": "off"
+    "no-plusplus": "off",
+    "tsdoc/syntax": "warn"
   },
 
   "overrides": [
