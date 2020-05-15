@@ -9,9 +9,12 @@ import {
 const injectorsByPathname = new Map();
 
 /** @type {import('gatsby').GatsbyBrowser["wrapRootElement"]} */
-export const wrapRootElement = ({ pathname, element }) => {
+export const wrapRootElement = (
+  { pathname, element },
+  { plugins, ...pluginOptions },
+) => {
   const injector = VirtualInjector();
-  setUp({ injector });
+  setUp({ ...pluginOptions, injector });
   injectorsByPathname.set(pathname, injector);
 
   return element;
@@ -30,5 +33,6 @@ export const onRenderBody = ({ pathname, bodyHtml, setHeadComponents }) => {
     setHeadComponents(
       getStyleElement(filterOutUnusedRules(injector, bodyHtml)),
     );
+    injectorsByPathname.delete(pathname);
   }
 };

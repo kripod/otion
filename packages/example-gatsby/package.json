@@ -12,6 +12,7 @@
   "dependencies": {
     "@types/react-dom": "^16.9.8",
     "gatsby": "^2.21.33",
+    "gatsby-plugin-otion": "^0.0.0",
     "otion": "^0.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

@@ -1,3 +1,3 @@
 module.exports = {
-  plugins: [],
+  plugins: ['gatsby-plugin-otion'],
 };
