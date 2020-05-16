@@ -17,7 +17,7 @@ Atomicity generalizes the former concept by instantiating style rules on demand.
 - 🍱 Reliable pseudo selector ordering
 - 🔐 Type safety with autocompletion
 - 🦖 Auto-prefixing and fallback values
-- 📚 Embedded TSDoc reference
+- 📚 Embedded JSDoc reference
 - 🐾 Negligible runtime footprint
 - 💫 Works without a framework
 

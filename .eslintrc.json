@@ -11,7 +11,7 @@
     "prettier/@typescript-eslint",
     "prettier/react"
   ],
-  "plugins": ["simple-import-sort", "tsdoc"],
+  "plugins": ["simple-import-sort"],
 
   "rules": {
     // Auto-sort imports
@@ -25,16 +25,14 @@
     // Custom preferences
     "import/prefer-default-export": "off",
     "no-bitwise": "off",
-    "no-plusplus": "off",
-    "tsdoc/syntax": "off" // TODO: Turn this on once more stable
+    "no-plusplus": "off"
   },
 
   "overrides": [
     {
       "files": ["*.js", "*.jsx"],
       "rules": {
-        "@typescript-eslint/explicit-function-return-type": "off",
-        "tsdoc/syntax": "off"
+        "@typescript-eslint/explicit-function-return-type": "off"
       }
     },
     {

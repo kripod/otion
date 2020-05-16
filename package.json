@@ -59,7 +59,6 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.2",
     "eslint-plugin-simple-import-sort": "^5.0.3",
-    "eslint-plugin-tsdoc": "^0.2.4",
     "husky": "^4.2.5",
     "lerna": "^3.21.0",
     "lint-staged": "^10.2.2",
