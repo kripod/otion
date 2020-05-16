@@ -3,6 +3,13 @@ import { VirtualInjector } from './injectors';
 
 export { VirtualInjector };
 
+/**
+ * Transforms an injector's data into `<style>` tag properties. Useful as a base to build custom server-side renderers upon.
+ *
+ * @param injector Server-side style rule injector.
+ *
+ * @returns Properties of a `<style>` tag as an object.
+ */
 export function getStyleProps(
   injector: ReturnType<typeof VirtualInjector>,
 ): { id: string; nonce: string | undefined; textContent: string } {
@@ -13,6 +20,13 @@ export function getStyleProps(
   };
 }
 
+/**
+ * Transforms an injector's data into a `<style>` tag string.
+ *
+ * @param injector Server-side style rule injector.
+ *
+ * @returns A stringified `<style>` tag containing server-renderable CSS.
+ */
 export function getStyleTag(
   injector: ReturnType<typeof VirtualInjector>,
 ): string {
@@ -23,6 +37,14 @@ export function getStyleTag(
   return `<style ${props}>${textContent}</style>`;
 }
 
+/**
+ * Filters out style rules which are not statically referenced by the given HTML code.
+ *
+ * @param injector Server-side style rule injector.
+ * @param html HTML code of the underlying page.
+ *
+ * @returns A copy of the given injector instance with the unused rules filtered out.
+ */
 export function filterOutUnusedRules(
   injector: ReturnType<typeof VirtualInjector>,
   html: string,
