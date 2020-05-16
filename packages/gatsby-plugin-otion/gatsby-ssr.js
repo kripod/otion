@@ -1,4 +1,4 @@
-import { setUp } from 'otion';
+import { setup } from 'otion';
 import {
   filterOutUnusedRules,
   getStyleElement,
@@ -13,7 +13,7 @@ const injectorsByPathname = new Map();
 /** @type {import('gatsby').GatsbyBrowser["wrapRootElement"]} */
 export const wrapRootElement = ({ pathname, element }) => {
   const injector = VirtualInjector();
-  setUp({ ...options, injector });
+  setup({ ...options, injector });
   injectorsByPathname.set(pathname, injector);
 
   return element;

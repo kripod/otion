@@ -34,7 +34,7 @@ export interface OtionInstance {
   /**
    * Customizes the otion instance. May only be called once, before using the instance for anything else.
    */
-  setUp(options: OtionConfig): void;
+  setup(options: OtionConfig): void;
 
   /**
    * Marks server-rendered CSS identity names as available to avoid re-injecting them to the style sheet during runtime.
@@ -114,7 +114,7 @@ export function createInstance(): OtionInstance {
   ): string {
     if (isDev && !prefix) {
       throw new Error(
-        'On a custom otion instance, `setUp()` must be called before usage.',
+        'On a custom otion instance, `setup()` must be called before usage.',
       );
     }
 
@@ -233,7 +233,7 @@ export function createInstance(): OtionInstance {
   }
 
   return {
-    setUp(options): void {
+    setup(options): void {
       injector =
         options.injector ||
         // eslint-disable-next-line no-nested-ternary
