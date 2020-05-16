@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="otion" src="https://raw.githubusercontent.com/kripod/otion/master/assets/logo.svg?sanitize=true" width="317">
+  <img alt="otion" src="https://raw.githubusercontent.com/kripod/otion/master/assets/logo.svg?sanitize=true" width="307">
 </p>
 
 <p align="center">
