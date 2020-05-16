@@ -35,7 +35,7 @@ Atomicity generalizes the former concept by instantiating style rules on demand.
 
 The following demo covers a wide range of use-cases.
 
-As a core function, `css(rules)` returns a space-separated list of stably generated class names. Each property–value pair is only injected once to the library-managed style sheet.
+As a core function, `css` returns a space-separated list of stably generated unique class names. Each property–value pair is only injected once to the library-managed style sheet.
 
 ```jsx
 import { css, keyframes } from 'otion';
