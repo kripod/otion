@@ -1,6 +1,6 @@
 # gatsby-plugin-otion
 
-Integrates otion, the atomic CSS-in-JS library, with Gatsby sites.
+Gatsby plugin for otion, the atomic CSS-in-JS library.
 
 ## Usage
 
