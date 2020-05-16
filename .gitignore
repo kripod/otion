@@ -14,3 +14,8 @@ packages/*otion/server/
 # Gatsby
 .cache/
 public/
+
+# Next.js
+.next/
+build/
+out/

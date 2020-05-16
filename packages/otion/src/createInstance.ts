@@ -80,7 +80,7 @@ export interface OtionInstance {
    *
    * // Referencing
    * const className = css({
-   *   animation: `${pulse} 1s infinite alternate`,
+   *   animation: `${pulse} 3s infinite alternate`,
    * });
    */
   keyframes(rules: CSSKeyframeRules): { /** @private */ toString(): string };

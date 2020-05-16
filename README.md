@@ -50,17 +50,16 @@ const pulse = keyframes({
 function Component() {
   return (
     <>
-      <p className={css({ color: 'blue' })}>I'm blue</p>
+      <p className={css({ color: 'blue' })}>I am blue</p>
       <p
         className={css({
           color: 'blue',
           ':hover': {
-            // Style attachment happens upon usage
-            animation: `${pulse} 1s infinite alternate`,
+            animation: `${pulse} 3s infinite alternate`,
           },
         })}
       >
-        I'm also blue, reusing the CSS class injected by my sibling
+        I am also blue, reusing the CSS class injected by my sibling
       </p>
     </>
   );
@@ -73,7 +72,8 @@ Please refer to the [`otion` package manual](./packages/otion/README.md) for an 
 
 ## Integrations
 
-TODO
+- Gatsby ([plugin](./packages/gatsby-plugin-otion), [example](./packages/example-gatsby))
+- Next.js ([example](./packages/example-nextjs))
 
 ## Acknowledgements
 
