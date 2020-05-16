@@ -17,7 +17,7 @@
   },
   "main": "./dist-cjs/bundle.min.cjs",
   "module": "./dist-esm/bundle.min.mjs",
-  "types": "./dist-cjs/bundle.min.cjs.d.ts",
+  "types": "./dist-esm/bundle.d.ts",
   "files": [
     "dist-*/",
     "server/",

@@ -6,7 +6,7 @@ Atomic CSS-in-JS with a featherweight runtime
 
 Design systems embrace a component-oriented mindset. Popularized by [Tailwind CSS][], utility classes provide reusable styles with no unwanted side-effects. However, they have to be generated upfront.
 
-Atomicity generalizes the former concept by instantiating styling rules on demand. Serving as a solid foundation for constraint-based layouts, [atomic CSS-in-JS][] has come to fluorish at scale.
+Atomicity generalizes the former concept by instantiating style rules on demand. Serving as a solid foundation for constraint-based layouts, [atomic CSS-in-JS][] has come to fluorish at scale.
 
 [tailwind css]: https://tailwindcss.com/
 [atomic css-in-js]: https://sebastienlorber.com/atomic-css-in-js
@@ -17,6 +17,7 @@ Atomicity generalizes the former concept by instantiating styling rules on deman
 - 🍱 Reliable pseudo selector ordering
 - 🔐 Type safety with autocompletion
 - 🦖 Auto-prefixing and fallback values
+- 📚 Embedded TSDoc reference
 - 🐾 Negligible runtime footprint
 - 💫 Works without a framework
 
@@ -31,8 +32,8 @@ import { css, keyframes } from 'otion';
 
 // Animation keyframes are lazily initialized
 const pulse = keyframes({
-  from: { opacity: 0.2 },
-  to: { opacity: 0.8 },
+  from: { opacity: 0 },
+  to: { opacity: 1 },
 });
 
 // Use of JSX is optional, as the solution is framework-agnostic
@@ -45,7 +46,7 @@ function Component() {
           color: 'blue',
           ':hover': {
             // Style attachment happens upon usage
-            animation: `${pulse} 1s infinite`,
+            animation: `${pulse} 1s infinite alternate`,
           },
         })}
       >
@@ -55,6 +56,10 @@ function Component() {
   );
 }
 ```
+
+## Documentation
+
+Please refer to the [`otion` package manual](./packages/otion/README.md) for an explorable reference. Additionally, each integration below has its own setup guide.
 
 ## Integrations
 

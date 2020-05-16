@@ -22,8 +22,74 @@ function upperToHyphenLower(match: string): string {
   return `-${match.toLowerCase()}`;
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function createInstance() {
+export interface OtionConfig {
+  /** Style insertion methodology to be used. */
+  injector?: InjectorInstance;
+
+  /** Auto-prefixer method for CSS property–value pairs. */
+  prefix?: (property: string, value: string) => string;
+}
+
+export interface OtionInstance {
+  /**
+   * Customizes the otion instance. May only be called once, before using the instance for anything else.
+   */
+  setUp(options: OtionConfig): void;
+
+  /**
+   * Marks server-rendered CSS identity names as available to avoid re-injecting them to the style sheet during runtime.
+   */
+  hydrate(): void;
+
+  /**
+   * Decomposes CSS into atomic styles. Rules are injected to the style sheet if not already available.
+   *
+   * @param rules Scoped CSS as [object styles](https://gist.github.com/threepointone/9f87907a91ec6cbcd376dded7811eb31), with value fallbacks represented as arrays.
+   *
+   * - Numbers assigned to non-unitless properties are postfixed with 'px'.
+   * - Excess white space characters are truncated.
+   *
+   * @returns A space-separated list of stably generated unique class names.
+   *
+   * @example
+   * const classNames = css({
+   *   display: 'flex',
+   *   justifyContent: ['space-around', 'space-evenly'], // Last takes precedence
+   *   padding: 8, // '8px'
+   *   lineHeight: 1.5, // '1.5' without a unit
+   * });
+   */
+  css(rules: ScopedCSSRules): string;
+
+  // used to specify the values for the animating properties at various points during the animation
+  /**
+   * Creates keyframes for animating values of given properties over time.
+   *
+   * @param rules CSS keyframe rules as [object styles](https://gist.github.com/threepointone/9f87907a91ec6cbcd376dded7811eb31), with value fallbacks represented as arrays.
+   *
+   * - Numbers assigned to non-unitless properties are postfixed with 'px'.
+   * - Excess white space characters are truncated.
+   *
+   * @returns Lazy method for stably generating a unique animation name upon usage.
+   *
+   * @example
+   * const pulse = keyframes({
+   *   from: { opacity: 0 },
+   *   to: { opacity: 1 },
+   * });
+   *
+   * // Referencing
+   * const className = css({
+   *   animation: `${pulse} 1s infinite alternate`,
+   * });
+   */
+  keyframes(rules: CSSKeyframeRules): { /** @private */ toString(): string };
+}
+
+/**
+ * Creates a new otion instance. Usable for managing styles of multiple browsing contexts (e.g. an `<iframe>` besides the main document).
+ */
+export function createInstance(): OtionInstance {
   let injector: InjectorInstance;
   let prefix: (property: string, value: string) => string;
 
@@ -167,10 +233,7 @@ export function createInstance() {
   }
 
   return {
-    setUp(options: {
-      injector?: typeof injector;
-      prefix?: typeof prefix;
-    }): void {
+    setUp(options): void {
       injector =
         options.injector ||
         // eslint-disable-next-line no-nested-ternary
@@ -178,7 +241,7 @@ export function createInstance() {
           ? isDev
             ? DOMInjector({})
             : CSSOMInjector({})
-          : NoOpInjector());
+          : NoOpInjector);
 
       prefix =
         options.prefix ||
@@ -207,12 +270,12 @@ export function createInstance() {
       }
     },
 
-    css(rules: ScopedCSSRules): string {
+    css(rules): string {
       // The leading white space character gets removed
       return decomposeToClassNames(rules, '', '').slice(1);
     },
 
-    keyframes(rules: CSSKeyframeRules): { toString(): string } {
+    keyframes(rules): { toString(): string } {
       let identName: string | undefined;
 
       return {
