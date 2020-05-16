@@ -6,7 +6,7 @@ import {
   VirtualInjector,
 } from 'react-otion/server';
 
-import options from '../../otion.config';
+import options from '../otion.config';
 
 export default class MyDocument extends Document {
   static async getInitialProps({
