@@ -35,7 +35,7 @@ Atomicity generalizes the former concept by instantiating style rules on demand.
 
 The following demo covers a wide range of use-cases.
 
-As a core function, `css` returns a space-separated list of stably generated unique class names. Each property–value pair is only injected once to the library-managed style sheet.
+As a core function, `css` returns a space-separated string of unique class names. Each property–value pair is only injected once to the library-managed style sheet.
 
 ```jsx
 import { css, keyframes } from "otion";
@@ -68,7 +68,7 @@ function Component() {
 
 ## Documentation
 
-Please refer to the [`otion` package manual](./packages/otion/README.md) for an explorable reference. Additionally, each integration below has its own setup guide.
+Please refer to the [`otion` package manual](./packages/otion/README.md) for further information. Additionally, each integration below has its own setup guide.
 
 ## Integrations
 
