@@ -23,15 +23,16 @@ Please keep the scope of each pull request to **one** specific feature or fix.
 
 0. Assign related [issues] to yourself
 1. Clone a fork of the `master` branch and install all the required dependencies with `yarn`
-2. Make changes to the codebase, observing them through `yarn develop`
-3. Before pushing, fix any errors possibly emitted by the following commands:
+2. Run `yarn build` once
+3. Make changes to the codebase, observing them through `yarn develop`
+4. Before pushing, fix any errors possibly emitted by the following commands:
 
    - `yarn format` fixes stylistic issues using [Prettier]
    - `yarn lint` enforces coding rules based on the [Airbnb JavaScript Style Guide]
    - `yarn type-check` checks for errors in TypeScript code
 
-4. Record your changes with `yarn commit`, adhering to the [Conventional Commits] specification
-5. Open a new pull request, [referencing corresponding issues] if available
+5. Record your changes with `yarn commit`, adhering to the [Conventional Commits] specification
+6. Open a new pull request, [referencing corresponding issues] if available
 
 ## License
 
