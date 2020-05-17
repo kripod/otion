@@ -1,42 +1,42 @@
 {
-  "name": "otion",
-  "version": "0.0.0",
-  "description": "Atomic CSS-in-JS with a featherweight runtime",
-  "keywords": [
-    "css-in-js",
-    "atomic",
-    "microlibrary",
-    "styling",
-    "typescript"
-  ],
-  "license": "MIT",
-  "author": "Kristóf Poduszló <kripod@protonmail.com>",
-  "sideEffects": false,
-  "exports": {
-    ".": {
-      "import": "./dist-esm/bundle.min.mjs",
-      "require": "./dist-cjs/bundle.min.cjs"
-    },
-    "./server": {
-      "import": "./server/index.mjs",
-      "require": "./server/index.js"
-    }
-  },
-  "main": "./dist-cjs/bundle.min.cjs",
-  "module": "./dist-esm/bundle.min.mjs",
-  "types": "./dist-esm/bundle.d.ts",
-  "files": [
-    "dist-*/",
-    "server/",
-    "src/"
-  ],
-  "scripts": {
-    "build": "rollup --config --sourcemap",
-    "develop": "yarn build --watch"
-  },
-  "dependencies": {
-    "@emotion/hash": "^0.8.0",
-    "csstype": "^2.6.10",
-    "tiny-css-prefixer": "^1.1.4"
-  }
+	"name": "otion",
+	"version": "0.0.0",
+	"description": "Atomic CSS-in-JS with a featherweight runtime",
+	"keywords": [
+		"css-in-js",
+		"atomic",
+		"microlibrary",
+		"styling",
+		"typescript"
+	],
+	"license": "MIT",
+	"author": "Kristóf Poduszló <kripod@protonmail.com>",
+	"sideEffects": false,
+	"exports": {
+		".": {
+			"import": "./dist-esm/bundle.min.mjs",
+			"require": "./dist-cjs/bundle.min.cjs"
+		},
+		"./server": {
+			"import": "./server/index.mjs",
+			"require": "./server/index.js"
+		}
+	},
+	"main": "./dist-cjs/bundle.min.cjs",
+	"module": "./dist-esm/bundle.min.mjs",
+	"types": "./dist-esm/bundle.d.ts",
+	"files": [
+		"dist-*/",
+		"server/",
+		"src/"
+	],
+	"scripts": {
+		"build": "rollup --config --sourcemap",
+		"develop": "yarn build --watch"
+	},
+	"dependencies": {
+		"@emotion/hash": "^0.8.0",
+		"csstype": "^2.6.10",
+		"tiny-css-prefixer": "^1.1.4"
+	}
 }

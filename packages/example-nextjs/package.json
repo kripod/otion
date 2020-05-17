@@ -1,18 +1,18 @@
 {
-  "name": "otion-example-nextjs",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "build": "next build",
-    "develop": "next dev",
-    "serve": "next start",
-    "type-check": "tsc"
-  },
-  "dependencies": {
-    "next": "^9.4.0",
-    "otion": "^0.0.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-otion": "^0.0.0"
-  }
+	"name": "otion-example-nextjs",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"build": "next build",
+		"develop": "next dev",
+		"serve": "next start",
+		"type-check": "tsc"
+	},
+	"dependencies": {
+		"next": "^9.4.0",
+		"otion": "^0.0.0",
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1",
+		"react-otion": "^0.0.0"
+	}
 }

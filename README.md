@@ -38,31 +38,31 @@ The following demo covers a wide range of use-cases.
 As a core function, `css` returns a space-separated list of stably generated unique class names. Each property–value pair is only injected once to the library-managed style sheet.
 
 ```jsx
-import { css, keyframes } from 'otion';
+import { css, keyframes } from "otion";
 
 // Animation keyframes are lazily initialized
 const pulse = keyframes({
-  from: { opacity: 0 },
-  to: { opacity: 1 },
+	from: { opacity: 0 },
+	to: { opacity: 1 },
 });
 
 // Use of JSX is optional, as the solution is framework-agnostic
 function Component() {
-  return (
-    <>
-      <p className={css({ color: 'blue' })}>I am blue</p>
-      <p
-        className={css({
-          color: 'blue',
-          ':hover': {
-            animation: `${pulse} 3s infinite alternate`,
-          },
-        })}
-      >
-        I am also blue, reusing the CSS class injected by my sibling
-      </p>
-    </>
-  );
+	return (
+		<>
+			<p className={css({ color: "blue" })}>I am blue</p>
+			<p
+				className={css({
+					color: "blue",
+					":hover": {
+						animation: `${pulse} 3s infinite alternate`,
+					},
+				})}
+			>
+				I am also blue, reusing the CSS class injected by my sibling
+			</p>
+		</>
+	);
 }
 ```
 

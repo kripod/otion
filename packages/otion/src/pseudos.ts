@@ -6,13 +6,13 @@
 */
 
 export const PRECEDENCES_BY_PSEUDO_CLASS = new Map([
-  [/* li */ 'nk', 2],
-  [/* vi */ 'sited', 2],
-  [/* em */ 'pty', 3],
-  [/* fo */ 'cus-w' /* ithin */, 4],
-  [/* ho */ 'ver', 5],
-  [/* fo */ 'cus', 6],
-  [/* fo */ 'cus-v' /* isible */, 7],
-  [/* ac */ 'tive', 8],
-  [/* di */ 'sable' /* d */, 9],
+	[/* li */ "nk", 2],
+	[/* vi */ "sited", 2],
+	[/* em */ "pty", 3],
+	[/* fo */ "cus-w" /* ithin */, 4],
+	[/* ho */ "ver", 5],
+	[/* fo */ "cus", 6],
+	[/* fo */ "cus-v" /* isible */, 7],
+	[/* ac */ "tive", 8],
+	[/* di */ "sable" /* d */, 9],
 ]);

@@ -1,9 +1,9 @@
-import { hydrate, setup } from 'otion';
+import { hydrate, setup } from "otion";
 
-import options from './src/options';
+import options from "./src/options";
 
-/** @type {import('gatsby').GatsbyBrowser["onClientEntry"]} */
+/** @type {import("gatsby").GatsbyBrowser["onClientEntry"]} */
 export const onClientEntry = () => {
-  setup(options);
-  hydrate();
+	setup(options);
+	hydrate();
 };

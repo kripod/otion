@@ -1,10 +1,10 @@
 {
-  "compilerOptions": {
-    "strict": true,
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "isolatedModules": true,
-    "jsx": "react"
-  }
+	"compilerOptions": {
+		"strict": true,
+		"target": "ESNext",
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"isolatedModules": true,
+		"jsx": "react"
+	}
 }

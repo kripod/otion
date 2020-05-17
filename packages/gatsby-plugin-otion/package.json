@@ -1,27 +1,27 @@
 {
-  "name": "gatsby-plugin-otion",
-  "version": "0.0.0",
-  "description": "Gatsby plugin for otion, the atomic CSS-in-JS library",
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "otion",
-    "css-in-js",
-    "atomic"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kripod/otion.git",
-    "directory": "packages/gatsby-plugin-otion"
-  },
-  "license": "MIT",
-  "author": "Kristóf Poduszló <kripod@protonmail.com>",
-  "scripts": {
-    "type-check": "tsc"
-  },
-  "peerDependencies": {
-    "gatsby": "^2",
-    "otion": "^0.0.0",
-    "react-otion": "^0.0.0"
-  }
+	"name": "gatsby-plugin-otion",
+	"version": "0.0.0",
+	"description": "Gatsby plugin for otion, the atomic CSS-in-JS library",
+	"keywords": [
+		"gatsby",
+		"gatsby-plugin",
+		"otion",
+		"css-in-js",
+		"atomic"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/kripod/otion.git",
+		"directory": "packages/gatsby-plugin-otion"
+	},
+	"license": "MIT",
+	"author": "Kristóf Poduszló <kripod@protonmail.com>",
+	"scripts": {
+		"type-check": "tsc"
+	},
+	"peerDependencies": {
+		"gatsby": "^2",
+		"otion": "^0.0.0",
+		"react-otion": "^0.0.0"
+	}
 }

@@ -1,7 +1,7 @@
 {
-  "extends": "../../tsconfig-lib",
-  "include": ["./src/"],
-  "compilerOptions": {
-    "tsBuildInfoFile": "./packages/react-otion/tsconfig.tsbuildinfo"
-  }
+	"extends": "../../tsconfig-lib",
+	"include": ["./src/"],
+	"compilerOptions": {
+		"tsBuildInfoFile": "./packages/react-otion/tsconfig.tsbuildinfo"
+	}
 }

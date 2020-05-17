@@ -14,7 +14,7 @@ Gatsby plugin for otion, the atomic CSS-in-JS library.
 
    ```js
    module.exports = {
-     plugins: ['gatsby-plugin-otion'],
+   	plugins: ["gatsby-plugin-otion"],
    };
    ```
 
@@ -25,17 +25,17 @@ Additional configuration can be specified through [shadowing](https://www.gatsby
 ```js
 /* src/gatsby-plugin-otion/options.js */
 
-import { prefix as stylisPrefix } from 'stylis'; // v4
+import { prefix as stylisPrefix } from "stylis"; // v4
 
 export default {
-  // Use a custom auto-prefixer, despite being larger than the default
-  prefix: (property, value) => {
-    const declaration = `${property}:${value};`;
-    return (
-      // The trailing `;` is removed for cleaner results
-      stylisPrefix(declaration, property.length).slice(0, -1)
-    );
-  },
+	// Use a custom auto-prefixer, despite being larger than the default
+	prefix: (property, value) => {
+		const declaration = `${property}:${value};`;
+		return (
+			// The trailing `;` is removed for cleaner results
+			stylisPrefix(declaration, property.length).slice(0, -1)
+		);
+	},
 };
 ```
 
