@@ -8,7 +8,7 @@ const pulse = keyframes({
 
 export default function IndexPage(): JSX.Element {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const unusedElement = (
+	const unusedElement = ( // lgtm [js/unused-local-variable]
 		<div
 			className={css({
 				content: `"This text shouldn't appear in the SSR-collected style sheet."`,
