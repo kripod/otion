@@ -4,13 +4,13 @@ Gatsby plugin for otion, the atomic CSS-in-JS library.
 
 ## Usage
 
-0. Install the package and its peer dependencies:
+1. Install the package and its peer dependencies:
 
    ```sh
    npm install gatsby-plugin-otion otion react-otion
    ```
 
-1. Add the newly installed plugin to `gatsby-config.js`, as shown through an [example project](https://github.com/kripod/otion/tree/master/packages/example-gatsby):
+2. Add the newly installed plugin to `gatsby-config.js`, as shown through an [example project](https://github.com/kripod/otion/tree/master/packages/example-gatsby):
 
    ```js
    module.exports = {
