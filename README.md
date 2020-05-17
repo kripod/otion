@@ -1,15 +1,15 @@
 <p align="center">
-  <img alt="otion" src="https://raw.githubusercontent.com/kripod/otion/master/assets/logo.svg?sanitize=true" width="307">
+	<img alt="otion" src="https://raw.githubusercontent.com/kripod/otion/master/assets/logo.svg?sanitize=true" width="307">
 </p>
 
 <p align="center">
-  Atomic CSS-in-JS with a featherweight runtime
+	Atomic CSS-in-JS with a featherweight runtime
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/otion"><img alt="npm" src="https://img.shields.io/npm/v/otion"></a>
-  <a href="https://lgtm.com/projects/g/kripod/otion/context:javascript"><img alt="Language grade: JavaScript" src="https://img.shields.io/lgtm/grade/javascript/g/kripod/otion.svg?logo=lgtm&logoWidth=18"/></a>
-  <a href="https://travis-ci.com/github/kripod/otion"><img alt="Travis (.com)" src="https://img.shields.io/travis/com/kripod/otion"></a>
+	<a href="https://www.npmjs.com/package/otion"><img alt="npm" src="https://img.shields.io/npm/v/otion"></a>
+	<a href="https://lgtm.com/projects/g/kripod/otion/context:javascript"><img alt="Language grade: JavaScript" src="https://img.shields.io/lgtm/grade/javascript/g/kripod/otion.svg?logo=lgtm&logoWidth=18"/></a>
+	<a href="https://travis-ci.com/github/kripod/otion"><img alt="Travis (.com)" src="https://img.shields.io/travis/com/kripod/otion"></a>
 </p>
 
 ## Backstory

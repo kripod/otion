@@ -1,8 +1,8 @@
 /*
-  Sources:
+	Sources:
 
-  - https://bitsofco.de/when-do-the-hover-focus-and-active-pseudo-classes-apply/#orderofstyleshoverthenfocusthenactive
-  - https://developer.mozilla.org/docs/Web/CSS/:active#Active_links
+	- https://bitsofco.de/when-do-the-hover-focus-and-active-pseudo-classes-apply/#orderofstyleshoverthenfocusthenactive
+	- https://developer.mozilla.org/docs/Web/CSS/:active#Active_links
 */
 
 export const PRECEDENCES_BY_PSEUDO_CLASS = new Map([

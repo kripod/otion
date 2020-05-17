@@ -1,11 +1,11 @@
 /*
-  The order of rules is influenced by CSS usage metrics:
+	The order of rules is influenced by CSS usage metrics:
 
-  - https://www.cssstats.com/stats/?url=css-tricks.com
-  - https://www.cssstats.com/stats/?url=joshwcomeau.com
-  - https://www.cssstats.com/stats/?url=mastery.games
-  - https://www.cssstats.com/stats/?url=nytimes.com
-  - https://www.chromestatus.com/metrics/css/popularity
+	- https://www.cssstats.com/stats/?url=css-tricks.com
+	- https://www.cssstats.com/stats/?url=joshwcomeau.com
+	- https://www.cssstats.com/stats/?url=mastery.games
+	- https://www.cssstats.com/stats/?url=nytimes.com
+	- https://www.chromestatus.com/metrics/css/popularity
 */
 
 // Includes support for CSS custom properties
