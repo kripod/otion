@@ -28,7 +28,7 @@ Additional configuration can be specified through [shadowing](https://www.gatsby
 import { prefix as stylisPrefix } from "stylis"; // v4
 
 export default {
-  // Use a custom auto-prefixer, despite being larger than the default
+  // Use a custom auto-prefixer, despite weighing more than the default
   prefix: (property, value) => {
     const declaration = `${property}:${value};`;
     return (
