@@ -13,6 +13,7 @@ script:
   - yarn build
   - yarn type-check
   - yarn lint
+  - yarn test
 
 deploy:
   - provider: npm
