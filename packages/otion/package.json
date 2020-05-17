@@ -9,6 +9,10 @@
 		"styling",
 		"typescript"
 	],
+	"funding": {
+		"type": "opencollective",
+		"url": "https://opencollective.com/otion"
+	},
 	"license": "MIT",
 	"author": "Kristóf Poduszló <kripod@protonmail.com>",
 	"sideEffects": false,
