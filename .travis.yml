@@ -1,0 +1,23 @@
+language: node_js
+node_js:
+  - 10
+  - 12
+  - 14
+
+cache:
+  directories:
+    - packages/example-gatsby/.cache/
+    - packages/example-nextjs/.next/cache/
+
+script:
+  - yarn build
+  - yarn type-check
+  - yarn lint
+
+deploy:
+  - provider: npm
+    edge: true
+    run_script: publish
+    on:
+      tags: true
+      node_js: 12
