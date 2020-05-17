@@ -1,6 +1,14 @@
 {
 	"name": "react-otion",
 	"version": "0.0.0",
+	"description": "React bindings for otion, the atomic CSS-in-JS library",
+	"keywords": [
+		"css-in-js",
+		"atomic",
+		"microlibrary",
+		"styling",
+		"typescript"
+	],
 	"license": "MIT",
 	"author": "Kristóf Poduszló <kripod@protonmail.com>",
 	"sideEffects": false,
