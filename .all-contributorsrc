@@ -20,6 +20,18 @@
         "ideas",
         "infra"
       ]
+    },
+    {
+      "login": "efflam",
+      "name": "efflam",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/149307?v=4",
+      "profile": "https://github.com/efflam",
+      "contributions": [
+        "bug"
+      ]
     }
+  ],
+  "files": [
+    "README.md"
   ]
 }
