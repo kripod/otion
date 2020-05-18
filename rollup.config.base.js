@@ -1,4 +1,5 @@
 import resolve from "@rollup/plugin-node-resolve";
+import replace from "@rollup/plugin-replace";
 import ts from "@wessberg/rollup-plugin-ts";
 import * as path from "path";
 import { terser } from "rollup-plugin-terser";
@@ -25,19 +26,21 @@ export const commonPlugins = [
 	}),
 ];
 
-export function getMainEntry(pkg) {
-	const minifiedOutputs = getOutputs(pkg, ".");
-
-	const unminifiedOutputs = minifiedOutputs.map(({ file, ...rest }) => ({
-		...rest,
-		file: file.replace(".min.", "."),
-	}));
+export function getMainEntry(pkg, env) {
+	const outputs = getOutputs(pkg, ".");
+	if (env === "development") {
+		outputs.forEach((output) => {
+			// eslint-disable-next-line no-param-reassign
+			output.file = output.file.replace(".prod.min.", ".dev.");
+		});
+	}
 
 	return {
 		input: "./src/index.ts",
-		output: [...unminifiedOutputs, ...minifiedOutputs],
+		output: outputs,
 		plugins: [
 			...commonPlugins,
+			replace({ "process.env.NODE_ENV": JSON.stringify(env) }),
 			resolve({ browser: true }),
 			terser({ include: /\.min\.[^.]+$/ }),
 		],
