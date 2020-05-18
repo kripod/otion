@@ -19,14 +19,14 @@
 	"exports": {
 		".": {
 			"import": "./dist-esm/bundle.min.mjs",
-			"require": "./dist-cjs/bundle.min.cjs"
+			"require": "./dist-cjs/bundle.min.js"
 		},
 		"./server": {
 			"import": "./server/index.mjs",
 			"require": "./server/index.js"
 		}
 	},
-	"main": "./dist-cjs/bundle.min.cjs",
+	"main": "./dist-cjs/bundle.min.js",
 	"module": "./dist-esm/bundle.min.mjs",
 	"types": "./dist-esm/bundle.d.ts",
 	"files": [
