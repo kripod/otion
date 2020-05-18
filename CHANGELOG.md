@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/kripod/otion/compare/v0.1.0...v0.1.1) (2020-05-18)
+
+### Bug Fixes
+
+- applying a pseudo selector directly ([eb45b63](https://github.com/kripod/otion/commit/eb45b637edfe7ce7152c308e2b8fbd98e27d8a5d)), closes [#5](https://github.com/kripod/otion/issues/5)
+
 # 0.1.0 (2020-05-17)
 
 ### Bug Fixes
