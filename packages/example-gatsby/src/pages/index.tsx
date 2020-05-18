@@ -29,6 +29,9 @@ export default function IndexPage(): JSX.Element {
 					paddingLeft: 16,
 					paddingRight: 24,
 					padding: 8,
+					":hover": {
+						padding: 32,
+					},
 
 					"@media": {
 						" (min-width:  \n600px)   ": {

@@ -184,7 +184,7 @@ export function createInstance(): OtionInstance {
 							`${
 								cssTextHead.slice(0, classSelectorStartIndex) +
 								scopeSelector +
-								(classSelectorStartIndex
+								(classSelectorStartIndex != null
 									? `${
 											scopeSelector.repeat(
 												PRECEDENCES_BY_PSEUDO_CLASS.get(
