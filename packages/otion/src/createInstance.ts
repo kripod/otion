@@ -158,6 +158,9 @@ export function createInstance(): OtionInstance {
 
 			if (value != null) {
 				if (typeof value !== "object" || Array.isArray(value)) {
+					// Class specificities are controlled with repetition, see:
+					// https://csswizardry.com/2014/07/hacks-for-dealing-with-specificity/
+
 					const property = key.replace(/[A-Z]/g, upperToHyphenLower);
 					const declarations = serializeDeclarationList(property, value);
 					const className = `_${hash(cssTextHead + declarations)}`;
@@ -175,9 +178,6 @@ export function createInstance(): OtionInstance {
 					const scopeSelector = `.${className}`.repeat(
 						precedence + (matches ? +!!matches[1] || -!!matches[2] : 0),
 					);
-
-					// Class specificities are controlled with repetition, see:
-					// https://csswizardry.com/2014/07/hacks-for-dealing-with-specificity/
 
 					if (!insertedIdentNames.has(className)) {
 						injector.insert(
