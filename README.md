@@ -14,7 +14,7 @@
 
 ## Backstory
 
-Design systems embrace a component-oriented mindset. Popularized by [Tailwind CSS][], utility classes provide reusable styles with no unwanted side-effects. However, they have to be generated upfront.
+Design systems embrace a component-oriented mindset. Inspired by [Tailwind CSS][], utility classes provide reusable styles with no unwanted side-effects. However, they have to be generated upfront.
 
 Atomicity generalizes the former concept by instantiating style rules on demand. Serving as a solid foundation for constraint-based layouts, [atomic CSS-in-JS][] has come to fluorish at scale.
 
