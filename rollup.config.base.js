@@ -3,6 +3,20 @@ import ts from "@wessberg/rollup-plugin-ts";
 import * as path from "path";
 import { terser } from "rollup-plugin-terser";
 
+function getOutputs(pkg, subpath) {
+	return [
+		{
+			file: pkg.exports[subpath].import,
+			format: "esm",
+		},
+		{
+			file: pkg.exports[subpath].require,
+			format: "cjs",
+			externalLiveBindings: false,
+		},
+	];
+}
+
 export const commonPlugins = [
 	ts({
 		transpiler: "babel",
@@ -12,17 +26,7 @@ export const commonPlugins = [
 ];
 
 export function getMainEntry(pkg) {
-	const minifiedOutputs = [
-		{
-			file: pkg.exports["."].import,
-			format: "esm",
-		},
-		{
-			file: pkg.exports["."].require,
-			format: "cjs",
-			externalLiveBindings: false,
-		},
-	];
+	const minifiedOutputs = getOutputs(pkg, ".");
 
 	const unminifiedOutputs = minifiedOutputs.map(({ file, ...rest }) => ({
 		...rest,
@@ -44,17 +48,7 @@ export function getMainEntry(pkg) {
 export function getServerEntry(pkg, options) {
 	return {
 		...options,
-		output: [
-			{
-				file: pkg.exports["./server"].import,
-				format: "esm",
-			},
-			{
-				file: pkg.exports["./server"].require,
-				format: "cjs",
-				externalLiveBindings: false,
-			},
-		],
+		output: getOutputs(pkg, "./server"),
 		plugins: commonPlugins,
 	};
 }
