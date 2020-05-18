@@ -115,7 +115,7 @@ import { hydrate, setup } from "otion";
 import { sharedOptions } from "./server";
 
 // Make sure to rehydrate only in browser environments
-if (typeof window !== "undefined") {
+if (typeof document !== "undefined") {
   setup(options);
   hydrate();
 }

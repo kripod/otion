@@ -5,7 +5,7 @@ import * as React from "react";
 import options from "../otion.config";
 
 export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
-	if (typeof window !== "undefined") {
+	if (typeof document !== "undefined") {
 		setup(options);
 		hydrate();
 	}
