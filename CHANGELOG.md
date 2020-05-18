@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2](https://github.com/kripod/otion/compare/v0.1.1...v0.1.2) (2020-05-18)
+
+### Bug Fixes
+
+- integration with Code Sandbox ([6745dec](https://github.com/kripod/otion/commit/6745dec0bf176fd549252e111ce1ea50b7f76e02))
+
 ## [0.1.1](https://github.com/kripod/otion/compare/v0.1.0...v0.1.1) (2020-05-18)
 
 ### Bug Fixes
