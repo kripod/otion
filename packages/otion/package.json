@@ -18,16 +18,16 @@
 	"sideEffects": false,
 	"exports": {
 		".": {
-			"import": "./dist-esm/bundle.prod.min.mjs",
-			"require": "./dist-cjs/bundle.prod.min.js"
+			"import": "./dist-esm/bundle.min.mjs",
+			"require": "./dist-cjs/bundle.min.js"
 		},
 		"./server": {
 			"import": "./server/index.mjs",
 			"require": "./server/index.js"
 		}
 	},
-	"main": "./dist-cjs/bundle.prod.min.js",
-	"module": "./dist-esm/bundle.prod.min.mjs",
+	"main": "./dist-cjs/bundle.min.js",
+	"module": "./dist-esm/bundle.min.mjs",
 	"types": "./dist-esm/bundle.d.ts",
 	"files": [
 		"dist-*/",
