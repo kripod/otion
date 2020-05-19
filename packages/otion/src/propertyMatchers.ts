@@ -9,7 +9,7 @@
 */
 
 // Includes support for CSS custom properties
-export const PROPERTY_ACCEPTS_UNITLESS_VALUES = /^(-|f[lo].*[^se]$|g.{6,}[^ps]$|z|o[pr]|li.*(t|mp)$|an|(bo|s).{5}im|sca|m.{4}[bi]|ta|c.*[st]$|wido|ini)/;
+export const PROPERTY_ACCEPTS_UNITLESS_VALUES = /^(-|f[lo].*[^se]$|g.{6,}[^ps]$|z|o[pr]|li.*(t|mp)$|an|(bo|s).{5}im|sca|m.{7}[ds]|ta|c.*[st]$|wido|ini)/;
 
 // TODO: Add tests to match everything below, without false positives
 export const propertiesAcceptingUnitlessValues = [
@@ -56,7 +56,7 @@ export const propertiesAcceptingUnitlessValues = [
 	/* ^sca */
 	"scale",
 
-	/* ^m.{4}[bi] */
+	/* ^m.{7}[ds] */
 	"mask-border",
 	"mask-border-outset",
 	"mask-border-slice",
