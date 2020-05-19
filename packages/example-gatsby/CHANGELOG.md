@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/kripod/otion/compare/v0.2.5...v0.3.0) (2020-05-19)
+
+### Features
+
+- support advanced nesting selectors ([b5e97da](https://github.com/kripod/otion/commit/b5e97da7af193798c08910b48c488d6a5a18ea4f))
+- support selector lists for grouping rules ([50c6ffa](https://github.com/kripod/otion/commit/50c6ffacde6c74d5235528a271ba676552bb9866)), closes [#7](https://github.com/kripod/otion/issues/7)
+
 ## [0.2.5](https://github.com/kripod/otion/compare/v0.2.4...v0.2.5) (2020-05-19)
 
 **Note:** Version bump only for package otion-example-gatsby
