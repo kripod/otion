@@ -21,7 +21,7 @@
 	},
 	"peerDependencies": {
 		"gatsby": "^2",
-		"otion": ">=0.1 <0.3",
-		"react-otion": ">=0.1 <0.3"
+		"otion": ">=0.1 <0.4",
+		"react-otion": ">=0.1 <0.4"
 	}
 }

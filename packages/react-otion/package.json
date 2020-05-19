@@ -33,7 +33,7 @@
 		"react": "^16.13.1"
 	},
 	"peerDependencies": {
-		"otion": ">=0.1 <0.3",
+		"otion": ">=0.1 <0.4",
 		"react": "^16.8.0"
 	}
 }
