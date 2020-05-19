@@ -1,6 +1,6 @@
 {
 	"name": "otion-example-gatsby",
-	"version": "0.2.4",
+	"version": "0.2.5",
 	"private": true,
 	"scripts": {
 		"build": "gatsby build",
@@ -13,9 +13,9 @@
 		"@types/react-dom": "^16.9.8",
 		"gatsby": "^2.21.33",
 		"gatsby-plugin-otion": "^0.2.2",
-		"otion": "^0.2.4",
+		"otion": "^0.2.5",
 		"react": "^16.12.0",
 		"react-dom": "^16.12.0",
-		"react-otion": "^0.2.4"
+		"react-otion": "^0.2.5"
 	}
 }
