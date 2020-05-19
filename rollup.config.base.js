@@ -33,17 +33,28 @@ export function getMainEntries(pkg, env) {
 		});
 	}
 
+	const denoOutputFile = nodeOutputs[0].file.replace(
+		"dist-node/esm/bundle",
+		`dist-deno/bundle.${env === "development" ? "dev" : "prod"}`,
+	);
 	const denoOutput = {
 		...nodeOutputs[0],
-		file: nodeOutputs[0].file.replace(
-			"dist-node/esm/bundle",
-			`dist-deno/bundle.${env === "development" ? "dev" : "prod"}`,
-		),
+		file: denoOutputFile,
+		banner: `/// <reference types="./${denoOutputFile
+			.split("/")
+			.slice(-1)[0]
+			.replace(".mjs", ".d.ts")}" />`,
 	};
 
 	const commonLastPlugins = [
 		resolve({ browser: true }),
-		terser({ include: /\.min\.[^.]+$/ }),
+		terser({
+			include: /\.min\.[^.]+$/,
+			output: {
+				// Preserve triple-slash directives
+				comments: /^\//,
+			},
+		}),
 	];
 
 	const nodeEntry = {
