@@ -218,15 +218,16 @@ export function createInstance(): OtionInstance {
 					let parentRuleTail = "";
 
 					if (!classSelectorStartIndex) {
-						if (firstParentRuleHead[0] === ":") {
+						if (
+							firstParentRuleHead[0] === ":" ||
+							firstParentRuleHead[0] === "&"
+						) {
 							// eslint-disable-next-line no-param-reassign
 							classSelectorStartIndex = cssTextHead.length;
-						} else if (firstParentRuleHead[0] === "&") {
 							parentRuleHeads = firstParentRuleHead
 								.split(",")
 								.map((singleSelector) =>
-									// Remove the leading "&" after truncation
-									minifyCondition(singleSelector).slice(1),
+									minifyCondition(singleSelector).replace("&", ""),
 								);
 						} else if (firstParentRuleHead === "selectors") {
 							firstParentRuleHead = "";
