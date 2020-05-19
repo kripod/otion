@@ -94,6 +94,14 @@ export function createInstance(): OtionInstance {
 	let prefix: (property: string, value: string) => string;
 	let insertedIdentNames: Set<string>;
 
+	function checkSetup(): void {
+		if (!injector || !prefix || !insertedIdentNames) {
+			throw new Error(
+				"On a custom otion instance, `setup()` must be called before usage.",
+			);
+		}
+	}
+
 	function hydrateScopedSubtree(cssRule: CSSRule): void {
 		if (cssRule.type === 1 /* CSSRule.STYLE_RULE */) {
 			const { selectorText } = cssRule as CSSStyleRule;
@@ -111,12 +119,6 @@ export function createInstance(): OtionInstance {
 		property: string,
 		value: string | number,
 	): string {
-		if (isDev && !prefix) {
-			throw new Error(
-				"On a custom otion instance, `setup()` must be called before usage.",
-			);
-		}
-
 		const formattedValue =
 			typeof value === "number" &&
 			!PROPERTY_ACCEPTS_UNITLESS_VALUES.test(property)
@@ -258,11 +260,7 @@ export function createInstance(): OtionInstance {
 		},
 
 		hydrate(): void {
-			if (isDev && !insertedIdentNames) {
-				throw new Error(
-					"On a custom otion instance, `setup()` must be called before usage.",
-				);
-			}
+			if (isDev) checkSetup();
 
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 			const { cssRules } = injector.sheet!;
@@ -278,11 +276,15 @@ export function createInstance(): OtionInstance {
 		},
 
 		css(rules): string {
+			if (isDev) checkSetup();
+
 			// The leading white space character gets removed
 			return decomposeToClassNames(rules, "", "").slice(1);
 		},
 
 		keyframes(rules): { toString(): string } {
+			if (isDev) checkSetup();
+
 			let identName: string | undefined;
 
 			return {
