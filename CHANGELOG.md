@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/kripod/otion/compare/v0.2.1...v0.2.2) (2020-05-19)
+
+### Bug Fixes
+
+- **example-nextjs:** hover animation smoothness ([356f6dc](https://github.com/kripod/otion/commit/356f6dc7a083c1ed1f87991fbe7f3f5e9fc83a28))
+- **ssr:** clear inserted idents between renders ([07679e1](https://github.com/kripod/otion/commit/07679e1ae784f26bca129f20fb4abc53a801192b)), closes [#8](https://github.com/kripod/otion/issues/8)
+
+### Features
+
+- add Deno type references ([43460d6](https://github.com/kripod/otion/commit/43460d6aa095467688d7816ca487b21e6ef0747b))
+
 ## [0.2.1](https://github.com/kripod/otion/compare/v0.2.0...v0.2.1) (2020-05-19)
 
 **Note:** Version bump only for package otion

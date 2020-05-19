@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/kripod/otion/compare/v0.2.1...v0.2.2) (2020-05-19)
+
+### Bug Fixes
+
+- **ssr:** clear inserted idents between renders ([07679e1](https://github.com/kripod/otion/commit/07679e1ae784f26bca129f20fb4abc53a801192b)), closes [#8](https://github.com/kripod/otion/issues/8)
+
 # [0.2.0](https://github.com/kripod/otion/compare/v0.1.3...v0.2.0) (2020-05-19)
 
 ### Bug Fixes
