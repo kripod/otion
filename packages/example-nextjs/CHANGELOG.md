@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/kripod/otion/compare/v0.1.3...v0.2.0) (2020-05-19)
+
+### Bug Fixes
+
+- make browser checks Deno-compatible ([96a05e9](https://github.com/kripod/otion/commit/96a05e993c1dc7849aefab0ceb428e8d0b815bb8))
+
+### Features
+
+- add Deno-compatible build output ([e54209a](https://github.com/kripod/otion/commit/e54209adea636733b1ecc2bc334f2f7c5206033f)), closes [#8](https://github.com/kripod/otion/issues/8)
+
 ## [0.1.3](https://github.com/kripod/otion/compare/v0.1.2...v0.1.3) (2020-05-18)
 
 **Note:** Version bump only for package otion-example-nextjs
