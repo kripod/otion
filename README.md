@@ -42,8 +42,8 @@ import { css, keyframes } from "otion";
 
 // Animation keyframes are lazily initialized
 const pulse = keyframes({
-  from: { opacity: 0 },
-  to: { opacity: 1 }
+  from: { opacity: 1 },
+  to: { opacity: 0 }
 });
 
 // Use of JSX is optional, as the solution is framework-agnostic
@@ -91,6 +91,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
