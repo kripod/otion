@@ -1,6 +1,6 @@
 {
 	"name": "react-otion",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"description": "React bindings for otion, the atomic CSS-in-JS library",
 	"keywords": [
 		"css-in-js",
