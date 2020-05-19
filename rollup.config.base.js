@@ -1,4 +1,5 @@
 import resolve from "@rollup/plugin-node-resolve";
+import replace from "@rollup/plugin-replace";
 import ts from "@wessberg/rollup-plugin-ts";
 import * as path from "path";
 import { terser } from "rollup-plugin-terser";
@@ -17,38 +18,61 @@ function getOutputs(pkg, subpath) {
 	];
 }
 
-export const commonPlugins = [
-	ts({
-		transpiler: "babel",
-		cwd: path.join(__dirname, "../.."),
-		tsconfig: path.join(__dirname, "tsconfig.json"),
-	}),
-];
+const tsPlugin = ts({
+	transpiler: "babel",
+	cwd: path.join(__dirname, "../.."),
+	tsconfig: path.join(__dirname, "tsconfig.json"),
+});
 
-export function getMainEntry(pkg) {
-	const minifiedOutputs = getOutputs(pkg, ".");
+export function getMainEntries(pkg, env) {
+	const nodeOutputs = getOutputs(pkg, ".");
+	if (env === "development") {
+		nodeOutputs.forEach((output) => {
+			// eslint-disable-next-line no-param-reassign
+			output.file = output.file.replace(".min.", ".");
+		});
+	}
 
-	const unminifiedOutputs = minifiedOutputs.map(({ file, ...rest }) => ({
-		...rest,
-		file: file.replace(".min.", "."),
-	}));
+	const denoOutput = {
+		...nodeOutputs[0],
+		file: nodeOutputs[0].file.replace(
+			"dist-node/esm/bundle",
+			`dist-deno/bundle.${env === "development" ? "dev" : "prod"}`,
+		),
+	};
 
-	return {
+	const commonLastPlugins = [
+		resolve({ browser: true }),
+		terser({ include: /\.min\.[^.]+$/ }),
+	];
+
+	const nodeEntry = {
 		input: "./src/index.ts",
-		output: [...unminifiedOutputs, ...minifiedOutputs],
-		plugins: [
-			...commonPlugins,
-			resolve({ browser: true }),
-			terser({ include: /\.min\.[^.]+$/ }),
-		],
+		output: nodeOutputs,
+		plugins: [tsPlugin, ...commonLastPlugins],
 		external: [/^@babel\/runtime\//],
 	};
+
+	const denoEntry = {
+		...nodeEntry,
+		output: denoOutput,
+		plugins: [
+			tsPlugin,
+			replace({
+				"process.env.NODE_ENV": JSON.stringify(env),
+				"typeof window": "typeof document",
+			}),
+			...commonLastPlugins,
+		],
+	};
+
+	return [nodeEntry, denoEntry];
 }
 
 export function getServerEntry(pkg, options) {
 	return {
 		...options,
 		output: getOutputs(pkg, "./server"),
-		plugins: commonPlugins,
+		plugins: tsPlugin,
 	};
 }

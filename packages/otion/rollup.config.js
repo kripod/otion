@@ -1,7 +1,8 @@
-import { getMainEntry, getServerEntry } from "../../rollup.config.base";
+import { getMainEntries, getServerEntry } from "../../rollup.config.base";
 import pkg from "./package.json";
 
 export default [
-	getMainEntry(pkg),
+	...getMainEntries(pkg, "development"),
+	...getMainEntries(pkg, "production"),
 	getServerEntry(pkg, { input: "./src/server.ts" }),
 ];
