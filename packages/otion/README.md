@@ -121,6 +121,25 @@ if (typeof window !== "undefined") {
 }
 ```
 
+### Deno support
+
+For convenient resolution of the library, an [import map](https://deno.land/manual/linking_to_external_code/import_maps/) should be used. Unlike with Node, development and production builds are separated into different bundles.
+
+```jsonc
+/* import_map.json */
+
+{
+  "imports": {
+    "otion/dev": "https://unpkg.com/otion/dist-deno/bundle.dev.mjs",
+    "otion": "https://unpkg.com/otion/dist-deno/bundle.prod.min.mjs"
+  }
+}
+```
+
+```shell
+deno run --importmap=import_map.json --unstable mod.ts
+```
+
 ## Security
 
 User-specified data shall be escaped manually using [`CSS.escape()`](https://developer.mozilla.org/docs/Web/API/CSS/escape) or an equivalent method.
