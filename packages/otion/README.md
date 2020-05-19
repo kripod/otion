@@ -130,8 +130,8 @@ For convenient resolution of the library, an [import map](https://deno.land/manu
 
 {
   "imports": {
-    "otion/dev": "https://unpkg.com/otion/dist-deno/bundle.dev.mjs",
-    "otion": "https://unpkg.com/otion/dist-deno/bundle.prod.min.mjs"
+    "otion/dev": "https://cdn.pika.dev/otion/runtime-deno/bundle.dev.mjs",
+    "otion": "https://cdn.pika.dev/otion/runtime-deno/bundle.prod.min.mjs"
   }
 }
 ```

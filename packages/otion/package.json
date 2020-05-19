@@ -21,6 +21,7 @@
 			"import": "./dist-node/esm/bundle.min.mjs",
 			"require": "./dist-node/cjs/bundle.min.js"
 		},
+		"./runtime-deno/": "./dist-deno/",
 		"./server": {
 			"import": "./server/index.mjs",
 			"require": "./server/index.js"
