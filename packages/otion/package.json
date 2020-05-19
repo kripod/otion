@@ -36,6 +36,7 @@
 	],
 	"scripts": {
 		"build": "rollup --config --sourcemap",
+		"clean": "del-cli \"dist-*/\" server/",
 		"develop": "yarn build --watch"
 	},
 	"dependencies": {
