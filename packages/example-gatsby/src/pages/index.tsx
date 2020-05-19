@@ -39,6 +39,9 @@ export default function IndexPage(): JSX.Element {
 							paddingLeft: 48,
 							color: "teal",
 						},
+						"  &:focus ,  &:active": {
+							outline: "solid",
+						},
 					},
 
 					"@media": {

@@ -212,29 +212,40 @@ export function createInstance(): OtionInstance {
 
 					classNames += ` ${className}`;
 				} else {
-					let parentRuleHead =
+					let parentRuleHeads: string[] | undefined;
+					let firstParentRuleHead =
 						key[0] === ":" || key[0] === "@" ? key : minifyCondition(key);
 					let parentRuleTail = "";
 
 					if (!classSelectorStartIndex) {
-						if (parentRuleHead[0] === ":") {
+						if (firstParentRuleHead[0] === ":") {
 							// eslint-disable-next-line no-param-reassign
 							classSelectorStartIndex = cssTextHead.length;
-						} else if (parentRuleHead[0] === "&") {
-							parentRuleHead = parentRuleHead.slice(1);
-						} else if (parentRuleHead === "selectors") {
-							parentRuleHead = "";
-						} else if (parentRuleHead[0] !== "@") {
-							parentRuleHead += "{";
+						} else if (firstParentRuleHead[0] === "&") {
+							parentRuleHeads = firstParentRuleHead
+								.split(",")
+								.map((singleSelector) =>
+									// Remove the leading "&" after truncation
+									minifyCondition(singleSelector).slice(1),
+								);
+						} else if (firstParentRuleHead === "selectors") {
+							firstParentRuleHead = "";
+						} else if (firstParentRuleHead[0] !== "@") {
+							firstParentRuleHead += "{";
 							parentRuleTail = "}";
 						}
 					}
 
-					classNames += decomposeToClassNames(
-						value as ScopedCSSRules,
-						cssTextHead + parentRuleHead,
-						parentRuleTail + cssTextTail,
-						classSelectorStartIndex,
+					(parentRuleHeads || [firstParentRuleHead]).forEach(
+						// eslint-disable-next-line no-loop-func
+						(parentRuleHead) => {
+							classNames += decomposeToClassNames(
+								value as ScopedCSSRules,
+								cssTextHead + parentRuleHead,
+								parentRuleTail + cssTextTail,
+								classSelectorStartIndex,
+							);
+						},
 					);
 				}
 			}

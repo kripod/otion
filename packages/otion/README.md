@@ -86,10 +86,15 @@ const className = css({
 const className = css({
   display: "flex",
   selectors: {
-    // Always start with "&", using it only once, representing the parent rule
+    // Always start with "&", representing the parent rule
     // See: https://drafts.csswg.org/css-nesting/#nest-selector
     "& > * + *": {
       marginLeft: 16
+    },
+
+    // In a comma-separated list, each individual selector shall start with "&"
+    "&:focus, &:active": {
+      outline: "solid"
     }
   }
 });
