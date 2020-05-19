@@ -36,7 +36,7 @@
 	],
 	"scripts": {
 		"build": "rollup --config --sourcemap",
-		"clean": "del-cli \"dist-*\" server/",
+		"clean": "del-cli \"dist-*\" server/ tsconfig.tsbuildinfo",
 		"develop": "yarn build --watch"
 	},
 	"dependencies": {
