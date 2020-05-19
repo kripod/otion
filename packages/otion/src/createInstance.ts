@@ -92,8 +92,7 @@ export interface OtionInstance {
 export function createInstance(): OtionInstance {
 	let injector: InjectorInstance;
 	let prefix: (property: string, value: string) => string;
-
-	const insertedIdentNames = new Set<string>();
+	let insertedIdentNames: Set<string>;
 
 	function hydrateScopedSubtree(cssRule: CSSRule): void {
 		if (cssRule.type === 1 /* CSSRule.STYLE_RULE */) {
@@ -254,9 +253,17 @@ export function createInstance(): OtionInstance {
 					if (flag & 0b100) cssText += `;-webkit-${declaration}`;
 					return cssText;
 				});
+
+			insertedIdentNames = new Set();
 		},
 
 		hydrate(): void {
+			if (isDev && !insertedIdentNames) {
+				throw new Error(
+					"On a custom otion instance, `setup()` must be called before usage.",
+				);
+			}
+
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 			const { cssRules } = injector.sheet!;
 			for (let i = 0, { length } = cssRules; i < length; ++i) {
