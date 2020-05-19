@@ -80,6 +80,21 @@ const className = css({
 });
 ```
 
+#### Advanced selectors may be used as an escape hatch from strict atomicity
+
+```js
+const className = css({
+  display: "flex",
+  selectors: {
+    // Always start with "&", using it only once, representing the parent rule
+    // See: https://drafts.csswg.org/css-nesting/#nest-selector
+    "& > * + *": {
+      marginLeft: 16
+    }
+  }
+});
+```
+
 ### Server-side rendering
 
 While prerendering a page, browser object models are inaccessible and thus, styles cannot be injected dynamically. However, a `VirtualInjector` can collect the styles instead of applying them through injection, as seen in the [Next.js example](https://github.com/kripod/otion/tree/master/packages/example-nextjs):

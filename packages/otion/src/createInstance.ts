@@ -57,6 +57,12 @@ export interface OtionInstance {
 	 *   justifyContent: ["space-around", "space-evenly"], // Last takes precedence
 	 *   padding: 8, // "8px"
 	 *   lineHeight: 1.5, // "1.5" without a unit
+	 *   selectors: {
+	 *     // Advanced selectors must start with "&"
+	 *     "& > * + *": {
+	 *       paddingLeft: 16
+	 *     }
+	 *   }
 	 * });
 	 */
 	css(rules: ScopedCSSRules): string;
@@ -75,12 +81,12 @@ export interface OtionInstance {
 	 * @example
 	 * const pulse = keyframes({
 	 *   from: { opacity: 0 },
-	 *   to: { opacity: 1 },
+	 *   to: { opacity: 1 }
 	 * });
 	 *
 	 * // Referencing
 	 * const className = css({
-	 *   animation: `${pulse} 3s infinite alternate`,
+	 *   animation: `${pulse} 3s infinite alternate`
 	 * });
 	 */
 	keyframes(rules: CSSKeyframeRules): { /** @private */ toString(): string };
@@ -214,6 +220,10 @@ export function createInstance(): OtionInstance {
 						if (parentRuleHead[0] === ":") {
 							// eslint-disable-next-line no-param-reassign
 							classSelectorStartIndex = cssTextHead.length;
+						} else if (parentRuleHead[0] === "&") {
+							parentRuleHead = parentRuleHead.slice(1);
+						} else if (parentRuleHead === "selectors") {
+							parentRuleHead = "";
 						} else if (parentRuleHead[0] !== "@") {
 							parentRuleHead += "{";
 							parentRuleTail = "}";

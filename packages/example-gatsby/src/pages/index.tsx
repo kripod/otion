@@ -33,6 +33,14 @@ export default function IndexPage(): JSX.Element {
 						padding: 32,
 					},
 
+					selectors: {
+						"& > * + *": {
+							// These are only to be observed in developer tools
+							paddingLeft: 48,
+							color: "teal",
+						},
+					},
+
 					"@media": {
 						" (min-width:  \n600px)   ": {
 							":hover": {

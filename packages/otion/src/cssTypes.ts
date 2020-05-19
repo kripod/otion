@@ -12,7 +12,9 @@ export type CSSRules<
 export interface ScopedCSSRules extends CSSRules<ScopedCSSProperties> {}
 
 export type CSSStyleRules<P extends Record<string, any> = CSSProperties> = P &
-	{ [pseudo in CSS.SimplePseudos]?: P };
+	{ [pseudo in CSS.SimplePseudos]?: P } & {
+		selectors?: { [selector: string]: P };
+	};
 
 export interface CSSGroupingRules<
 	P extends Record<string, any> = CSSProperties
