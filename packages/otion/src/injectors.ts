@@ -50,7 +50,12 @@ export function CSSOMInjector({
 		sheet: target,
 
 		insert(rule, index): number {
-			return target.insertRule(rule, index);
+			// Avoid render failure during production if a rule cannot be parsed
+			try {
+				return target.insertRule(rule, index);
+			} catch {
+				return -1;
+			}
 		},
 	};
 }
