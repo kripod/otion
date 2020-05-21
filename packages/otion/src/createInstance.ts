@@ -224,11 +224,10 @@ export function createInstance(): OtionInstance {
 						) {
 							// eslint-disable-next-line no-param-reassign
 							classSelectorStartIndex = cssTextHead.length;
-							parentRuleHeads = firstParentRuleHead
-								.split(",")
-								.map((singleSelector) =>
-									minifyCondition(singleSelector).replace("&", ""),
-								);
+							parentRuleHeads = firstParentRuleHead.split(",").map(
+								(singleSelector) =>
+									minifyCondition(singleSelector).replace("&", ""), // lgtm [js/incomplete-sanitization]
+							);
 						} else if (firstParentRuleHead === "selectors") {
 							firstParentRuleHead = "";
 						} else if (firstParentRuleHead[0] !== "@") {
