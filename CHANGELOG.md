@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.2](https://github.com/kripod/otion/compare/v0.3.1...v0.3.2) (2020-05-21)
+
+### Bug Fixes
+
+- avoid production render failure in Chrome ([0eb21f8](https://github.com/kripod/otion/commit/0eb21f8bb9d80ed9e52f1a343137efb0a758fcf4))
+
 ## [0.3.1](https://github.com/kripod/otion/compare/v0.3.0...v0.3.1) (2020-05-19)
 
 ### Bug Fixes
