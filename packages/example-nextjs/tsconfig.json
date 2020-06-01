@@ -8,6 +8,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"noEmit": true,
 		"esModuleInterop": true,
+		"module": "esnext",
 		"resolveJsonModule": true,
 		"jsx": "preserve"
 	},
