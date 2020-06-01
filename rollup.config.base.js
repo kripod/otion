@@ -31,6 +31,19 @@ export function getMainEntries(pkg, env) {
 			// eslint-disable-next-line no-param-reassign
 			output.file = output.file.replace(".min.", ".");
 		});
+	} else {
+		nodeOutputs.forEach((output) => {
+			// eslint-disable-next-line no-param-reassign
+			output.plugins = [
+				// Minify only in production
+				terser({
+					output: {
+						// Preserve triple-slash directives
+						comments: /^\//,
+					},
+				}),
+			];
+		});
 	}
 
 	const denoOutputFile = nodeOutputs[0].file.replace(
@@ -46,16 +59,7 @@ export function getMainEntries(pkg, env) {
 			.replace(".mjs", ".d.ts")}" />`,
 	};
 
-	const commonLastPlugins = [
-		resolve({ browser: true }),
-		terser({
-			include: /\.min\.[^.]+$/,
-			output: {
-				// Preserve triple-slash directives
-				comments: /^\//,
-			},
-		}),
-	];
+	const commonLastPlugins = [resolve({ browser: true })];
 
 	const nodeEntry = {
 		input: "./src/index.ts",
