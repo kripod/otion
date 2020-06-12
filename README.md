@@ -61,6 +61,16 @@ function Component() {
       >
         I am also blue, reusing the CSS class injected by my sibling
       </p>
+      <p
+        className={css({
+          color: "blue",
+          "@media": {
+            "(min-width: 400px)": {
+              color: "orange"
+            }
+          }
+        })}
+      >I'm blue, but I'll be orange if your screen is larger than 360px</p>
     </>
   );
 }
