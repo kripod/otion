@@ -1,8 +1,9 @@
 # react-otion
 
-React bindings for otion, the atomic CSS-in-JS library.
+React bindings for otion, the atomic CSS-in-JS library (Server only). 
 
 ## Usage
+
 
 ### Server-side rendering
 
@@ -23,3 +24,7 @@ setHeadComponents(styleElement);
 ```
 
 All [methods of `otion/server`](https://github.com/kripod/otion/tree/master/packages/otion#server-side-rendering) are re-exported for convenience, as seen in the previous snippet.
+
+### Single Page Applications
+
+This package is not necessary for single page React applications (e.g. those built with Create React App)
