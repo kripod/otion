@@ -65,12 +65,14 @@ function Component() {
         className={css({
           color: "blue",
           "@media": {
-            "(min-width: 400px)": {
+            "(min-width: 768px)": {
               color: "orange"
             }
           }
         })}
-      >I'm blue, but I'll be orange if your screen is larger than 360px</p>
+      >
+        I am orange if your viewport is wider than 768px
+      </p>
     </>
   );
 }
