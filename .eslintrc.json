@@ -5,7 +5,6 @@
 	"extends": [
 		"airbnb-typescript",
 		"airbnb/hooks",
-		"plugin:@typescript-eslint/eslint-recommended",
 		"plugin:@typescript-eslint/recommended",
 		"prettier",
 		"prettier/@typescript-eslint",
@@ -32,7 +31,8 @@
 		{
 			"files": ["*.js", "*.jsx"],
 			"rules": {
-				"@typescript-eslint/explicit-function-return-type": "off"
+				"@typescript-eslint/explicit-function-return-type": "off",
+				"@typescript-eslint/explicit-module-boundary-types": "off"
 			}
 		},
 		{
