@@ -101,6 +101,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://nitropage.com"><img src="https://avatars0.githubusercontent.com/u/4012401?v=4" width="100px;" alt=""/><br /><sub><b>Katja Lutz</b></sub></a><br /><a href="https://github.com/kripod/otion/issues?q=author%3Akatywings" title="Bug reports">🐛</a> <a href="#ideas-katywings" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/biowaffeln"><img src="https://avatars3.githubusercontent.com/u/29342337?v=4" width="100px;" alt=""/><br /><sub><b>Mark Kvetny</b></sub></a><br /><a href="#ideas-biowaffeln" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://formik.com"><img src="https://avatars2.githubusercontent.com/u/4060187?v=4" width="100px;" alt=""/><br /><sub><b>Jared Palmer</b></sub></a><br /><a href="https://github.com/kripod/otion/commits?author=jaredpalmer" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/etc-tiago"><img src="https://avatars1.githubusercontent.com/u/33164463?v=4" width="100px;" alt=""/><br /><sub><b>Tiago Souza</b></sub></a><br /><a href="https://github.com/kripod/otion/commits?author=etc-tiago" title="Documentation">📖</a></td>
   </tr>
 </table>
 
