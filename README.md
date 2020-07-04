@@ -61,6 +61,18 @@ function Component() {
       >
         I am also blue, reusing the CSS class injected by my sibling
       </p>
+      <p
+        className={css({
+          color: "blue",
+          "@media": {
+            "(min-width: 768px)": {
+              color: "orange"
+            }
+          }
+        })}
+      >
+        I am orange if your viewport is wider than 768px
+      </p>
     </>
   );
 }
