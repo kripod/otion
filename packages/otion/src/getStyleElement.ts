@@ -9,8 +9,5 @@ export function getStyleElement(): HTMLStyleElement {
 	el = document.createElement("style");
 	el.id = STYLE_ELEMENT_ID;
 
-	// Avoid Edge bug where empty style elements don't create sheets
-	el.appendChild(document.createTextNode(""));
-
 	return document.head.appendChild(el);
 }
