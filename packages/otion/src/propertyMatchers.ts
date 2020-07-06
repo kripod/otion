@@ -9,7 +9,7 @@
 */
 
 // Includes support for CSS custom properties
-export const PROPERTY_ACCEPTS_UNITLESS_VALUES = /^(-|f[lo].*[^se]$|g.{6,}[^ps]$|z|o[pr]|li.*(t|mp)$|an|(bo|s).{5}im|sca|m.{7}[ds]|ta|c.*[st]$|wido|ini)/;
+export const PROPERTY_ACCEPTS_UNITLESS_VALUES = /^(-|f[lo].*[^se]$|g.{6,}[^ps]$|z|o[pr]|(-w.{6})?li.*(t|mp)$|an|(bo|s).{5}im|sca|m.{7}[ds]|ta|c.*[st]$|wido|ini)/;
 
 // TODO: Add tests to match everything below, without false positives
 export const propertiesAcceptingUnitlessValues = [
@@ -31,16 +31,16 @@ export const propertiesAcceptingUnitlessValues = [
 
 	/* ^z */
 	"z-index",
-	"zoom",
 
 	/* ^o[pr] */
 	"opacity",
 	"order",
 	"orphans",
 
-	/* ^li.*(t|mp)$ */
+	/* ^(-w.{6})?li.*(t|mp)$ */
 	"line-height",
 	"line-clamp",
+	"-webkit-line-clamp",
 
 	/* ^an */
 	"animation",
