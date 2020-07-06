@@ -45,5 +45,10 @@
 		"@emotion/hash": "^0.8.0",
 		"csstype": "^2.6.10",
 		"tiny-css-prefixer": "^1.1.4"
+	},
+	"devDependencies": {
+		"@types/css-tree": "^1.0.3",
+		"css-tree": "^1.0.0-alpha.39",
+		"mdn-data": "^2.0.10"
 	}
 }
