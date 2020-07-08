@@ -7,14 +7,27 @@ import {
 } from "./propertyMatchers";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function nodeAcceptsNumericValue(node: any): boolean {
+function requiredTermCount(terms: any) {
+	return terms.reduce(
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		(sum: number, term: any) =>
+			sum + (term.type === "Multiplier" ? term.min : 1),
+		0,
+	);
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function nodeAcceptsValueType(node: any, acceptedTypes: Set<string>): boolean {
 	if (node.type === "Type") {
-		if (node.name === "number" || node.name === "integer") return true;
+		if (acceptedTypes.has(node.name)) {
+			return true;
+		}
 
 		return (
 			Object.prototype.hasOwnProperty.call(CSSData.syntaxes, node.name) &&
-			nodeAcceptsNumericValue(
+			nodeAcceptsValueType(
 				definitionSyntax.parse(CSSData.syntaxes[node.name].syntax),
+				acceptedTypes,
 			)
 		);
 	}
@@ -22,31 +35,35 @@ function nodeAcceptsNumericValue(node: any): boolean {
 	if (node.type === "Group") {
 		if (
 			node.combinator[0] === "|" ||
-			(node.combinator === " " && node.terms.length === 1)
+			node.terms.length === 1 ||
+			requiredTermCount(node.terms) === 0
 		) {
-			return node.terms.some(nodeAcceptsNumericValue);
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			return node.terms.some((term: any) =>
+				nodeAcceptsValueType(term, acceptedTypes),
+			);
 		}
 
-		if (
-			node.terms.slice(1).every(
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				(subNode: any) => subNode.type === "Multiplier" && subNode.min === 0,
-			)
-		) {
-			return nodeAcceptsNumericValue(node.terms[0]);
+		const firstRequiredTerm = node.terms.find(
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			(term: any) => term.type !== "Multiplier" || term.min === 1,
+		);
+		if (firstRequiredTerm != null && requiredTermCount(node.terms) === 1) {
+			return nodeAcceptsValueType(firstRequiredTerm, acceptedTypes);
 		}
 
 		return false;
 	}
 
 	if (node.type === "Property") {
-		return nodeAcceptsNumericValue(
+		return nodeAcceptsValueType(
 			definitionSyntax.parse(CSSData.properties[node.name].syntax),
+			acceptedTypes,
 		);
 	}
 
 	if (node.type === "Multiplier" && node.min <= 1) {
-		return nodeAcceptsNumericValue(node.term);
+		return nodeAcceptsValueType(node.term, acceptedTypes);
 	}
 
 	return false;
@@ -54,20 +71,35 @@ function nodeAcceptsNumericValue(node: any): boolean {
 
 function hasUnitlessSyntax(syntax: string): boolean {
 	const rootNode = definitionSyntax.parse(syntax);
-	return nodeAcceptsNumericValue(rootNode);
+	return nodeAcceptsValueType(rootNode, new Set(["number", "integer"]));
 }
+
+function hasDimensionalSyntax(syntax: string): boolean {
+	const rootNode = definitionSyntax.parse(syntax);
+	return nodeAcceptsValueType(rootNode, new Set(["length"]));
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const cssProperties = Object.entries<any>(CSSData.properties).filter(
+	([, { status }]) => status === "standard" || status === "experimental",
+);
+
+const unitlessCSSProperties = new Set(
+	cssProperties
+		.filter(([, { syntax }]) => hasUnitlessSyntax(syntax))
+		.map(([property]) => property),
+);
+
+const nonUnitlessCSSProperties = cssProperties
+	.filter(
+		([property, { syntax }]) =>
+			!unitlessCSSProperties.has(property) && hasDimensionalSyntax(syntax),
+	)
+	.map(([property]) => property);
 
 test("known set of unitless-valued CSS properties matches MDN data", () => {
 	expect(new Set(propertiesAcceptingUnitlessValues)).toEqual(
-		new Set(
-			Object.entries<{ syntax: string; status: string }>(CSSData.properties)
-				.filter(
-					([, { syntax, status }]) =>
-						(status === "standard" || status === "experimental") &&
-						hasUnitlessSyntax(syntax),
-				)
-				.map(([property]) => property),
-		),
+		unitlessCSSProperties,
 	);
 });
 
@@ -75,5 +107,12 @@ test.each(propertiesAcceptingUnitlessValues)(
 	"regexp matches unitless-valued '%s' CSS property",
 	(property) => {
 		expect(PROPERTY_ACCEPTS_UNITLESS_VALUES.test(property)).toBe(true);
+	},
+);
+
+test.each(nonUnitlessCSSProperties)(
+	"regexp does not match non-unitless-valued '%s' CSS property",
+	(property) => {
+		expect(PROPERTY_ACCEPTS_UNITLESS_VALUES.test(property)).toBe(false);
 	},
 );
