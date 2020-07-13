@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.3](https://github.com/kripod/otion/compare/v0.3.2...v0.3.3) (2020-07-13)
+
+### Bug Fixes
+
+- add missing unitless property matcher pattern ([b93465e](https://github.com/kripod/otion/commit/b93465ef54f4a09792e718559f016b818b70bf46))
+- support manual vendor prefixing for '-ms-\*' ([6ae277f](https://github.com/kripod/otion/commit/6ae277fe4f2bc64d0343676bf9320ac6e5cb339d))
+
 ## [0.3.2](https://github.com/kripod/otion/compare/v0.3.1...v0.3.2) (2020-05-21)
 
 ### Bug Fixes
