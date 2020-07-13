@@ -18,7 +18,7 @@ import { PRECEDENCES_BY_PSEUDO_CLASS } from "./pseudos";
 
 const MAX_CLASS_NAME_LENGTH = 9;
 
-function upperToHyphenLower(match: string): string {
+function toHyphenLower(match: string): string {
 	return `-${match.toLowerCase()}`;
 }
 
@@ -168,7 +168,8 @@ export function createInstance(): OtionInstance {
 					// Class specificities are controlled with repetition, see:
 					// https://csswizardry.com/2014/07/hacks-for-dealing-with-specificity/
 
-					const property = key.replace(/[A-Z]/g, upperToHyphenLower);
+					// TODO: Consider removing IE vendor prefix support
+					const property = key.replace(/^ms|[A-Z]/g, toHyphenLower);
 					const declarations = serializeDeclarationList(property, value);
 					const className = `_${hash(cssTextHead + declarations)}`;
 
