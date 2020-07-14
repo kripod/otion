@@ -4,7 +4,9 @@
 	"private": true,
 	"scripts": {
 		"build": "SKIP_PREFLIGHT_CHECK=true react-scripts build",
-		"start": "SKIP_PREFLIGHT_CHECK=true react-scripts start"
+		"lint": "yarn lint",
+		"start": "SKIP_PREFLIGHT_CHECK=true react-scripts start",
+		"type-check": "tsc"
 	},
 	"browserslist": {
 		"production": [
