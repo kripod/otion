@@ -16,20 +16,21 @@
 	"license": "MIT",
 	"author": "Kristóf Poduszló <kripod@protonmail.com>",
 	"sideEffects": false,
+	"type": "module",
 	"exports": {
 		".": {
-			"import": "./dist-node/esm/bundle.min.mjs",
-			"require": "./dist-node/cjs/bundle.min.js"
+			"import": "./dist-node/esm/bundle.min.js",
+			"require": "./dist-node/cjs/bundle.min.cjs"
 		},
 		"./runtime-deno": "./dist-deno/bundle.prod.min.mjs",
 		"./runtime-deno-dev": "./dist-deno/bundle.dev.mjs",
 		"./server": {
-			"import": "./server/index.mjs",
-			"require": "./server/index.js"
+			"import": "./server/index.js",
+			"require": "./server/index.cjs"
 		}
 	},
-	"main": "./dist-node/cjs/bundle.min.js",
-	"module": "./dist-node/esm/bundle.min.mjs",
+	"main": "./dist-node/cjs/bundle.min.cjs",
+	"module": "./dist-node/esm/bundle.min.js",
 	"types": "./dist-node/esm/bundle.d.ts",
 	"files": [
 		"dist-*/",
