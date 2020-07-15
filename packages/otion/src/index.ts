@@ -1,5 +1,7 @@
 import { createInstance, OtionInstance } from "./createInstance";
 
+export type { ScopedCSSRules } from "./cssTypes";
+
 export { createInstance };
 
 const defaultInstance = createInstance();
