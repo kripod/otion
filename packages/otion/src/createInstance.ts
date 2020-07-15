@@ -65,7 +65,7 @@ export interface OtionInstance {
 	 *   }
 	 * });
 	 */
-	css(rules: ScopedCSSRules): string;
+	css(rules: ScopedCSSRules | ScopedCSSRules[]): string;
 
 	// used to specify the values for the animating properties at various points during the animation
 	/**
@@ -297,10 +297,17 @@ export function createInstance(): OtionInstance {
 		},
 
 		css(rules): string {
-			if (isDev) checkSetup();
+			let styles: ScopedCSSRules = {};
+			if ((rules as any).length) {
+				(rules as ScopedCSSRules[]).forEach((rule: ScopedCSSRules) => {
+					styles = Object.assign(styles, rule);
+				});
+			} else {
+				styles = rules as ScopedCSSRules;
+			}
 
 			// The leading white space character gets removed
-			return decomposeToClassNames(rules, "", "").slice(1);
+			return decomposeToClassNames(styles, "", "").slice(1);
 		},
 
 		keyframes(rules): { toString(): string } {
