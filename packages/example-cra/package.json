@@ -1,11 +1,11 @@
 {
-	"name": "otion-example-cra",
-	"version": "0.3.3",
+	"name": "example-cra",
+	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"build": "SKIP_PREFLIGHT_CHECK=true react-scripts build",
-		"lint": "yarn lint",
-		"start": "SKIP_PREFLIGHT_CHECK=true react-scripts start",
+		"build": "react-scripts build",
+		"eject": "react-scripts eject",
+		"start": "react-scripts start",
 		"type-check": "tsc"
 	},
 	"browserslist": {
@@ -21,6 +21,7 @@
 		]
 	},
 	"dependencies": {
+		"cra-template-typescript": "1.0.3",
 		"otion": "^0.3.3",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",

@@ -1,44 +1,47 @@
 import { css, keyframes } from "otion";
-import * as React from "react";
+import React from "react";
 
 import logo from "./logo.svg";
 
-const app = css({ textAlign: "center" });
-
-const logoSpin = keyframes({
+const spin = keyframes({
 	from: { transform: "rotate(0deg)" },
 	to: { transform: "rotate(360deg)" },
 });
 
-const appLogo = css({
-	height: "40vmin",
-	pointerEvents: "none",
-	animation: `${logoSpin} infinite 20s linear`,
-});
-
-const appHeader = css({
-	backgroundColor: "#282c34",
-	minHeight: "100vh",
-	display: "flex",
-	flexDirection: "column",
-	alignItems: "center",
-	justifyContent: "center",
-	fontSize: "calc(10px + 2vmin)",
-	color: "white",
-});
-
-const appLink = css({ color: "#61dafb" });
-
-function App(): JSX.Element {
+export default function App(): JSX.Element {
 	return (
-		<div className={app}>
-			<header className={appHeader}>
-				<img src={logo} className={appLogo} alt="logo" />
+		<div className={css({ textAlign: "center" })}>
+			<header
+				className={css({
+					backgroundColor: "#282c34",
+					minHeight: "100vh",
+					display: "flex",
+					flexDirection: "column",
+					alignItems: "center",
+					justifyContent: "center",
+					fontSize: "calc(10px + 2vmin)",
+					color: "white",
+				})}
+			>
+				<img
+					src={logo}
+					className={css({
+						height: "40vmin",
+						pointerEvents: "none",
+						animation: `${spin} infinite 20s linear`,
+						"@media": {
+							"(prefers-reduced-motion: reduce)": {
+								animation: "none",
+							},
+						},
+					})}
+					alt="logo"
+				/>
 				<p>
 					Edit <code>src/App.tsx</code> and save to reload.
 				</p>
 				<a
-					className={appLink}
+					className={css({ color: "#61dafb" })}
 					href="https://reactjs.org"
 					target="_blank"
 					rel="noopener noreferrer"
@@ -49,5 +52,3 @@ function App(): JSX.Element {
 		</div>
 	);
 }
-
-export default App;

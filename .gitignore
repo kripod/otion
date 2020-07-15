@@ -11,6 +11,9 @@ node_modules/
 dist-*/
 packages/*otion/server/
 
+# Create React App
+!packages/example-cra/.env
+
 # Gatsby
 .cache/
 public/
