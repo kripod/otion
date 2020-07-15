@@ -8,7 +8,7 @@ function getOutputs(pkg, subpath) {
 	return [
 		{
 			file: pkg.exports[subpath].import,
-			format: "es",
+			format: "esm",
 		},
 		{
 			file: pkg.exports[subpath].require,
