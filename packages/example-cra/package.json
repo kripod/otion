@@ -1,0 +1,29 @@
+{
+	"name": "otion-example-cra",
+	"version": "0.3.3",
+	"private": true,
+	"scripts": {
+		"build": "SKIP_PREFLIGHT_CHECK=true react-scripts build",
+		"lint": "yarn lint",
+		"start": "SKIP_PREFLIGHT_CHECK=true react-scripts start",
+		"type-check": "tsc"
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"dependencies": {
+		"otion": "^0.3.3",
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1",
+		"react-scripts": "3.4.1"
+	}
+}
