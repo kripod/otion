@@ -16,6 +16,7 @@
 	"license": "MIT",
 	"author": "Kristóf Poduszló <kripod@protonmail.com>",
 	"sideEffects": false,
+	"type": "module",
 	"exports": {
 		".": {
 			"import": "./dist-node/esm/bundle.min.js",
