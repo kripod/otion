@@ -14,3 +14,5 @@ export const keyframes: OtionInstance["keyframes"] = defaultInstance.keyframes;
 /* eslint-enable prefer-destructuring */
 
 export { CSSOMInjector, DOMInjector, NoOpInjector } from "./injectors";
+
+export type { ScopedCSSRules } from "./cssTypes";
