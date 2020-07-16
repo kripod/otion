@@ -67,7 +67,8 @@
       "contributions": [
         "doc",
         "platform",
-        "example"
+        "example",
+        "code"
       ]
     }
   ],
