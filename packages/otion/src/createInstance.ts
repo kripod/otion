@@ -141,13 +141,11 @@ export function createInstance(): OtionInstance {
 			return normalizeDeclaration(property, value);
 		}
 
-		let cssText = "";
-		value.forEach((fallbackValue) => {
-			cssText += `;${normalizeDeclaration(property, fallbackValue)}`;
-		});
-
-		// The leading declaration separator character gets removed
-		return cssText.slice(1);
+		return value
+			.map((fallbackValue: string | number) =>
+				normalizeDeclaration(property, fallbackValue),
+			)
+			.join(";");
 	}
 
 	function decomposeToClassNames(
