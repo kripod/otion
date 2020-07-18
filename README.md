@@ -31,11 +31,27 @@ Atomicity generalizes the former concept by instantiating style rules on demand.
 - 🐾 Negligible runtime footprint
 - 💫 Works without a framework
 
+## Getting started
+
+Install the library with a package manager of choice, e.g.:
+
+```shell
+npm install otion
+```
+
+Additionally, configure frameworks as shown below:
+
+- Create React App ([example](./packages/example-cra))
+- Gatsby ([plugin](./packages/gatsby-plugin-otion), [example](./packages/example-gatsby))
+- Next.js ([example](./packages/example-nextjs))
+
 ## Example
 
 The following demo covers a wide range of use-cases.
 
 As a core function, `css` returns a space-separated string of unique class names. Each property–value pair is only injected once to the library-managed style sheet.
+
+Please refer to the [core package manual](./packages/otion/README.md) for further information.
 
 ```jsx
 import { css, keyframes } from "otion";
@@ -77,15 +93,6 @@ function Component() {
   );
 }
 ```
-
-## Documentation
-
-Please refer to the [`otion` package manual](./packages/otion/README.md) for further information. Additionally, each integration below has its own setup guide.
-
-## Integrations
-
-- Gatsby ([plugin](./packages/gatsby-plugin-otion), [example](./packages/example-gatsby))
-- Next.js ([example](./packages/example-nextjs))
 
 ## Contributors
 
