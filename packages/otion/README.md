@@ -4,6 +4,12 @@ Atomic CSS-in-JS with a featherweight runtime.
 
 ## Usage
 
+Install the library with a package manager of choice, e.g.:
+
+```shell
+npm install otion
+```
+
 ### Introduction through examples
 
 The code snippets below are deliberately framework-agnostic. Please refer to the [project's repository](https://github.com/kripod/otion) for information about integrations.

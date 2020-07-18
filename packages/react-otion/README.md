@@ -4,6 +4,12 @@ Server-side React bindings for otion, the atomic CSS-in-JS library.
 
 ## Usage
 
+Install the library and its bindings with a package manager of choice, e.g.:
+
+```shell
+npm install otion react-otion
+```
+
 ### Server-side rendering
 
 A special renderer is available for instantiating `<style>` JSX elements on the server, as seen in the [Next.js example](https://github.com/kripod/otion/tree/master/packages/example-nextjs):

@@ -4,7 +4,7 @@ Gatsby plugin for otion, the atomic CSS-in-JS library.
 
 ## Usage
 
-1. Install the package and its peer dependencies:
+1. Install the plugin and its peer dependencies with a package manager of choice, e.g.:
 
    ```shell
    npm install gatsby-plugin-otion otion react-otion
