@@ -12,11 +12,10 @@
 	"license": "MIT",
 	"author": "Kristóf Poduszló <kripod@protonmail.com>",
 	"sideEffects": false,
-	"type": "module",
 	"exports": {
 		"./server": {
 			"import": "./server/index.mjs",
-			"require": "./server/index.cjs"
+			"require": "./server/index.js"
 		}
 	},
 	"files": [
