@@ -12,7 +12,7 @@ npm install otion react-otion
 
 ### Server-side rendering
 
-A special renderer is available for instantiating `<style>` JSX elements on the server, as seen in the [Next.js example](https://github.com/kripod/otion/tree/master/packages/example-nextjs):
+A special renderer is available for instantiating `<style>` JSX elements on the server, as seen in the [Next.js example](https://github.com/kripod/otion/tree/main/packages/example-nextjs):
 
 ```js
 import { setup } from "otion";
@@ -28,7 +28,7 @@ const styleElement = getStyleElement(injector);
 setHeadComponents(styleElement);
 ```
 
-All [methods of `otion/server`](https://github.com/kripod/otion/tree/master/packages/otion#server-side-rendering) are re-exported for convenience, as seen in the previous snippet.
+All [methods of `otion/server`](https://github.com/kripod/otion/tree/main/packages/otion#server-side-rendering) are re-exported for convenience, as seen in the previous snippet.
 
 ### Single-page applications
 

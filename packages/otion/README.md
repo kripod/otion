@@ -108,7 +108,7 @@ const className = css({
 
 ### Server-side rendering
 
-While prerendering a page, browser object models are inaccessible and thus, styles cannot be injected dynamically. However, a `VirtualInjector` can collect the styles instead of applying them through injection, as seen in the [Next.js example](https://github.com/kripod/otion/tree/master/packages/example-nextjs):
+While prerendering a page, browser object models are inaccessible and thus, styles cannot be injected dynamically. However, a `VirtualInjector` can collect the styles instead of applying them through injection, as seen in the [Next.js example](https://github.com/kripod/otion/tree/main/packages/example-nextjs):
 
 ```js
 import { setup } from "otion";
