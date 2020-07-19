@@ -1,4 +1,5 @@
 {
+	"packages": ["./packages/!(example-*)"],
 	"sandboxes": [
 		"./packages/example-cra",
 		"./packages/example-gatsby",
