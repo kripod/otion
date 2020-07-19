@@ -41,9 +41,9 @@ npm install otion
 
 Additionally, configure frameworks as shown below:
 
-- Create React App ([example](./packages/example-cra), [sandbox](https://codesandbox.io/s/kripodotion-example-cra-k5htd))
-- Gatsby ([plugin](./packages/gatsby-plugin-otion), [example](./packages/example-gatsby), [sandbox](https://codesandbox.io/s/kripodotion-example-gatsby-i7yqp))
-- Next.js ([example](./packages/example-nextjs), [sandbox](https://codesandbox.io/s/kripodotion-example-nextjs-1pudm))
+- Create React App ([example](./packages/example-cra), [sandbox](https://githubbox.com/kripod/otion/tree/main/packages/example-cra))
+- Gatsby ([plugin](./packages/gatsby-plugin-otion), [example](./packages/example-gatsby), [sandbox](https://githubbox.com/kripod/otion/tree/main/packages/example-gatsby))
+- Next.js ([example](./packages/example-nextjs), [sandbox](https://githubbox.com/kripod/otion/tree/main/packages/example-nextjs))
 
 ## Example
 
