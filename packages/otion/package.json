@@ -29,9 +29,9 @@
 			"require": "./server/index.cjs"
 		}
 	},
-	"main": "./dist-node/esm/bundle.min.js",
+	"main": "./dist-node/cjs/bundle.min.cjs",
 	"module": "./dist-node/esm/bundle.min.js",
-	"types": "./dist-node/esm/bundle.d.ts",
+	"types": "./dist-node/cjs/bundle.min.cjs.d.ts",
 	"files": [
 		"dist-*/",
 		"server/",
