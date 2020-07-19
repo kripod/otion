@@ -1,9 +1,10 @@
 {
-	"name": "example-cra",
-	"version": "0.1.0",
+	"name": "otion-example-cra",
+	"version": "0.3.3",
 	"private": true,
 	"scripts": {
 		"build": "react-scripts build",
+		"clean": "del-cli build/",
 		"eject": "react-scripts eject",
 		"start": "react-scripts start",
 		"type-check": "tsc"
