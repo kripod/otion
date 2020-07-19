@@ -3,6 +3,7 @@ import {
 	filterOutUnusedRules,
 	getStyleElement,
 	VirtualInjector,
+	// eslint-disable-next-line import/no-unresolved
 } from "react-otion/server";
 
 import options from "./src/options";
