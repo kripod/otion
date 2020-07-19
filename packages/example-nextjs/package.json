@@ -5,8 +5,8 @@
 	"scripts": {
 		"build": "next build",
 		"clean": "del-cli .next/",
-		"develop": "next dev",
-		"serve": "next start",
+		"dev": "next dev",
+		"start": "next start",
 		"type-check": "tsc"
 	},
 	"dependencies": {
