@@ -3,8 +3,6 @@
 	"sandboxes": [
 		"/packages/example-cra",
 		"/packages/example-gatsby",
-		"/packages/example-nextjs",
-		"new",
-		"vanilla"
+		"/packages/example-nextjs"
 	]
 }
