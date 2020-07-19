@@ -30,7 +30,6 @@
 		}
 	},
 	"main": "./dist-node/esm/bundle.min.js",
-	"module": "./dist-node/esm/bundle.min.js",
 	"types": "./dist-node/esm/bundle.d.ts",
 	"files": [
 		"dist-*/",
