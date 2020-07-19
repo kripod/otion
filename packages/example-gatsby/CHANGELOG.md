@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.4](https://github.com/kripod/otion/compare/v0.3.3...v0.3.4) (2020-07-19)
+
+### Bug Fixes
+
+- **example-gatsby:** module resolution ([35e4c3a](https://github.com/kripod/otion/commit/35e4c3a977db0058ba2c94133cd39566ce0f3593))
+
+### Reverts
+
+- "ci(codesandbox): set templates explicitly" ([82db16c](https://github.com/kripod/otion/commit/82db16ca1d97d742f1a81b17db1bf1bc3c44f1e7))
+
 ## [0.3.3](https://github.com/kripod/otion/compare/v0.3.2...v0.3.3) (2020-07-13)
 
 **Note:** Version bump only for package otion-example-gatsby

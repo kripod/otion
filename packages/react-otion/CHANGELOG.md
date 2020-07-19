@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.4](https://github.com/kripod/otion/compare/v0.3.3...v0.3.4) (2020-07-19)
+
+### Bug Fixes
+
+- **example-nextjs:** ssr with Node.js 10 ([dacdbad](https://github.com/kripod/otion/commit/dacdbadabb0330da0d462895a68f9805be0022eb))
+- **nextjs:** server-side module resolution ([d47911b](https://github.com/kripod/otion/commit/d47911b2a09ed48c02d6e867fce1d338dd5d029b))
+- **package:** module resolution ([3f084f6](https://github.com/kripod/otion/commit/3f084f6542e2d6831f25add58e185e99032f262f))
+- **packaging:** output file extensions ([5ce164b](https://github.com/kripod/otion/commit/5ce164b8c9c44714c4add3d3f280661ce3262ac7))
+
 ## [0.3.3](https://github.com/kripod/otion/compare/v0.3.2...v0.3.3) (2020-07-13)
 
 **Note:** Version bump only for package react-otion

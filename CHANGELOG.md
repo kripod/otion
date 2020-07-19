@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.4](https://github.com/kripod/otion/compare/v0.3.3...v0.3.4) (2020-07-19)
+
+### Bug Fixes
+
+- **codesandbox:** package entry point resolution ([4fd92b4](https://github.com/kripod/otion/commit/4fd92b4d6bf8eccb3be235cf779aa87338307ec3))
+- **example-gatsby:** module resolution ([35e4c3a](https://github.com/kripod/otion/commit/35e4c3a977db0058ba2c94133cd39566ce0f3593))
+- **example-nextjs:** ssr with Node.js 10 ([dacdbad](https://github.com/kripod/otion/commit/dacdbadabb0330da0d462895a68f9805be0022eb))
+- **nextjs:** server-side module resolution ([d47911b](https://github.com/kripod/otion/commit/d47911b2a09ed48c02d6e867fce1d338dd5d029b))
+- **package:** module resolution ([3f084f6](https://github.com/kripod/otion/commit/3f084f6542e2d6831f25add58e185e99032f262f))
+- **packaging:** output file extensions ([5ce164b](https://github.com/kripod/otion/commit/5ce164b8c9c44714c4add3d3f280661ce3262ac7))
+- compatibility with older bundlers ([#29](https://github.com/kripod/otion/issues/29)) ([61d0763](https://github.com/kripod/otion/commit/61d0763d1ea57d6098c42bccd3f701d08e694b77))
+
+### Reverts
+
+- "chore(package): remove non-standard ESM entry" ([57fe06b](https://github.com/kripod/otion/commit/57fe06bbcec1881c0f0875580f79dd0c74806ec5))
+- "ci(codesandbox): experiment with no config" ([b2fab56](https://github.com/kripod/otion/commit/b2fab56794d32b4a029b7e109724f9832e347d76))
+- "ci(codesandbox): set templates explicitly" ([82db16c](https://github.com/kripod/otion/commit/82db16ca1d97d742f1a81b17db1bf1bc3c44f1e7))
+
 ## [0.3.3](https://github.com/kripod/otion/compare/v0.3.2...v0.3.3) (2020-07-13)
 
 ### Bug Fixes
