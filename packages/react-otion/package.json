@@ -15,7 +15,7 @@
 	"type": "module",
 	"exports": {
 		"./server": {
-			"import": "./server/index.js",
+			"import": "./server/index.mjs",
 			"require": "./server/index.cjs"
 		}
 	},
