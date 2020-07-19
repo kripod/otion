@@ -2,6 +2,7 @@
 	"extends": "../../tsconfig-lib",
 	"include": ["./src/"],
 	"compilerOptions": {
-		"tsBuildInfoFile": "./tsconfig.tsbuildinfo"
+		"tsBuildInfoFile": "./tsconfig.tsbuildinfo",
+		"esModuleInterop": true
 	}
 }

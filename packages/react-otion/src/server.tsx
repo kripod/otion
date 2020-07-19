@@ -1,5 +1,5 @@
 import { getStyleProps, VirtualInjector } from "otion/server";
-import * as React from "react";
+import React from "react";
 
 export * from "otion/server";
 
