@@ -175,15 +175,23 @@ export function createInstance(): OtionInstance {
 					const className = `_${hash(cssTextHead + declarations)}`;
 
 					// The property's baseline precedence is based on dash (`-`) counting
+					const unprefixedProperty =
+						property[0] !== "-"
+							? property
+							: property.slice(property.indexOf("-", 1)) + 1;
 					let precedence = 1;
-					let position = 3;
-					// eslint-disable-next-line no-cond-assign
-					while ((position = property.indexOf("-", position) + 1) > 0) {
+					let position = 1; // First character of the property can't be `-`
+					while (
+						// eslint-disable-next-line no-cond-assign
+						(position = unprefixedProperty.indexOf("-", position) + 1) > 0
+					) {
 						++precedence;
 					}
 
 					// Handle properties which don't conform to the rule above
-					const matches = PROPERTY_PRECEDENCE_FIX_GROUPS.exec(property);
+					const matches = PROPERTY_PRECEDENCE_FIX_GROUPS.exec(
+						unprefixedProperty,
+					);
 					const scopeSelector = `.${className}`.repeat(
 						precedence + (matches ? +!!matches[1] || -!!matches[2] : 0),
 					);
