@@ -200,23 +200,25 @@ export function createInstance(): OtionInstance {
 							++precedence;
 						}
 
+						// Pseudo-classes also have an impact on rule precedence
+						precedence *=
+							(classSelectorStartIndex != null &&
+								PRECEDENCES_BY_PSEUDO_CLASS.get(
+									cssTextHead.slice(
+										// This part uniquely identifies a pseudo selector
+										classSelectorStartIndex + 3,
+										classSelectorStartIndex + 8,
+									),
+								)) ||
+							1;
+
 						const scopeSelector = `.${className}`.repeat(precedence);
 						injector.insert(
 							`${
 								cssTextHead.slice(0, classSelectorStartIndex) +
 								scopeSelector +
 								(classSelectorStartIndex != null
-									? `${
-											scopeSelector.repeat(
-												PRECEDENCES_BY_PSEUDO_CLASS.get(
-													cssTextHead.slice(
-														// This part uniquely identifies a pseudo selector
-														classSelectorStartIndex + 3,
-														classSelectorStartIndex + 8,
-													),
-												) || 1,
-											) + cssTextHead.slice(classSelectorStartIndex)
-									  }{`
+									? `${cssTextHead.slice(classSelectorStartIndex)}{`
 									: "{")
 							}${declarations}}${cssTextTail}`,
 							insertedIdentNames.size,
