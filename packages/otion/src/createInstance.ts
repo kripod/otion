@@ -101,7 +101,7 @@ export function createInstance(): OtionInstance {
 	let prefix: (property: string, value: string) => string;
 	let insertedIdentNames: Set<string>;
 
-	const lastRuleIndexesByPrecedenceGroup = new Uint16Array(
+	const nextRuleIndexesByPrecedenceGroup = new Uint16Array(
 		PRECEDENCE_GROUP_COUNT,
 	);
 
@@ -212,7 +212,7 @@ export function createInstance(): OtionInstance {
 								)) ||
 							1;
 
-						const scopeSelector = `.${className}`.repeat(precedence);
+						const scopeSelector = `.${className}`;
 						injector.insert(
 							`${
 								cssTextHead.slice(0, classSelectorStartIndex) +
@@ -221,8 +221,13 @@ export function createInstance(): OtionInstance {
 									? `${cssTextHead.slice(classSelectorStartIndex)}{`
 									: "{")
 							}${declarations}}${cssTextTail}`,
-							insertedIdentNames.size,
+							nextRuleIndexesByPrecedenceGroup[precedence],
 						);
+
+						for (let i = precedence; i <= PRECEDENCE_GROUP_COUNT; ++i) {
+							++nextRuleIndexesByPrecedenceGroup[i];
+						}
+
 						insertedIdentNames.add(className);
 					}
 
