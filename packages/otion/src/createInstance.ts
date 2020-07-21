@@ -98,10 +98,10 @@ export interface OtionInstance {
 export function createInstance(): OtionInstance {
 	let injector: InjectorInstance;
 	let prefix: (property: string, value: string) => string;
-	let insertedIdentNames: Set<string>;
+	let ruleIndexesByIdentName: Map<string, number>;
 
 	function checkSetup(): void {
-		if (!injector || !prefix || !insertedIdentNames) {
+		if (!injector || !prefix || !ruleIndexesByIdentName) {
 			throw new Error(
 				"On a custom otion instance, `setup()` must be called before usage.",
 			);
@@ -112,9 +112,10 @@ export function createInstance(): OtionInstance {
 		if (cssRule.type === 1 /* CSSRule.STYLE_RULE */) {
 			const { selectorText } = cssRule as CSSStyleRule;
 			const index = selectorText.indexOf(".", 2);
-			insertedIdentNames.add(
+			ruleIndexesByIdentName.set(
 				// Remove leading `.` from class selector
 				selectorText.slice(1, index < 0 ? MAX_CLASS_NAME_LENGTH : index),
+				ruleIndexesByIdentName.size,
 			);
 		} else {
 			hydrateScopedSubtree((cssRule as CSSGroupingRule).cssRules[0]);
@@ -187,7 +188,7 @@ export function createInstance(): OtionInstance {
 						precedence + (matches ? +!!matches[1] || -!!matches[2] : 0),
 					);
 
-					if (!insertedIdentNames.has(className)) {
+					if (!ruleIndexesByIdentName.has(className)) {
 						injector.insert(
 							`${
 								cssTextHead.slice(0, classSelectorStartIndex) +
@@ -206,9 +207,9 @@ export function createInstance(): OtionInstance {
 									  }{`
 									: "{")
 							}${declarations}}${cssTextTail}`,
-							insertedIdentNames.size,
+							ruleIndexesByIdentName.size,
 						);
-						insertedIdentNames.add(className);
+						ruleIndexesByIdentName.set(className, ruleIndexesByIdentName.size);
 					}
 
 					classNames += ` ${className}`;
@@ -278,7 +279,7 @@ export function createInstance(): OtionInstance {
 					return cssText;
 				});
 
-			insertedIdentNames = new Set();
+			ruleIndexesByIdentName = new Map();
 		},
 
 		hydrate(): void {
@@ -290,7 +291,10 @@ export function createInstance(): OtionInstance {
 				const cssRule = cssRules[i];
 				if (cssRule.type === 7 /* CSSRule.KEYFRAMES_RULE */) {
 					// Keyframes needn't be checked recursively, as they are never nested
-					insertedIdentNames.add((cssRule as CSSKeyframesRule).name);
+					ruleIndexesByIdentName.set(
+						(cssRule as CSSKeyframesRule).name,
+						ruleIndexesByIdentName.size,
+					);
 				} else {
 					hydrateScopedSubtree(cssRule);
 				}
@@ -336,12 +340,15 @@ export function createInstance(): OtionInstance {
 						}
 
 						identName = `_${hash(cssText)}`;
-						if (!insertedIdentNames.has(identName)) {
+						if (!ruleIndexesByIdentName.has(identName)) {
 							injector.insert(
 								`@keyframes ${identName}{${cssText}}`,
-								insertedIdentNames.size,
+								ruleIndexesByIdentName.size,
 							);
-							insertedIdentNames.add(identName);
+							ruleIndexesByIdentName.set(
+								identName,
+								ruleIndexesByIdentName.size,
+							);
 						}
 					}
 
