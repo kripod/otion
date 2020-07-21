@@ -237,14 +237,14 @@ export function createInstance(): OtionInstance {
 					let firstParentRuleHead =
 						key[0] === ":" || key[0] === "@" ? key : minifyCondition(key);
 					let parentRuleTail = "";
+					let scopeClassSelectorStartIndex = classSelectorStartIndex;
 
-					if (!classSelectorStartIndex) {
+					if (scopeClassSelectorStartIndex == null) {
 						if (
 							firstParentRuleHead[0] === ":" ||
 							firstParentRuleHead[0] === "&"
 						) {
-							// eslint-disable-next-line no-param-reassign
-							classSelectorStartIndex = cssTextHead.length;
+							scopeClassSelectorStartIndex = cssTextHead.length;
 							parentRuleHeads = firstParentRuleHead.split(",").map(
 								(singleSelector) =>
 									minifyCondition(singleSelector).replace("&", ""), // lgtm [js/incomplete-sanitization]
@@ -264,7 +264,7 @@ export function createInstance(): OtionInstance {
 								value as ScopedCSSRules,
 								cssTextHead + parentRuleHead,
 								parentRuleTail + cssTextTail,
-								classSelectorStartIndex,
+								scopeClassSelectorStartIndex,
 							);
 						},
 					);
