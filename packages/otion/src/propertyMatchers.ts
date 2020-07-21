@@ -77,10 +77,10 @@ export const propertiesAcceptingUnitlessValues = [
 	"initial-letter",
 ];
 
-export const PROPERTY_PRECEDENCE_FIX_GROUPS = /^(?:(border-(?!w|c|sty)|[tlbr].{2,4}m?$|c.{7}$)|([fl].{5}l|g.{8}$|pl))/;
+export const PROPERTY_PRECEDENCE_CORRECTION_GROUPS = /^(?:(border-(?!w|c|sty)|[tlbr].{2,4}m?$|c.{7}$)|([fl].{5}l|g.{8}$|pl))/;
 
 // TODO: Add tests to match everything below, with no conflicting longhands
-export const propertiesByPrecedenceFixGroup = {
+export const propertiesByPrecedenceCorrectionGroup = {
 	"+1": [
 		/* ^border-(?!w|c|sty) */
 		"border-!(width,color,style)",

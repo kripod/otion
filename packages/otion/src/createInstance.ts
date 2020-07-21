@@ -12,11 +12,12 @@ import {
 import { minifyCondition, minifyValue } from "./minify";
 import {
 	PROPERTY_ACCEPTS_UNITLESS_VALUES,
-	PROPERTY_PRECEDENCE_FIX_GROUPS,
+	PROPERTY_PRECEDENCE_CORRECTION_GROUPS,
 } from "./propertyMatchers";
 import { PRECEDENCES_BY_PSEUDO_CLASS } from "./pseudos";
 
 const MAX_CLASS_NAME_LENGTH = 9;
+export const PRECEDENCE_GROUP_COUNT = 36;
 
 function toHyphenLower(match: string): string {
 	return `-${match.toLowerCase()}`;
@@ -100,6 +101,10 @@ export function createInstance(): OtionInstance {
 	let prefix: (property: string, value: string) => string;
 	let insertedIdentNames: Set<string>;
 
+	const lastRuleIndexesByPrecedenceGroup = new Uint16Array(
+		PRECEDENCE_GROUP_COUNT,
+	);
+
 	function checkSetup(): void {
 		if (!injector || !prefix || !insertedIdentNames) {
 			throw new Error(
@@ -173,29 +178,29 @@ export function createInstance(): OtionInstance {
 					const declarations = serializeDeclarationList(property, value);
 					const className = `_${hash(cssTextHead + declarations)}`;
 
-					// The property's baseline precedence is based on dash (`-`) counting
-					const unprefixedProperty =
-						property[0] !== "-"
-							? property
-							: property.slice(property.indexOf("-", 1)) + 1;
-					let precedence = 1;
-					let position = 1; // First character of the property can't be `-`
-					while (
-						// eslint-disable-next-line no-cond-assign
-						(position = unprefixedProperty.indexOf("-", position) + 1) > 0
-					) {
-						++precedence;
-					}
-
-					// Handle properties which don't conform to the rule above
-					const matches = PROPERTY_PRECEDENCE_FIX_GROUPS.exec(
-						unprefixedProperty,
-					);
-					const scopeSelector = `.${className}`.repeat(
-						precedence + (matches ? +!!matches[1] || -!!matches[2] : 0),
-					);
-
 					if (!insertedIdentNames.has(className)) {
+						// The property's baseline precedence is based on dash (`-`) counting
+						const unprefixedProperty =
+							property[0] !== "-"
+								? property
+								: property.slice(property.indexOf("-", 1)) + 1;
+						const correctiveMatches = PROPERTY_PRECEDENCE_CORRECTION_GROUPS.exec(
+							unprefixedProperty,
+						);
+						let precedence =
+							(correctiveMatches
+								? +!!correctiveMatches[1] /* +1 */ ||
+								  -!!correctiveMatches[2] /* -1 */
+								: 0) + 1;
+						let position = 1; // First character of the property can't be `-`
+						while (
+							// eslint-disable-next-line no-cond-assign
+							(position = unprefixedProperty.indexOf("-", position) + 1) > 0
+						) {
+							++precedence;
+						}
+
+						const scopeSelector = `.${className}`.repeat(precedence);
 						injector.insert(
 							`${
 								cssTextHead.slice(0, classSelectorStartIndex) +
