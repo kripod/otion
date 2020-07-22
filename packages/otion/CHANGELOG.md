@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/kripod/otion/compare/v0.3.4...v0.4.0) (2020-07-22)
+
+### Bug Fixes
+
+- assign higher precedence to custom selectors ([002c790](https://github.com/kripod/otion/commit/002c790d6bfd77d84e88858cfd4f529d8a836573))
+- class selector start index tracking ([f9f666e](https://github.com/kripod/otion/commit/f9f666e3cd87e4579eab71013d5ecffc0fd37d99))
+- property and pseudo precedence management ([b36a50a](https://github.com/kripod/otion/commit/b36a50a3f94370d1ef153cea7d603f183c74f378))
+
+### Features
+
+- precedence management without class repeats ([16acfbc](https://github.com/kripod/otion/commit/16acfbce0a12c36eff0cb1ece392c4699955846a))
+
+### Performance Improvements
+
+- lazy rule precedence calculation ([a1eff01](https://github.com/kripod/otion/commit/a1eff01cbdf7cc9bf7784ae66c511580cf3496f8))
+
+### Reverts
+
+- "refactor: use a Map for tracking inserted rules" ([046145a](https://github.com/kripod/otion/commit/046145a9198c98d021cb3bd680b7da3b032e60b1))
+
 ## [0.3.4](https://github.com/kripod/otion/compare/v0.3.3...v0.3.4) (2020-07-19)
 
 ### Bug Fixes
