@@ -14,7 +14,10 @@ import {
 	PROPERTY_ACCEPTS_UNITLESS_VALUES,
 	PROPERTY_PRECEDENCE_CORRECTION_GROUPS,
 } from "./propertyMatchers";
-import { PRECEDENCES_BY_PSEUDO_CLASS } from "./pseudos";
+import {
+	PRECEDENCES_BY_PSEUDO_CLASS,
+	PSEUDO_CLASS_PRECEDENCE_GROUP_COUNT,
+} from "./pseudos";
 
 const MAX_CLASS_NAME_LENGTH = 9;
 export const PRECEDENCE_GROUP_COUNT = 36;
@@ -210,7 +213,7 @@ export function createInstance(): OtionInstance {
 										classSelectorStartIndex + 8,
 									),
 								)) ||
-							1;
+							PSEUDO_CLASS_PRECEDENCE_GROUP_COUNT + 1;
 
 						const scopeSelector = `.${className}`;
 						injector.insert(
