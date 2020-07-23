@@ -26,7 +26,11 @@ test("number of precedence groups is correct", () => {
 			}),
 		) + 1;
 
+	const conditionalPrecedenceGroupExistenceMultiplier = 2;
+
 	expect(PRECEDENCE_GROUP_COUNT).toEqual(
-		pseudoClassPrecedenceGroupCount * propertyPrecedenceGroupCount,
+		pseudoClassPrecedenceGroupCount *
+			propertyPrecedenceGroupCount *
+			conditionalPrecedenceGroupExistenceMultiplier,
 	);
 });

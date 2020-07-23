@@ -66,6 +66,34 @@ export default function IndexPage(): JSX.Element {
 				This is some long dummy text to demonstrate the styling capabilities
 				provided by the underlying library.
 			</p>
+
+			<div
+				className={css({
+					"@media": {
+						"(min-width: 2px)": { color: "green" },
+					},
+				})}
+			/>
+			<p
+				className={css({
+					"@media": {
+						"(min-width: 1px)": { color: "red" },
+						"(min-width: 2px)": { color: "green" },
+					},
+				})}
+			>
+				Conditional rule precedence management test #1, should be green
+			</p>
+			<p
+				className={css({
+					color: "red",
+					"@media": {
+						"(min-width: 2px)": { color: "green" },
+					},
+				})}
+			>
+				Conditional rule precedence management test #2, should be green
+			</p>
 		</React.StrictMode>
 	);
 }

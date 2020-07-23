@@ -20,7 +20,7 @@ import {
 } from "./pseudos";
 
 const MAX_CLASS_NAME_LENGTH = 9;
-export const PRECEDENCE_GROUP_COUNT = 36;
+export const PRECEDENCE_GROUP_COUNT = 72;
 
 function toHyphenLower(match: string): string {
 	return `-${match.toLowerCase()}`;
@@ -163,6 +163,7 @@ export function createInstance(): OtionInstance {
 		rules: ScopedCSSRules,
 		cssTextHead: string,
 		cssTextTail: string,
+		maxPrecedingConditionalRuleIndexesByPrecedenceGroup: Uint16Array,
 		classSelectorStartIndex?: number,
 	): string {
 		let classNames = "";
@@ -181,8 +182,11 @@ export function createInstance(): OtionInstance {
 					const property = key.replace(/^ms|[A-Z]/g, toHyphenLower);
 					const declarations = serializeDeclarationList(property, value);
 					const className = `_${hash(cssTextHead + declarations)}`;
+					const isConditionalRule = cssTextTail;
 
-					if (!ruleIndexesByIdentName.has(className)) {
+					let ruleIndex = ruleIndexesByIdentName.get(className);
+
+					if (ruleIndex == null || isConditionalRule) {
 						// The property's baseline precedence is based on dash (`-`) counting
 						const unprefixedProperty =
 							property[0] !== "-"
@@ -205,8 +209,10 @@ export function createInstance(): OtionInstance {
 						}
 
 						// Pseudo-classes also have an impact on rule precedence
+						const conditionalPrecedenceGroupExistenceMultiplier = 2;
 						precedence *=
-							(classSelectorStartIndex != null &&
+							conditionalPrecedenceGroupExistenceMultiplier *
+							((classSelectorStartIndex != null &&
 								PRECEDENCES_BY_PSEUDO_CLASS.get(
 									cssTextHead.slice(
 										// This part uniquely identifies a pseudo selector
@@ -214,25 +220,48 @@ export function createInstance(): OtionInstance {
 										classSelectorStartIndex + 8,
 									),
 								)) ||
-							PSEUDO_CLASS_PRECEDENCE_GROUP_COUNT + 1;
+								PSEUDO_CLASS_PRECEDENCE_GROUP_COUNT + 1);
 
-						const scopeSelector = `.${className}`;
-						injector.insert(
-							`${
-								cssTextHead.slice(0, classSelectorStartIndex) +
-								scopeSelector +
-								(classSelectorStartIndex != null
-									? `${cssTextHead.slice(classSelectorStartIndex)}{`
-									: "{")
-							}${declarations}}${cssTextTail}`,
-							nextRuleIndexesByPrecedenceGroup[precedence],
-						);
+						// Conditional rules should take precedence over non-conditionals
+						precedence += +!!isConditionalRule;
 
-						for (let i = precedence; i <= PRECEDENCE_GROUP_COUNT; ++i) {
-							++nextRuleIndexesByPrecedenceGroup[i];
+						if (
+							ruleIndex == null ||
+							// Re-insert conditional rule if necessary to fix CSS source order
+							maxPrecedingConditionalRuleIndexesByPrecedenceGroup[precedence] >
+								ruleIndex
+						) {
+							const scopeSelector = `.${className}`;
+							injector.insert(
+								`${
+									cssTextHead.slice(0, classSelectorStartIndex) +
+									scopeSelector +
+									(classSelectorStartIndex != null
+										? `${cssTextHead.slice(classSelectorStartIndex)}{`
+										: "{")
+								}${declarations}}${cssTextTail}`,
+								nextRuleIndexesByPrecedenceGroup[precedence],
+							);
+
+							for (let i = precedence; i <= PRECEDENCE_GROUP_COUNT; ++i) {
+								++nextRuleIndexesByPrecedenceGroup[i];
+							}
+
+							ruleIndex = ruleIndexesByIdentName.size;
+							ruleIndexesByIdentName.set(className, ruleIndex);
+
+							if (isConditionalRule) {
+								// eslint-disable-next-line no-param-reassign
+								maxPrecedingConditionalRuleIndexesByPrecedenceGroup[
+									precedence
+								] = Math.max(
+									maxPrecedingConditionalRuleIndexesByPrecedenceGroup[
+										precedence
+									],
+									ruleIndex,
+								);
+							}
 						}
-
-						ruleIndexesByIdentName.set(className, ruleIndexesByIdentName.size);
 					}
 
 					classNames += ` ${className}`;
@@ -268,6 +297,7 @@ export function createInstance(): OtionInstance {
 								value as ScopedCSSRules,
 								cssTextHead + parentRuleHead,
 								parentRuleTail + cssTextTail,
+								maxPrecedingConditionalRuleIndexesByPrecedenceGroup,
 								scopeClassSelectorStartIndex,
 							);
 						},
@@ -328,7 +358,12 @@ export function createInstance(): OtionInstance {
 			if (isDev) checkSetup();
 
 			// The leading white space character gets removed
-			return decomposeToClassNames(rules, "", "").slice(1);
+			return decomposeToClassNames(
+				rules,
+				"",
+				"",
+				new Uint16Array(PRECEDENCE_GROUP_COUNT),
+			).slice(1);
 		},
 
 		keyframes(rules): { toString(): string } {
