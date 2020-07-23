@@ -70,6 +70,15 @@
         "example",
         "code"
       ]
+    },
+    {
+      "login": "namjul",
+      "name": "Samuel Hobl",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/328836?v=4",
+      "profile": "https://github.com/namjul",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "files": [
