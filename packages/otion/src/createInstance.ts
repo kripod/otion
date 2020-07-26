@@ -187,25 +187,30 @@ export function createInstance(): OtionInstance {
 					let ruleIndex = ruleIndexesByIdentName.get(className);
 
 					if (ruleIndex == null || isConditionalRule) {
-						// The property's baseline precedence is based on dash (`-`) counting
-						const unprefixedProperty =
-							property[0] !== "-"
-								? property
-								: property.slice(property.indexOf("-", 1)) + 1;
-						const correctiveMatches = PROPERTY_PRECEDENCE_CORRECTION_GROUPS.exec(
-							unprefixedProperty,
-						);
-						let precedence =
-							(correctiveMatches
-								? +!!correctiveMatches[1] /* +1 */ ||
-								  -!!correctiveMatches[2] /* -1 */
-								: 0) + 1;
-						let position = 1; // First character of the property can't be `-`
-						while (
-							// eslint-disable-next-line no-cond-assign
-							(position = unprefixedProperty.indexOf("-", position) + 1) > 0
-						) {
-							++precedence;
+						let precedence = 0;
+
+						const isCustomProperty = property[1] === "-";
+						if (!isCustomProperty) {
+							// The property's baseline precedence is based on "-" counting
+							const unprefixedProperty =
+								property[0] === "-"
+									? property.slice(property.indexOf("-", 1)) + 1
+									: property;
+							const correctiveMatches = PROPERTY_PRECEDENCE_CORRECTION_GROUPS.exec(
+								unprefixedProperty,
+							);
+							precedence =
+								(correctiveMatches
+									? +!!correctiveMatches[1] /* +1 */ ||
+									  -!!correctiveMatches[2] /* -1 */
+									: 0) + 1;
+							let position = 1; // First character of the property can't be `-`
+							while (
+								// eslint-disable-next-line no-cond-assign
+								(position = unprefixedProperty.indexOf("-", position) + 1) > 0
+							) {
+								++precedence;
+							}
 						}
 
 						// Pseudo-classes also have an impact on rule precedence
