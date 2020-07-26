@@ -106,6 +106,32 @@ const className = css({
 });
 ```
 
+#### Custom properties may be defined with type safety in mind
+
+However, please be advised that the recommended method of defining custom property values is within inline or global styles.
+
+```ts
+/* css.d.ts */
+/* See: https://github.com/frenic/csstype#what-should-i-do-when-i-get-type-errors */
+
+import * as CSS from "csstype";
+
+/* Augment the module below with custom or even missing properties */
+declare module "csstype" {
+  interface PropertiesFallback {
+    "--theme-color"?: "black" | "white"; // Custom property
+    WebkitRocketLauncher?: string; // Missing property
+  }
+}
+```
+
+```js
+const className = css({
+  "--theme-color": "black",
+  color: "var(--theme-color)" // References the property above
+});
+```
+
 ### Server-side rendering
 
 While prerendering a page, browser object models are inaccessible and thus, styles cannot be injected dynamically. However, a `VirtualInjector` can collect the styles instead of applying them through injection, as seen in the [Next.js example](https://github.com/kripod/otion/tree/main/packages/example-nextjs):
