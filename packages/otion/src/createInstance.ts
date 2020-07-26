@@ -119,7 +119,7 @@ export function createInstance(): OtionInstance {
 		if (cssRule.type === 1 /* CSSRule.STYLE_RULE */) {
 			const { selectorText } = cssRule as CSSStyleRule;
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-			const identName = /[0-9a-z]/.exec(selectorText.slice(2 /* "._" */))![0];
+			const identName = /^[0-9a-z]+/.exec(selectorText.slice(2 /* "._" */))![0];
 			ruleIndexesByIdentName.set(identName, ruleIndexesByIdentName.size);
 		} else {
 			hydrateScopedSubtree((cssRule as CSSGroupingRule).cssRules[0]);
