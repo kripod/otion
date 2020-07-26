@@ -10,14 +10,8 @@ import {
 	NoOpInjector,
 } from "./injectors";
 import { minifyCondition, minifyValue } from "./minify";
-import {
-	PROPERTY_ACCEPTS_UNITLESS_VALUES,
-	PROPERTY_PRECEDENCE_CORRECTION_GROUPS,
-} from "./propertyMatchers";
-import {
-	PRECEDENCES_BY_PSEUDO_CLASS,
-	PSEUDO_CLASS_PRECEDENCE_GROUP_COUNT,
-} from "./pseudos";
+import { PROPERTY_ACCEPTS_UNITLESS_VALUES } from "./propertyMatchers";
+import { rulePrecedence } from "./rulePrecedence";
 
 export const PRECEDENCE_GROUP_COUNT = 72;
 
@@ -102,10 +96,7 @@ export function createInstance(): OtionInstance {
 	let injector: InjectorInstance;
 	let prefix: (property: string, value: string) => string;
 	let ruleIndexesByIdentName: Map<string, number>;
-
-	const nextRuleIndexesByPrecedenceGroup = new Uint16Array(
-		PRECEDENCE_GROUP_COUNT,
-	);
+	let nextRuleIndexesByPrecedenceGroup: Uint16Array;
 
 	function checkSetup(): void {
 		if (!injector || !prefix || !ruleIndexesByIdentName) {
@@ -115,14 +106,30 @@ export function createInstance(): OtionInstance {
 		}
 	}
 
-	function hydrateScopedSubtree(cssRule: CSSRule): void {
+	function updatePrecedenceGroupRanges(fromPrecedence: number) {
+		for (let i = fromPrecedence; i <= PRECEDENCE_GROUP_COUNT; ++i) {
+			++nextRuleIndexesByPrecedenceGroup[i];
+		}
+	}
+
+	function hydrateScopedSubtree(
+		cssRule: CSSRule,
+		isConditionalRule?: boolean,
+	): void {
 		if (cssRule.type === 1 /* CSSRule.STYLE_RULE */) {
-			const { selectorText } = cssRule as CSSStyleRule;
+			const { selectorText, style } = cssRule as CSSStyleRule;
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-			const identName = /^[0-9a-z]+/.exec(selectorText.slice(2 /* "._" */))![0];
+			const [, identName, pseudoClass] = /^..([0-9a-z]+)(:.*)?/.exec(
+				selectorText,
+			)!;
+			const property = style[0];
+			updatePrecedenceGroupRanges(
+				rulePrecedence(property, pseudoClass, !!isConditionalRule),
+			);
 			ruleIndexesByIdentName.set(identName, ruleIndexesByIdentName.size);
 		} else {
-			hydrateScopedSubtree((cssRule as CSSGroupingRule).cssRules[0]);
+			/* cssRule.type === CSSRule.MEDIA_RULE */
+			hydrateScopedSubtree((cssRule as CSSGroupingRule).cssRules[0], true);
 		}
 	}
 
@@ -183,48 +190,13 @@ export function createInstance(): OtionInstance {
 					let ruleIndex = ruleIndexesByIdentName.get(className);
 
 					if (ruleIndex == null || isConditionalRule) {
-						let precedence = 0;
-
-						const isCustomProperty = property[1] === "-";
-						if (!isCustomProperty) {
-							// The property's baseline precedence is based on "-" counting
-							const unprefixedProperty =
-								property[0] === "-"
-									? property.slice(property.indexOf("-", 1)) + 1
-									: property;
-							const correctiveMatches = PROPERTY_PRECEDENCE_CORRECTION_GROUPS.exec(
-								unprefixedProperty,
-							);
-							precedence =
-								(correctiveMatches
-									? +!!correctiveMatches[1] /* +1 */ ||
-									  -!!correctiveMatches[2] /* -1 */
-									: 0) + 1;
-							let position = 1; // First character of the property can't be `-`
-							while (
-								// eslint-disable-next-line no-cond-assign
-								(position = unprefixedProperty.indexOf("-", position) + 1) > 0
-							) {
-								++precedence;
-							}
-						}
-
-						// Pseudo-classes also have an impact on rule precedence
-						const conditionalPrecedenceGroupExistenceMultiplier = 2;
-						precedence *=
-							conditionalPrecedenceGroupExistenceMultiplier *
-							((classSelectorStartIndex != null &&
-								PRECEDENCES_BY_PSEUDO_CLASS.get(
-									cssTextHead.slice(
-										// This part uniquely identifies a pseudo selector
-										classSelectorStartIndex + 3,
-										classSelectorStartIndex + 8,
-									),
-								)) ||
-								PSEUDO_CLASS_PRECEDENCE_GROUP_COUNT + 1);
-
-						// Conditional rules should take precedence over non-conditionals
-						precedence += +!!isConditionalRule;
+						const precedence = rulePrecedence(
+							property,
+							classSelectorStartIndex == null
+								? ""
+								: cssTextHead.slice(classSelectorStartIndex),
+							!!isConditionalRule,
+						);
 
 						if (
 							ruleIndex == null ||
@@ -244,9 +216,7 @@ export function createInstance(): OtionInstance {
 								nextRuleIndexesByPrecedenceGroup[precedence],
 							);
 
-							for (let i = precedence; i <= PRECEDENCE_GROUP_COUNT; ++i) {
-								++nextRuleIndexesByPrecedenceGroup[i];
-							}
+							updatePrecedenceGroupRanges(precedence);
 
 							ruleIndex = ruleIndexesByIdentName.size;
 							ruleIndexesByIdentName.set(className, ruleIndex);
@@ -334,6 +304,9 @@ export function createInstance(): OtionInstance {
 				});
 
 			ruleIndexesByIdentName = new Map();
+			nextRuleIndexesByPrecedenceGroup = new Uint16Array(
+				PRECEDENCE_GROUP_COUNT,
+			);
 		},
 
 		hydrate(): void {
