@@ -19,7 +19,6 @@ import {
 	PSEUDO_CLASS_PRECEDENCE_GROUP_COUNT,
 } from "./pseudos";
 
-const MAX_CLASS_NAME_LENGTH = 9;
 export const PRECEDENCE_GROUP_COUNT = 72;
 
 function toHyphenLower(match: string): string {
@@ -119,12 +118,9 @@ export function createInstance(): OtionInstance {
 	function hydrateScopedSubtree(cssRule: CSSRule): void {
 		if (cssRule.type === 1 /* CSSRule.STYLE_RULE */) {
 			const { selectorText } = cssRule as CSSStyleRule;
-			const index = selectorText.indexOf(".", 2);
-			ruleIndexesByIdentName.set(
-				// Remove leading `.` from class selector
-				selectorText.slice(1, index < 0 ? MAX_CLASS_NAME_LENGTH : index),
-				ruleIndexesByIdentName.size,
-			);
+			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+			const identName = /[0-9a-z]/.exec(selectorText.slice(2 /* "._" */))![0];
+			ruleIndexesByIdentName.set(identName, ruleIndexesByIdentName.size);
 		} else {
 			hydrateScopedSubtree((cssRule as CSSGroupingRule).cssRules[0]);
 		}
