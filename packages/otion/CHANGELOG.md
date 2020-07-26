@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.2](https://github.com/kripod/otion/compare/v0.5.1...v0.5.2) (2020-07-26)
+
+### Bug Fixes
+
+- **hydrate:** respect rule precedence groups ([dc08fa8](https://github.com/kripod/otion/commit/dc08fa81aeee8f51a8f09f554a5d7fd681cf050a)), closes [#42](https://github.com/kripod/otion/issues/42)
+- **hydration:** ident name parsing ([d4a4e32](https://github.com/kripod/otion/commit/d4a4e32db98a0b807127cd8a528241c2cb6912b3))
+- hydrating ident name of complex rules ([958d8a0](https://github.com/kripod/otion/commit/958d8a099f296c955ca6022c67cfdb370efd7e8a))
+
 ## [0.5.1](https://github.com/kripod/otion/compare/v0.5.0...v0.5.1) (2020-07-26)
 
 ### Bug Fixes

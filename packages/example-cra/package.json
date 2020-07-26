@@ -1,6 +1,6 @@
 {
 	"name": "otion-example-cra",
-	"version": "0.5.1",
+	"version": "0.5.2",
 	"private": true,
 	"scripts": {
 		"build": "react-scripts build",
@@ -23,7 +23,7 @@
 	},
 	"dependencies": {
 		"cra-template-typescript": "1.0.3",
-		"otion": "^0.5.1",
+		"otion": "^0.5.2",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
 		"react-scripts": "3.4.1"

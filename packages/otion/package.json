@@ -1,6 +1,6 @@
 {
 	"name": "otion",
-	"version": "0.5.1",
+	"version": "0.5.2",
 	"description": "Atomic CSS-in-JS with a featherweight runtime",
 	"keywords": [
 		"css-in-js",
