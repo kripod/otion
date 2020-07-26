@@ -21,7 +21,8 @@ export default function IndexPage(): JSX.Element {
 			<h1>Hello, world!</h1>
 			<p
 				className={css({
-					color: "green",
+					"--text-color": "green",
+					color: ["blue", "var(--text-color)"],
 					fontWeight: "bold",
 					fontSize: 30,
 					textEmphasis: "filled   red",
