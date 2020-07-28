@@ -26,7 +26,7 @@ export function rulePrecedence(
 		let position = 1; // First character of the property can't be `-`
 		while (
 			// eslint-disable-next-line no-cond-assign
-			(position = unprefixedProperty.indexOf("-", position) + 1) > 0
+			(position = unprefixedProperty.indexOf("-", position) + 1) /* > 0 */
 		) {
 			++precedence;
 		}
