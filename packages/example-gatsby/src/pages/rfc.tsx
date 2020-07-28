@@ -26,8 +26,8 @@ const styles = css.create({
 	green: { color: "green" },
 	hotpink: { color: "hotpink", selectors: { "&:hover": { color: "pink" } } },
 });
-const combined = stylesCompose(styles.blue, styles.green, styles.hotpink);
-const className = stylesClassnames(styles.blue, styles.hotpink);
+const combined = css.compose(styles.blue, styles.green, styles.hotpink);
+const className = css.cls(styles.blue, styles.hotpink);
 
 export default function IndexPage(): JSX.Element {
 	return (
