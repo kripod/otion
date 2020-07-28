@@ -1,5 +1,8 @@
 import { createInstance, OtionInstance } from "./createInstance";
 
+export { stylesCompose } from "./utils/stylesCompose";
+export { stylesCreate } from "./utils/stylesCreate";
+export { stylesClassnames } from "./utils/stylesClassnames";
 export { createInstance };
 
 const defaultInstance = createInstance();
@@ -15,4 +18,4 @@ export const keyframes: OtionInstance["keyframes"] = defaultInstance.keyframes;
 
 export { CSSOMInjector, DOMInjector, NoOpInjector } from "./injectors";
 
-export type { ScopedCSSRules } from "./cssTypes";
+export type { ScopedCSSRules, GroupScopedCSSRules } from "./cssTypes";
