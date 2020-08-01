@@ -251,12 +251,14 @@ export function createInstance(): OtionInstance {
 							scopeClassSelectorStartIndex = cssTextHead.length;
 							parentRuleHeads = firstParentRuleHead
 								.split(
+									// Separate selector list items by ","
 									// Inspired by: https://stackoverflow.com/a/9030062
 									/,(?![^[]*?[^\\]["']\s*?\])/,
 								)
 								.map(
 									(singleSelector) =>
-										minifyCondition(singleSelector).replace("&", ""), // lgtm [js/incomplete-sanitization]
+										// Keep non-first occurrences of "&" for later replacement
+										minifyValue(singleSelector).replace("&", ""), // lgtm [js/incomplete-sanitization]
 								);
 						} else if (firstParentRuleHead === "selectors") {
 							firstParentRuleHead = "";
