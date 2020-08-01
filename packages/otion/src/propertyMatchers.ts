@@ -9,11 +9,11 @@
 */
 
 // Includes support for CSS custom properties
-export const PROPERTY_ACCEPTS_UNITLESS_VALUES = /^(-|f[lo].*[^se]$|g.{6,}[^ps]$|z|o[pr]|(-w.{6})?li.*(t|mp)$|an|(bo|s).{5}im|sca|m.{7}[ds]|ta|c.*[st]$|wido|ini)/;
+export const PROPERTY_ACCEPTS_UNITLESS_VALUES = /^(-|f[lo].*?[^se]$|g.{6,}[^ps]$|z|o[pr]|(-w.{6})?li.*?(t|mp)$|an|(bo|s).{5}im|sca|m.{7}[ds]|ta|c.*?[st]$|wido|ini)/;
 
 // TODO: Add tests to match everything below, without false positives
 export const propertiesAcceptingUnitlessValues = [
-	/* ^f[lo].*[^se]$ */
+	/* ^f[lo].*?[^se]$ */
 	"flex",
 	"flex-grow",
 	"flex-shrink",
@@ -37,7 +37,7 @@ export const propertiesAcceptingUnitlessValues = [
 	"order",
 	"orphans",
 
-	/* ^(-w.{6})?li.*(t|mp)$ */
+	/* ^(-w.{6})?li.*?(t|mp)$ */
 	"line-height",
 	"line-clamp",
 	"-webkit-line-clamp",
@@ -66,7 +66,7 @@ export const propertiesAcceptingUnitlessValues = [
 	/* ^ta */
 	"tab-size",
 
-	/* ^c.*[st]$ */
+	/* ^c.*?[st]$ */
 	"columns",
 	"column-count",
 
