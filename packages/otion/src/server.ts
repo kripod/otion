@@ -51,7 +51,7 @@ export function filterOutUnusedRules(
 ): ReturnType<typeof VirtualInjector> {
 	const usedIdentNames = new Set<string>();
 
-	const re = /<[^>]+\s+class\s*=\s*("[^"]+"|'[^']+'|[^>\s]+)/gi;
+	const re = /<[^>]+\s+?class\s*?=\s*?(".+?"|'.+?'|[^>\s]+)/gi;
 	let matches: string[] | null;
 
 	// eslint-disable-next-line no-cond-assign
