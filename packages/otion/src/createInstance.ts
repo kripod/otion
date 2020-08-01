@@ -210,7 +210,11 @@ export function createInstance(): OtionInstance {
 									cssTextHead.slice(0, classSelectorStartIndex) +
 									scopeSelector +
 									(classSelectorStartIndex != null
-										? `${cssTextHead.slice(classSelectorStartIndex)}{`
+										? `${
+												cssTextHead
+													.slice(classSelectorStartIndex)
+													.replace(/&/g, scopeSelector) // Resolve references
+										  }{`
 										: "{")
 								}${declarations}}${cssTextTail}`,
 								nextRuleIndexesByPrecedenceGroup[precedence],

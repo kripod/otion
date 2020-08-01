@@ -95,6 +95,11 @@ export default function IndexPage(): JSX.Element {
 			>
 				Conditional rule precedence management test #2, should be green
 			</p>
+
+			<div className={css({ selectors: { "& + &": { color: "green" } } })} />
+			<p className={css({ selectors: { "& + &": { color: "green" } } })}>
+				Self-referencing selector test, should be green
+			</p>
 		</React.StrictMode>
 	);
 }
