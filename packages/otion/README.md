@@ -88,7 +88,7 @@ const className = css({
 
 #### Advanced selectors may be used as an escape hatch from strict atomicity
 
-These should be used sparingly, as selectors are not parsed, but transformed as strings. [Overly specific selectors](https://github.com/kripod/otion/issues/45) void the main advantages of atomicity, so it's best to avoid them.
+These should be used sparingly, as selectors are not parsed, but transformed as strings. [Overly specific selectors](https://github.com/kripod/otion/issues/45) void the main advantages of atomicity, so it's best to avoid them. The characters `,` and `&` shall not be part of [attribute selector](https://developer.mozilla.org/docs/Web/CSS/Attribute_selectors) values, otherwise, styling is not guaranteed to work.
 
 ```js
 const className = css({
