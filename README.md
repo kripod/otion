@@ -94,6 +94,23 @@ function Component() {
 }
 ```
 
+## Is this ready for production?
+
+The project is marked with a '0.Y.Z' version until thorough automatic tests are written for it. However, existing functionality should be safe to use.
+
+If you decide to give otion a try, module aliasing may help migrating between CSS-in-JS libraries:
+
+```jsonc
+/* package.json */
+{
+  "devDependencies": {
+    "emotion": "npm:otion@^X.Y.Z" // Could also be done in reverse
+  }
+}
+```
+
+Please bear in mind that while the APIs of otion and Emotion are similar, they're not totally interchangeable. For example, custom selectors and [conditional group rules](https://developer.mozilla.org/docs/Web/CSS/At-rule#Conditional_group_rules) have no type-safe syntax in Emotion.
+
 ## Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -118,6 +135,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
