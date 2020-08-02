@@ -88,6 +88,8 @@ const className = css({
 
 #### Advanced selectors may be used as an escape hatch from strict atomicity
 
+These should be used sparingly, as selectors are not parsed, but transformed as strings. [Overly specific selectors](https://github.com/kripod/otion/issues/45) void the main advantages of atomicity, so it's best to avoid them.
+
 ```js
 const className = css({
   display: "flex",
@@ -101,6 +103,11 @@ const className = css({
     // In a comma-separated list, each individual selector shall start with "&"
     "&:focus, &:active": {
       outline: "solid"
+    },
+
+    // Self-references are also supported
+    "& + &": {
+      color: "green"
     }
   }
 });
