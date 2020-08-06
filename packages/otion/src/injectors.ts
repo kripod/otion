@@ -10,7 +10,7 @@ export interface InjectorConfig<T> {
 
 export type InjectorInstance = {
 	sheet?: CSSStyleSheet;
-	insert(rule: string, index: number): number;
+	insert: (rule: string, index: number) => number;
 };
 
 type VirtualInjectorInstance = InjectorInstance & {
