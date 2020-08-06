@@ -51,7 +51,7 @@ export function setup(options: {
 	nextRuleIndexesByPrecedenceGroup = new Uint16Array(PRECEDENCE_GROUP_COUNT);
 }
 
-function associateToClassNames(
+function mapToClassNames(
 	rules: ScopedCSSRules,
 	cssTextHead: string,
 	cssTextTail: string,
@@ -71,5 +71,5 @@ function associateToClassNames(
 }
 
 export function css(rules: ScopedCSSRules): string {
-	return associateToClassNames(rules, "", "").slice(1); // Removes leading space
+	return mapToClassNames(rules, "", "").slice(1); // Removes leading space
 }

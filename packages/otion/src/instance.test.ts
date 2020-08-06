@@ -1,6 +1,6 @@
 import { css } from "./instance";
 
-test("associates a simple CSS rule to a stable class name", () => {
+test("maps a simple CSS rule to a stable class name", () => {
 	const c1 = css({ color: "red" });
 	const c2 = css({ color: "red" });
 
@@ -8,7 +8,7 @@ test("associates a simple CSS rule to a stable class name", () => {
 	expect(c1).toBe(c1.trim());
 });
 
-test("associates multiple simple CSS rules to a set of stable class names", () => {
+test("maps multiple simple CSS rules to a set of stable class names", () => {
 	const c1 = css({ color: "red", background: "green" });
 	const c2 = css({ background: "green", color: "red" });
 
