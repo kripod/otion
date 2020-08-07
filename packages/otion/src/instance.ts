@@ -95,9 +95,13 @@ function mapToClassNames(
 	for (const key in rules) {
 		const value = rules[key as keyof typeof rules];
 
-		const cssText = `${key}:${value}`;
-		const className = hash(cssText);
-		classNames.push(className);
+		if (value != null) {
+			if (typeof value !== "object" || Array.isArray(value)) {
+				const cssText = stringifyDeclarationList(key, value);
+				const className = hash(cssText);
+				classNames.push(className);
+			}
+		}
 	}
 
 	return classNames;
