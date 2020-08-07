@@ -82,7 +82,7 @@ function mapToClassNames(
 
 		const cssText = `${key}:${value}`;
 		const className = hash(cssText);
-		classNames.push(` ${className}`);
+		classNames.push(className);
 	}
 
 	return classNames;
