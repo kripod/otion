@@ -74,7 +74,7 @@ function mapToClassNames(
 	cssTextHead: string,
 	cssTextTail: string,
 ) {
-	let classNames = "";
+	const classNames: string[] = [];
 
 	// eslint-disable-next-line guard-for-in, no-restricted-syntax
 	for (const key in rules) {
@@ -82,12 +82,12 @@ function mapToClassNames(
 
 		const cssText = `${key}:${value}`;
 		const className = hash(cssText);
-		classNames += ` ${className}`;
+		classNames.push(` ${className}`);
 	}
 
 	return classNames;
 }
 
 export function css(rules: ScopedCSSRules): string {
-	return mapToClassNames(rules, "", "").slice(1); // Removes leading space
+	return mapToClassNames(rules, "", "").join(" ");
 }
