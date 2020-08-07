@@ -1,4 +1,8 @@
-import { css, normalizeDeclaration } from "./instance";
+import {
+	css,
+	normalizeDeclaration,
+	serializeDeclarationList,
+} from "./instance";
 
 test("maps a simple CSS rule to a stable class name", () => {
 	const c1 = css({ color: "red" });
@@ -35,4 +39,13 @@ test("doesn't postfix unitless CSS values with a unit", () => {
 
 	expect(c1).toBe("line-height:1.5");
 	expect(c2).toBe("padding:0");
+});
+
+test("serializes fallback values properly", () => {
+	const c1 = serializeDeclarationList("justify-content", [
+		"space-around",
+		"space-evenly",
+	]);
+
+	expect(c1).toBe("justify-content:space-around;justify-content:space-evenly");
 });

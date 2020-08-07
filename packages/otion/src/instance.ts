@@ -69,6 +69,21 @@ export function normalizeDeclaration(
 	return prefix(property, formattedValue);
 }
 
+export function serializeDeclarationList(
+	property: string,
+	value: string | number | Array<string | number>,
+): string {
+	if (typeof value !== "object") {
+		return normalizeDeclaration(property, value);
+	}
+
+	let cssText = "";
+	value.forEach((fallbackValue) => {
+		cssText += `;${normalizeDeclaration(property, fallbackValue)}`;
+	});
+	return cssText.slice(1); // Leading separator gets removed
+}
+
 function mapToClassNames(
 	rules: ScopedCSSRules,
 	cssTextHead: string,
