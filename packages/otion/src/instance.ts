@@ -55,7 +55,7 @@ export function setup(options: {
 
 setup({});
 
-export function normalizeDeclaration(
+export function stringifyDeclaration(
 	property: string,
 	value: string | number,
 ): string {
@@ -69,17 +69,17 @@ export function normalizeDeclaration(
 	return prefix(property, formattedValue);
 }
 
-export function serializeDeclarationList(
+export function stringifyDeclarationList(
 	property: string,
 	value: string | number | Array<string | number>,
 ): string {
 	if (typeof value !== "object") {
-		return normalizeDeclaration(property, value);
+		return stringifyDeclaration(property, value);
 	}
 
 	let cssText = "";
 	value.forEach((fallbackValue) => {
-		cssText += `;${normalizeDeclaration(property, fallbackValue)}`;
+		cssText += `;${stringifyDeclaration(property, fallbackValue)}`;
 	});
 	return cssText.slice(1); // Leading separator gets removed
 }
