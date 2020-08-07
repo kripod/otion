@@ -9,6 +9,8 @@ import {
 	InjectorInstance,
 	NoOpInjector,
 } from "./injectors";
+import { minifyValue } from "./minify";
+import { PROPERTY_ACCEPTS_UNITLESS_VALUES } from "./propertyMatchers";
 
 const PRECEDENCE_GROUP_COUNT = 72;
 
@@ -49,6 +51,22 @@ export function setup(options: {
 
 	ruleIndexesByIdentName = new Map();
 	nextRuleIndexesByPrecedenceGroup = new Uint16Array(PRECEDENCE_GROUP_COUNT);
+}
+
+setup({});
+
+export function normalizeDeclaration(
+	property: string,
+	value: string | number,
+): string {
+	// eslint-disable-next-line no-nested-ternary
+	const formattedValue = value
+		? typeof value === "number" &&
+		  !PROPERTY_ACCEPTS_UNITLESS_VALUES.test(property)
+			? `${value}px` // Append missing unit
+			: minifyValue(`${value}`)
+		: `${value}`; // Keeps `0` unpostfixed
+	return prefix(property, formattedValue);
 }
 
 function mapToClassNames(
