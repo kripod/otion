@@ -123,9 +123,12 @@ export function createInstance(): OtionInstance {
 				selectorText,
 			)!;
 			const property = style[0];
-			updatePrecedenceGroupRanges(
-				rulePrecedence(property, pseudoClass, !!isConditionalRule),
-			);
+			if (property) {
+				// Broken rule declarations are ignored
+				updatePrecedenceGroupRanges(
+					rulePrecedence(property, pseudoClass, !!isConditionalRule),
+				);
+			}
 			ruleIndexesByIdentName.set(identName, ruleIndexesByIdentName.size);
 		} else {
 			/* cssRule.type === CSSRule.MEDIA_RULE */
