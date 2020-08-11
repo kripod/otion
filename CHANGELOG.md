@@ -3,22 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.5.3](https://github.com/kripod/otion/compare/v0.5.2...v0.5.3) (2020-08-02)
-
+## [0.5.4](https://github.com/kripod/otion/compare/v0.5.3...v0.5.4) (2020-08-11)
 
 ### Bug Fixes
 
-* improve custom selector list splitting ([37b02a9](https://github.com/kripod/otion/commit/37b02a9f663cbf896bcb5c83d949de543336c3b7)), closes [#45](https://github.com/kripod/otion/issues/45)
-* resolve self-references ([f0ba93f](https://github.com/kripod/otion/commit/f0ba93f3c90aedb735cebcee1466bdb163734e0f))
+- **hydrate:** ignore broken rule declarations ([bc1ed78](https://github.com/kripod/otion/commit/bc1ed78cab58099fa2beae1cbf52550957af9ec7))
 
+## [0.5.3](https://github.com/kripod/otion/compare/v0.5.2...v0.5.3) (2020-08-02)
+
+### Bug Fixes
+
+- improve custom selector list splitting ([37b02a9](https://github.com/kripod/otion/commit/37b02a9f663cbf896bcb5c83d949de543336c3b7)), closes [#45](https://github.com/kripod/otion/issues/45)
+- resolve self-references ([f0ba93f](https://github.com/kripod/otion/commit/f0ba93f3c90aedb735cebcee1466bdb163734e0f))
 
 ### Performance Improvements
 
-* use reluctant RegExp matchers ([7e6e53d](https://github.com/kripod/otion/commit/7e6e53d26844db9947c32bfcc33f1f8764c7c6c6))
-
-
-
-
+- use reluctant RegExp matchers ([7e6e53d](https://github.com/kripod/otion/commit/7e6e53d26844db9947c32bfcc33f1f8764c7c6c6))
 
 ## [0.5.2](https://github.com/kripod/otion/compare/v0.5.1...v0.5.2) (2020-07-26)
 
