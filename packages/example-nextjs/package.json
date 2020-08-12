@@ -1,6 +1,6 @@
 {
 	"name": "otion-example-nextjs",
-	"version": "0.5.4",
+	"version": "0.5.5",
 	"private": true,
 	"scripts": {
 		"build": "next build",
@@ -11,10 +11,10 @@
 	},
 	"dependencies": {
 		"next": "^9.4.4",
-		"otion": "^0.5.4",
+		"otion": "^0.5.5",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
-		"react-otion": "^0.5.4"
+		"react-otion": "^0.5.5"
 	},
 	"devDependencies": {
 		"@types/node": "^14.0.23",
