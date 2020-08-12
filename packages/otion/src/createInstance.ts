@@ -246,7 +246,9 @@ export function createInstance(): OtionInstance {
 				} else {
 					let parentRuleHeads: string[] | undefined;
 					let firstParentRuleHead =
-						key[0] === ":" || key[0] === "@" ? key : minifyCondition(key);
+						key[0] === ":" || key[0] === "@" || key[0] === "&"
+							? key
+							: minifyCondition(key);
 					let parentRuleTail = "";
 					let scopeClassSelectorStartIndex = classSelectorStartIndex;
 
