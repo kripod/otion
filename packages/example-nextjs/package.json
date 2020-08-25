@@ -10,7 +10,7 @@
 		"type-check": "tsc"
 	},
 	"dependencies": {
-		"next": "^9.4.4",
+		"next": "^9.5.2",
 		"otion": "^0.5.5",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",

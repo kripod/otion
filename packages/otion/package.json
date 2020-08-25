@@ -43,7 +43,7 @@
 	},
 	"dependencies": {
 		"@emotion/hash": "^0.8.0",
-		"csstype": "^2.6.10",
+		"csstype": "^3.0.2",
 		"tiny-css-prefixer": "^1.1.4"
 	},
 	"devDependencies": {
