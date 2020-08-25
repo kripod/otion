@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1](https://github.com/kripod/otion/compare/v0.6.0...v0.6.1) (2020-08-25)
+
+### Bug Fixes
+
+- type checking issue ([2210bc8](https://github.com/kripod/otion/commit/2210bc82bcdfc4ddadc5918ce43147cfac8b2134))
+
 # [0.6.0](https://github.com/kripod/otion/compare/v0.5.5...v0.6.0) (2020-08-25)
 
 **Note:** Version bump only for package otion
