@@ -1,6 +1,6 @@
 {
 	"name": "gatsby-plugin-otion",
-	"version": "0.5.0",
+	"version": "0.6.0",
 	"description": "Gatsby plugin for otion, the atomic CSS-in-JS library",
 	"keywords": [
 		"gatsby",
