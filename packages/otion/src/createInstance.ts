@@ -150,7 +150,7 @@ export function createInstance(): OtionInstance {
 
 	function serializeDeclarationList(
 		property: string,
-		value: string | number | Array<string | number>,
+		value: string | number | Array<string | number | undefined>,
 	): string {
 		if (typeof value !== "object") {
 			return normalizeDeclaration(property, value);
@@ -158,7 +158,9 @@ export function createInstance(): OtionInstance {
 
 		let cssText = "";
 		value.forEach((fallbackValue) => {
-			cssText += `;${normalizeDeclaration(property, fallbackValue)}`;
+			if (fallbackValue) {
+				cssText += `;${normalizeDeclaration(property, fallbackValue)}`;
+			}
 		});
 
 		// The leading declaration separator character gets removed
