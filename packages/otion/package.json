@@ -15,6 +15,13 @@
 	},
 	"license": "MIT",
 	"author": "Kristóf Poduszló <kripod@protonmail.com>",
+	"repository": {
+    "type": "git",
+    "url": "https://github.com/kripod/otion.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kripod/otion/issues"
+  },
 	"sideEffects": false,
 	"exports": {
 		".": {
