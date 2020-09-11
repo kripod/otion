@@ -89,6 +89,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "bebraw",
+      "name": "Juho Vepsäläinen",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/166921?v=4",
+      "profile": "https://survivejs.com/",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "files": [
