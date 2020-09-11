@@ -1,6 +1,6 @@
 {
 	"name": "react-otion",
-	"version": "0.6.1",
+	"version": "0.6.2",
 	"description": "React bindings for otion, the atomic CSS-in-JS library",
 	"keywords": [
 		"css-in-js",
@@ -35,7 +35,7 @@
 		"develop": "yarn build --watch"
 	},
 	"devDependencies": {
-		"otion": "^0.6.1",
+		"otion": "^0.6.2",
 		"react": "^16.13.1"
 	},
 	"peerDependencies": {
