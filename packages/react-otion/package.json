@@ -9,6 +9,12 @@
 		"styling",
 		"typescript"
 	],
+	"bugs": "https://github.com/kripod/otion/issues",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/kripod/otion.git",
+		"directory": "packages/react-otion"
+	},
 	"license": "MIT",
 	"author": "Kristóf Poduszló <kripod@protonmail.com>",
 	"sideEffects": false,
