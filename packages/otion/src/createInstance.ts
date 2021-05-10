@@ -19,6 +19,10 @@ function toHyphenLower(match: string): string {
 	return `-${match.toLowerCase()}`;
 }
 
+function normalizeProperty(name: string): string {
+	return name.replace(/^ms|[A-Z]/g, toHyphenLower);
+}
+
 export interface OtionConfig {
 	/** Style insertion methodology to be used. */
 	injector?: InjectorInstance;
@@ -187,7 +191,7 @@ export function createInstance(): OtionInstance {
 					// https://csswizardry.com/2014/07/hacks-for-dealing-with-specificity/
 
 					// TODO: Consider removing IE vendor prefix support
-					const property = key.replace(/^ms|[A-Z]/g, toHyphenLower);
+					const property = normalizeProperty(key);
 					const declarations = serializeDeclarationList(property, value);
 					const className = `_${hash(cssTextHead + declarations)}`;
 					const isConditionalRule = cssTextTail;
@@ -377,11 +381,11 @@ export function createInstance(): OtionInstance {
 
 							// TODO: Replace var with const once it minifies equivalently
 							// eslint-disable-next-line guard-for-in, no-restricted-syntax, no-var, vars-on-top
-							for (var property in declarations) {
-								const value =
-									declarations[property as keyof typeof declarations];
+							for (var key in declarations) {
+								const value = declarations[key as keyof typeof declarations];
 
 								if (value != null) {
+									const property = normalizeProperty(key);
 									cssText += serializeDeclarationList(property, value);
 								}
 							}
