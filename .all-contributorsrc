@@ -98,6 +98,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "danielkov",
+      "name": "Daniel Emod Kovacs",
+      "avatar_url": "https://avatars.githubusercontent.com/u/18039004?v=4",
+      "profile": "https://kde.design",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "files": [
