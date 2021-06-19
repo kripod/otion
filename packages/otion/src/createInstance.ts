@@ -379,21 +379,18 @@ export function createInstance(): OtionInstance {
 
 							const declarations = rules[time as keyof typeof rules];
 
-							cssText += Object.keys(declarations ?? {})
-								.map((key) => {
-									const value =
-										declarations?.[key as keyof typeof declarations];
+							// TODO: Replace var with const once it minifies equivalently
+							// eslint-disable-next-line guard-for-in, no-restricted-syntax, no-var, vars-on-top
+							for (var key in declarations) {
+								const value = declarations[key as keyof typeof declarations];
 
-									if (value != null) {
-										const property = normalizeProperty(key);
-										return serializeDeclarationList(property, value);
-									}
+								if (value != null) {
+									const property = normalizeProperty(key);
+									cssText += `;${serializeDeclarationList(property, value)}`;
+								}
+							}
 
-									return null;
-								})
-								.filter(Boolean)
-								.join(";");
-
+							cssText = cssText.replace("{;", "{");
 							cssText += "}";
 						}
 
