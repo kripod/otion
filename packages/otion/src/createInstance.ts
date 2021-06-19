@@ -386,10 +386,11 @@ export function createInstance(): OtionInstance {
 
 								if (value != null) {
 									const property = normalizeProperty(key);
-									cssText += serializeDeclarationList(property, value);
+									cssText += `;${serializeDeclarationList(property, value)}`;
 								}
 							}
 
+							cssText = cssText.replace("{;", "{");
 							cssText += "}";
 						}
 
